@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Listado Prestamos</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+       <section th:fragment="listadoPrestamos" id="prestamos">
+           <div class="container">
+               <div class="row">
+               <div class="col-md-9">
+                    <div class="list-group">
+            <div th:each="prestamo : ${prestamos}">
+                <a th:href="@{/verpagares/} + ${prestamo.idPrestamo}" class="list-group-item list-group-item-action bg-opacity-50 rounded shadow" aria-current="true">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">[[${prestamo.cliente.nombre + ' ' + prestamo.cliente.apellido}]]</h5>
+                                    <h6>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)}]]</h6>
+                                </div>
+                             
+                                <p class="mb-1">[[${#temporals.format(prestamo.fecha, 'MMMM d, yyyy')}]]</b></p>
+
+                                <small>[[${prestamo.cuotas}]]</small>
+                            </a> 
+                    <br/>
+            </div>
+          </div>
+               </div>
+           </div>
+           </div>    
+       </section>
+    </body>
+</html>
+
+

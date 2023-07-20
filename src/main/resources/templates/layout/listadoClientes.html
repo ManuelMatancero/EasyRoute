@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Listado Clientes</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="listadoClientes" id="clientes">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>[[#{persona.titulo-lista}]]</h4>
+                            </div>
+                            <div th:if="${clientes != null and !clientes.empty}">
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th th:text="#{cliente.nombre}">Nombre</th>
+                                            <th th:text="#{cliente.apellido}">Apellido</th>
+                                            <th th:text="#{cliente.cedula}">Cedula</th>
+                                            <th th:text="#{cliente.direccion}">Direccion</th>
+                                            <th th:text="#{cliente.celular}">Celular</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="cliente, contador : ${clientes}">
+                                            <td>[[${contador.count}]]</td>
+                                            <td>[[${cliente.nombre}]]</td>
+                                            <td>[[${cliente.apellido}]]</td>
+                                            <td>[[${cliente.cedula}]]</td>
+                                            <td>[[${cliente.direccion}]]</td>
+                                            <td>[[${cliente.celular}]]</td>
+                                            <td>
+                                                <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
+                                                   class="btn btn-success">
+                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.verprestamos}]]
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
+                                                   class="btn btn-secondary">
+                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.agregarprestamo}]]
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${clientes == null or clientes.empty}">
+                                <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

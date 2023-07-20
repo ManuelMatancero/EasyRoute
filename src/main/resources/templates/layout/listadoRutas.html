@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Listado Rutas</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="listadoRutas" id="rutas">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>[[#{ruta.listaderutas}]]</h4>
+                            </div>
+                            <div th:if="${rutas != null and !rutas.empty}">
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th th:text="#{ruta.nombre}">Nombre</th>
+                                            <th th:text="#{ruta.dia}">Dia</th>
+                                            <th th:text="#{ruta.zona}">Zona</th>
+                                            <th th:text="#{ruta.cobrador}">Cobrador</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="ruta, contador : ${rutas}">
+                                            <td>[[${contador.count}]]</td>
+                                            <td>[[${ruta.nombre}]]</td>
+                                            <td>[[${ruta.dia}]]</td>
+                                            <td>[[${ruta.zona.nombre}]]</td>
+                                            <td>[[${ruta.cobrador.nombre + ' ' + ruta.cobrador.apellido }]]</td>
+                                            <td>
+                                                <a th:href="@{/verclientes/} + ${ruta.idRuta}"
+                                                   class="btn btn-success">
+                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.verclientes}]]
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/editar/} + ${ruta.idRuta}"
+                                                   class="btn btn-secondary">
+                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.editar}]]
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/eliminar(idRuta=${ruta.idRuta})}"
+                                                   class="btn btn-dark">
+                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.eliminar}]]
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${rutas == null or rutas.empty}">
+                                <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

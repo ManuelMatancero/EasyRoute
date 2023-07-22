@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Listado Prestamos</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+       <section th:fragment="listadoPrestamos" id="prestamos">
+           <div class="container">
+               <div class="row">
+                   <div class="col-md-9">
+                   <div class="card shadow bg-Light-subtle rounded mt-3">
+                       <div class="card-header">
+                           <h2><i class="fa-solid fa-handshake"></i>  <span th:text="#{panel.prestamos}"></span></h2>
+                       </div>
+                       <div class="card-body">
+                           <div class="list-group">
+                               <div class="accordion" id="accordionExample">
+                                   <div th:each="prestamo : ${prestamos}">
+                                       <div class="accordion-item">
+                                           <h2 class="accordion-header">
+                                               <button class="accordion-button collapsed" th:text="'Codigo de prestamo: #'+ ${prestamo.idPrestamo} + ', Dia de cobro: ' + ${prestamo.cliente.ruta.dia}" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#'+${prestamo.idPrestamo}" aria-expanded="true" aria-controls="collapseOne">
+                                                   Accordion Item #1
+                                               </button>
+                                           </h2>
+                                           <div th:attr="id=${prestamo.idPrestamo}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                               <div class="accordion-body">
+                                                   <div class="row">
+                                                       <div class="col-md-12">
+                                                           <div class="card">
+                                                               <div class="card-header">
+                                                                   <h4>[[#{pagare.listapagares}]]</h4>
+                                                               </div>
+                                                               <div th:if="${prestamo.pagares != null and !prestamo.pagares.empty}">
+                                                                   <table class="table table-stryped">
+                                                                       <thead class="thead-dark">
+                                                                       <tr>
+                                                                           <th>#</th>
+                                                                           <th th:text="#{pagare.nopagare}">No</th>
+                                                                           <th th:text="#{pagare.capital}">Capital</th>
+                                                                           <th th:text="#{pagare.interes}">Interes</th>
+                                                                           <th th:text="#{pagare.total}">Total</th>
+                                                                           <th th:text="#{pagare.vencimiento}">Vencimiento</th>
+                                                                           <th></th>
+                                                                           <th></th>
+                                                                       </tr>
+                                                                       </thead>
+                                                                       <tbody>
+                                                                       <tr th:each="pagare, contador : ${prestamo.pagares}">
+                                                                           <td>[[${contador.count}]]</td>
+                                                                           <td>[[${pagare.noPagare}]]</td>
+                                                                           <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
+                                                                           <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
+                                                                           <td><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
+                                                                           <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
+                                                                           <td>
+                                                                               <a href="#"
+                                                                                  class="btn btn-success">
+                                                                                   <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
+                                                                               </a>
+                                                                           </td>
+                                                                       </tr>
+                                                                       </tbody>
+                                                                   </table>
+                                                               </div>
+                                                               <div class="text-center p-2" th:if="${pagares == null or pagares.empty}">
+                                                                   <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+                                                               </div>
+                                                           </div>
+                                                       </div>
+
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                       <div class="card mt-5">
+                           <div class="card-header">
+                               <h2><i class="fa-solid fa-circle-info"></i>  <span th:text="#{cliente.informacion}"></span></h2>
+                           </div>
+                           <div class="card-body">
+                               <div class="row">
+                                   <div class="col-md-3">
+                                       <p><b>[[#{cliente.nombre}]]:</b></p>
+                                       <p><b>[[#{cliente.cedula}]]:</b></p>
+                                       <p><b>[[#{cliente.trabajo}]]:</b></p>
+                                       <p><b>[[#{cliente.celular}]]:</b></p>
+                                       <p><b>[[#{ruta.nombre}]]:</b></p>
+                                       <p><b>[[#{cliente.telefonoresidencia}]]:</b></p>
+                                       <p><b>[[#{cliente.telefonotrabajo}]]:</b></p>
+                                       <p><b>[[#{cliente.email}]]:</b></p>
+                                       <p><b>[[#{cliente.ocupacion}]]:</b></p>
+                                       <p><b>[[#{cliente.recomendado}]]:</b></p>
+                                       <p><b>[[#{cliente.observaciones}]]:</b></p>
+                                       <p><b>[[#{cliente.direccion}]]:</b></p>
+                                   </div>
+                                   <div class="col-md-6">
+                                        <p th:text="${cliente.nombre}+' '+${cliente.apellido}"></p>
+                                        <p th:text="${cliente.cedula}"></p>
+                                        <p th:text="${cliente.lugarTrabajo}"></p>
+                                       <p th:text="${cliente.celular}"></p>
+                                       <p th:text="${cliente.ruta.nombre}"></p>
+                                        <p th:text="${cliente.telResidencia}"></p>
+                                       <p th:text="${cliente.telTrabajo}"></p>
+                                       <p th:text="${cliente.email}"></p>
+                                       <p th:text="${cliente.ocupacion}"></p>
+                                       <p th:text="${cliente.recomendado}"></p>
+                                       <p th:text="${cliente.observaciones}"></p>
+                                       <p th:text="${cliente.direccion}"></p>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+               </div>
+                   <div class="col-md-3">
+                       <div class="card text-center bg-danger text-white mt-3">
+                           <div class="card-body">
+                               <span class="fs-2"><i class="fa-solid fa-money-bill-wave"></i></span>
+                               <h5 class="display-6">
+                                   [[${new java.text.DecimalFormat('$#,##0.00').format(totalPendiente)}]]
+                               </h5>
+                           </div>
+                       </div>
+                       <div class="card text-center bg-primary text-white mt-3">
+                           <div class="card-body">
+                               <span class="fs-2"><i class="fa-regular fa-handshake"></i></span>
+                               <h5 class="display-6">
+                                   [[${totalPrestamos}]]
+                               </h5>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>    
+       </section>
+    </body>
+</html>
+
+

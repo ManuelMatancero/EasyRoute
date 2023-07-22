@@ -1,12 +1,11 @@
 package com.matancita.sarante.web;
 
-import com.matancita.sarante.domain.Cliente;
-import com.matancita.sarante.domain.Prestamo;
-import com.matancita.sarante.domain.Ruta;
-import com.matancita.sarante.servicio.ClienteService;
-import com.matancita.sarante.servicio.RutaService;
+import com.matancita.sarante.domain.*;
+import com.matancita.sarante.servicio.*;
+
 import java.util.List;
 import javax.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,35 +23,87 @@ public class ControladorInicio {
     @Autowired
     private RutaService rutaService;
     @Autowired
+    private IUsuarioService usuarioService;
+    @Autowired
     private ClienteService clienteService;
+    @Autowired
+    private ZonaService zonaService;
+    @Autowired
+    private PrestamoService prestamoService;
+    @Autowired
+    private PagareService pagareService;
+    @Autowired
+    private CobradorService cobradorService;
     
     @GetMapping("/")
-    public String inicio(Model model, @AuthenticationPrincipal User user){
-        var rutas = rutaService.listAll();
+    public String inicio(@AuthenticationPrincipal User user){
         log.info("ejecutando el controlador Spring MVC");
         log.info("usuario que hizo login:" + user);
-        var saldoTotal = 0D;
-        model.addAttribute("rutas", rutas);
-        model.addAttribute("saldoTotal", saldoTotal);
-        model.addAttribute("totalRutas", rutas.size());
         return "index";
     }
-    
-    @GetMapping("/verclientes/{idRuta}")
-    public String clientes (Ruta ruta, Model model){
-        ruta = rutaService.getById(ruta.getIdRuta());
-        List<Cliente> clientes = ruta.getClientes();
-        model.addAttribute("clientes", clientes);
-        return "clientes";      
+    @GetMapping("/verrutas")
+    public String rutas (Model model){
+        List<Ruta> rutas = rutaService.listAll();
+        List<Zona> zonas = zonaService.listAll();
+        List<Cobrador> cobradores = cobradorService.listAll();
+        //Numero total de rutas
+        int totalRutas = rutas.size();
+        //Dinero en la ruta
+        double dineroPorCobrar = 0;
+        for(Ruta ruta: rutas){
+            List<Cliente> clientes = ruta.getClientes();
+            for (Cliente cliente: clientes){
+                List<Prestamo> prestamos = cliente.getPrestamos();
+                for (Prestamo prestamo: prestamos){
+                    List<Pagare> pagares = prestamo.getPagares();
+                    for (Pagare pagare: pagares){
+                        if(pagare.getReciboGen()==null){
+                            dineroPorCobrar += pagare.getTotal();
+                        }
+                    }
+                }
+            }
+        }
+        model.addAttribute("dineroPorCobrar", dineroPorCobrar);
+        model.addAttribute("totalRutas", totalRutas);
+        model.addAttribute("rutas", rutas);
+        model.addAttribute("zonas", zonas);
+        model.addAttribute("cobradores", cobradores);
+        //These are the objects to be filled in the form
+        model.addAttribute("ruta", new Ruta());
+        model.addAttribute("zona", new Zona());
+        return "rutas";
     }
+/*
+    @GetMapping("/verclientes")
+    public String clientes (Model model){
+        List<Cliente> clientes = clienteService.listAll();
+        model.addAttribute("clientes", clientes);
+        model.addAttribute("cliente", new Cliente());
+        return "clientes";
+    }*/
+
+    @GetMapping("/verprestamos")
+    public String prestamos (Model model){
+        List<Prestamo> prestamos = prestamoService.listAll();
+        model.addAttribute("prestamos", prestamos);
+        return "prestamos";
+    }
+    @GetMapping("/verpagares")
+    public String pagares (Model model){
+        List<Pagare> pagares = pagareService.listAll();
+        model.addAttribute("pagares", pagares);
+        return "pagares";
+    }
+
     
-    @GetMapping("/verprestamos/{idCliente}")
+   /* @GetMapping("/verprestamos/{idCliente}")
     public String prestamos (Cliente cliente, Model model){
         cliente = clienteService.getById(cliente.getIdCliente());
         List<Prestamo> prestamos = cliente.getPrestamos();
         model.addAttribute("prestamos", prestamos);
         return "prestamos";
-    }
+    }*/
     
 //    @GetMapping("/agregar")
 //    public String agregar(Persona persona){

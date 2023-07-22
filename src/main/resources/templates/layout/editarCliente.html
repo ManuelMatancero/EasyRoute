@@ -11,7 +11,7 @@
             <form th:action="@{/guardar}" th:object="${persona}"
                   method="POST" class="was-validated">
                 <input type="hidden" name="idPersona" th:field="*{idPersona}"/>
-                <section th:replace="layout/botonesEditar :: botonesEditar"></section>
+                <section th:replace="layout/botonesEditarRuta :: botonesEditar"></section>
                 <div id="details">
                     <div class="container">
                         <div class="row">

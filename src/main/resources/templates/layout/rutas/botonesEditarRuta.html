@@ -7,12 +7,12 @@
         <meta charset="UTF-8"/>
     </head>
     <body>
-        <section th:fragment="botonesEditar">
-            <div id="actions" class="py-4 mb-4 bg-light">
+        <section th:fragment="botonesEditarRuta">
+            <div id="actions" class="py-4 mb-4 bg-light mt-5">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3">
-                            <a th:href="@{/}" class="btn btn-ligth btn-block">
+                            <a th:href="@{/verrutas}" class="btn btn-ligth btn-block">
                                 <i class="fas fa-arrow-left"></i> [[#{accion.regresar}]]
                             </a>
                         </div>
@@ -22,7 +22,7 @@
                             </button>
                         </div>
                         <div class="col-md-3">
-                            <a th:href="@{/eliminar(idPersona=${persona.idPersona})}"
+                            <a th:href="@{/eliminarRuta(idRuta=${ruta.idRuta})}"
                                 class="btn btn-danger btn-block">
                                 <i class="fas fa-trash"></i> [[#{accion.eliminar}]]
                             </a>

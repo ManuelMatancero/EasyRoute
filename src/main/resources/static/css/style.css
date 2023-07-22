@@ -1,0 +1,10 @@
+/* Bootstrap */
+@import "bootstrap/dist/css/bootstrap.css";
+
+/* Custom colors */
+.custom-color {
+    color: #ff0000;
+}
+.custom-background {
+    background-color: #00ff00;
+}

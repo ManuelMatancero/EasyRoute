@@ -8,13 +8,10 @@
     </head>
     <body>
         <section th:fragment="listadoClientes" id="clientes">
-            <div class="container">
+            <div class="container mt-3">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h4>[[#{persona.titulo-lista}]]</h4>
-                            </div>
                             <div th:if="${clientes != null and !clientes.empty}">
                                 <table class="table table-stryped">
                                     <thead class="thead-dark">
@@ -40,13 +37,13 @@
                                             <td>
                                                 <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
                                                    class="btn btn-success">
-                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.verprestamos}]]
+                                                    <i class="fa-regular fa-address-card"></i>[[#{cliente.perfil}]]
                                                 </a>
                                             </td>
                                             <td>
                                                 <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
                                                    class="btn btn-secondary">
-                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.agregarprestamo}]]
+                                                    <i class="fa-solid fa-handshake"></i> [[#{accion.agregarprestamo}]]
                                                 </a>
                                             </td>
                                         </tr>

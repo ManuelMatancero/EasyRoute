@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Agregar Ruta</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+<section th:fragment="agregarRuta">
+<div class="modal fade" id="agregarRuta" tabindex="-1" aria-labelledby="agregarRutaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" th:text="#{ruta.agregar}" id="agregarRuta">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/guardarRuta}" th:object="${ruta}"
+         method="POST" class="was-validated">
+          <div class="mb-3">
+            <label for="nombre" th:text="#{ruta.nombre}" class="col-form-label">Nombre</label>
+            <input type="text" class="form-control" th:field="*{nombre}" id="nombre" required = "true">
+          </div>
+          <div class="mb-3">
+            <label for="dia" th:text="#{ruta.dia}" class="col-form-label">Dia</label>
+            <select class="form-select" id="dia" th:field="*{dia}" aria-label="Default select example" required="required">
+              <option value="" disabled selected>Open this select menu</option>
+              <option value="LUNES" >LUNES</option>
+              <option value="MARTES" >MARTES</option>
+              <option value="MIERCOLES">MIERCOLES</option>
+              <option value="JUEVES">JUEVES</option>
+              <option value="VIERNES">VIERNES</option>
+              <option value="SABADO">SABADO</option>
+              <option value="DOMINGO">DOMINGO</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="cobrador" th:text="#{ruta.asignarcobrador}" class="col-form-label">Cobrador</label>
+            <select class="form-select" name="idCobrador" id="cobrador" aria-label="Default select example">
+              <!-- Loop through the List and generate options for each cobrador -->
+              <option  th:each="cobrador : ${cobradores}" th:value="${cobrador.idCobrador}" th:text="${cobrador.nombre} + ' ' + ${cobrador.apellido} "></option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="zona" th:text="#{zona.agregarzona}" class="col-form-label">Zona</label>
+            <select class="form-select" name="idZona" id="zona" aria-label="Default select example">
+              <!-- Loop through the List and generate options for each cobrador -->
+              <option  th:each="zona : ${zonas}" th:value="${zona.idZona}" th:text="${zona.nombre}"></option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{barra.salir}">Close</button>
+            <button type="submit" class="btn btn-primary" th:text="#{ruta.agregar}">Send message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</body>
+</html>

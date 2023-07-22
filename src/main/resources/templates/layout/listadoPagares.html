@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Listado Pagares</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+<section th:fragment="listadoPagares" id="pagares">
+  <div class="container pt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>[[#{pagare.listapagares}]]</h4>
+          </div>
+          <div th:if="${pagares != null and !pagares.empty}">
+            <table class="table table-stryped">
+              <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th th:text="#{pagare.nopagare}">No</th>
+                <th th:text="#{cliente.nombre}">Nombre</th>
+                <th th:text="#{pagare.capital}">Capital</th>
+                <th th:text="#{pagare.interes}">Interes</th>
+                <th th:text="#{pagare.total}">Total</th>
+                <th th:text="#{pagare.vencimiento}">Vencimiento</th>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="pagare, contador : ${pagares}">
+                <td>[[${contador.count}]]</td>
+                <td>[[${pagare.noPagare}]]</td>
+                <td>[[${pagare.prestamo.cliente.nombre} + ' ' + ${pagare.prestamo.cliente.apellido}]]</td>
+                <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
+                <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
+                <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</td>
+                <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
+                <td>
+                  <a href="#"
+                     class="btn btn-success">
+                    <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-center p-2" th:if="${pagares == null or pagares.empty}">
+            <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</body>
+</html>

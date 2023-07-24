@@ -45,15 +45,21 @@ public class ControladorRuta {
     @PostMapping("/guardarRuta")
     public String guardarRuta(@Valid Ruta ruta, @RequestParam Long idCobrador,@RequestParam Long idZona,  Errors errores, RedirectAttributes redirectAttributes){
         if(errores.hasErrors()){
-            return "verrutas";
+            return "modificarRuta";
         }
-        Zona zona = new Zona();
-        zona.setIdZona(idZona);
-        Cobrador cobrador = new Cobrador();
-        cobrador.setIdCobrador(idCobrador);
+        log.info("nombre= " + ruta.getNombre()+ "\ndia= "+ ruta.getDia());
+        
+        Zona zona;
+        zona = zonaService.getById(idZona);
+        Cobrador cobrador;
+        cobrador = cobradorService.getById(idCobrador);
+        //This operation will run if the idRuta is null when updating
+        if(!(ruta.getIdRuta()==null)){
+          Ruta rutaFromDb= rutaService.getById(ruta.getIdRuta());
+          ruta.setClientes(rutaFromDb.getClientes());
+        }  
         ruta.setZona(zona);
         ruta.setCobrador(cobrador);
-
         rutaService.insert(ruta);
         redirectAttributes.addFlashAttribute("successMessage", "Route saved successfully!");
         return "redirect:/verrutas";
@@ -72,6 +78,7 @@ public class ControladorRuta {
 
         @GetMapping("/eliminarRuta")
         public String eliminarRuta(Ruta ruta, RedirectAttributes redirectAttributes){
+            ruta = rutaService.getById(ruta.getIdRuta());
             rutaService.delete(ruta);
             redirectAttributes.addFlashAttribute("successMessage", "Route eliminated successfully!");
             return "redirect:/verrutas";

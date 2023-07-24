@@ -38,8 +38,7 @@ public class Prestamo implements Serializable {
 
     private int estado;
 
-    @OneToMany
-    @JoinColumn(name = "id_prestamo", referencedColumnName = "id_prestamo")
+    @OneToMany(mappedBy = "prestamo", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Pagare> pagares;
 
     @ManyToOne

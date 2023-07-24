@@ -83,12 +83,6 @@ public class ControladorInicio {
         return "clientes";
     }*/
 
-    @GetMapping("/verprestamos")
-    public String prestamos (Model model){
-        List<Prestamo> prestamos = prestamoService.listAll();
-        model.addAttribute("prestamos", prestamos);
-        return "prestamos";
-    }
     @GetMapping("/verpagares")
     public String pagares (Model model){
         List<Pagare> pagares = pagareService.listAll();

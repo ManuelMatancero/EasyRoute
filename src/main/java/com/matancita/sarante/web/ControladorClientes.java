@@ -51,7 +51,7 @@ public class ControladorClientes {
             totalPrestamos++;
             List<Pagare> pagares = prestamo.getPagares();
             for (Pagare pagare : pagares){
-                if (!(pagare.getReciboGen()==null)){
+                if (pagare.getReciboGen()==null){
                     totalPendiente += pagare.getTotal();
                 }
             }
@@ -60,6 +60,7 @@ public class ControladorClientes {
         model.addAttribute("totalPendiente", totalPendiente);
         model.addAttribute("cliente", cliente);
         model.addAttribute("prestamos", prestamos);
+        model.addAttribute("prestamo", new Prestamo());
         return "perfilCliente";
     }
 

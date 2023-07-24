@@ -60,8 +60,7 @@ public class Cliente implements Serializable {
 
     private int estatus;
 
-    @OneToMany
-    @JoinColumn(name = "id_cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Prestamo> prestamos;
 
     @ManyToOne

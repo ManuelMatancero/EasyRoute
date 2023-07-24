@@ -28,13 +28,13 @@ public class RutaServiceImpl implements RutaService{
     @Override
     @Transactional
     public void insert(Ruta ruta) {
-        rutaDao.save(ruta);
+        rutaDao.saveAndFlush(ruta);
     }
 
     @Override
     @Transactional
     public void update(Ruta ruta) {
-        rutaDao.save(ruta);
+        rutaDao.save(ruta);   
     }
 
     @Override

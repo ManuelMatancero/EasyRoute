@@ -21,7 +21,7 @@
                                    <div th:each="prestamo : ${prestamos}">
                                        <div class="accordion-item">
                                            <h2 class="accordion-header">
-                                               <button class="accordion-button collapsed" th:text="'Codigo de prestamo: #'+ ${prestamo.idPrestamo} + ', Dia de cobro: ' + ${prestamo.cliente.ruta.dia}" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#'+${prestamo.idPrestamo}" aria-expanded="true" aria-controls="collapseOne">
+                                               <button class="accordion-button collapsed lead" th:text="'Codigo de prestamo: #'+ ${prestamo.idPrestamo} + ' CAPITAL: ' +${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)} + ' INTERES: ' + ${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)} " type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#'+${prestamo.idPrestamo}" aria-expanded="true" aria-controls="collapseOne">
                                                    Accordion Item #1
                                                </button>
                                            </h2>
@@ -37,7 +37,6 @@
                                                                    <table class="table table-stryped">
                                                                        <thead class="thead-dark">
                                                                        <tr>
-                                                                           <th>#</th>
                                                                            <th th:text="#{pagare.nopagare}">No</th>
                                                                            <th th:text="#{pagare.capital}">Capital</th>
                                                                            <th th:text="#{pagare.interes}">Interes</th>
@@ -48,24 +47,23 @@
                                                                        </tr>
                                                                        </thead>
                                                                        <tbody>
-                                                                       <tr th:each="pagare, contador : ${prestamo.pagares}">
-                                                                           <td>[[${contador.count}]]</td>
-                                                                           <td>[[${pagare.noPagare}]]</td>
-                                                                           <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
-                                                                           <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
-                                                                           <td><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
-                                                                           <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
-                                                                           <td>
-                                                                               <a href="#"
-                                                                                  class="btn btn-success">
-                                                                                   <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
-                                                                               </a>
-                                                                           </td>
+                                                                       <tr th:each="pagare: ${prestamo.pagares}">
+                                                                               <td>[[${pagare.noPagare}]]</td>
+                                                                               <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
+                                                                               <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
+                                                                               <td><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
+                                                                               <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
+                                                                               <td>
+                                                                                   <a href="#"
+                                                                                      class="btn btn-success">
+                                                                                       <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
+                                                                                   </a>
+                                                                               </td>
                                                                        </tr>
                                                                        </tbody>
                                                                    </table>
                                                                </div>
-                                                               <div class="text-center p-2" th:if="${pagares == null or pagares.empty}">
+                                                               <div class="text-center p-2" th:if="${prestamo.pagares == null or prestamo.pagares.empty}">
                                                                    <span th:text="#{persona.lista-vacia}">Lista vacía</span>
                                                                </div>
                                                            </div>

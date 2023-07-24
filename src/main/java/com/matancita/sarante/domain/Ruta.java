@@ -30,15 +30,14 @@ public class Ruta implements Serializable {
 
     private String dia;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_zona", referencedColumnName = "id_zona")
     private Zona zona;
 
-    @OneToMany
-    @JoinColumn(name = "id_ruta")
+    @OneToMany(mappedBy ="ruta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cliente> clientes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_cobrador", referencedColumnName = "id_cobrador")
     private Cobrador cobrador;
 

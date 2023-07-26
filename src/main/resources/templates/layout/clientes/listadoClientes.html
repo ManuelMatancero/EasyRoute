@@ -8,9 +8,13 @@
     </head>
     <body>
         <section th:fragment="listadoClientes" id="clientes">
-            <div class="container mt-3">
+            <div class="container-fluid mt-3">
                 <div class="row">
                     <div class="col-md-12">
+                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+                            <p th:text="${successMessage}"></p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="card">
                             <div th:if="${clientes != null and !clientes.empty}">
                                 <div class="table-responsive">
@@ -42,9 +46,9 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
-                                                       class="btn btn-warning">
-                                                        <i class="fa-regular fa-address-card"></i>[[#{cliente.editar}]]
+                                                    <a th:href="@{/modificarcliente/} + ${cliente.idCliente}"
+                                                       class="btn btn-secondary">
+                                                        <i class="fa-solid fa-pen-to-square"></i>[[#{cliente.editar}]]
                                                     </a>
                                                 </td>
                                             </tr>
@@ -52,8 +56,9 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="text-center p-2" th:if="${clientes == null or clientes.empty}">
-                                <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+                            <div class="alert alert-primary" role="alert" th:if="${clientes == null or clientes.empty}">
+                                <h4 class="alert-heading" th:text="#{cliente.vacia}">Well done!</h4>
+                                <i class="fa-solid fa-circle-plus" style="color: #023388;"></i><p th:text="#{cliente.paraagregar}"></p>
                             </div>
                         </div>
                     </div>

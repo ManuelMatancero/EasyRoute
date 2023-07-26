@@ -8,7 +8,7 @@
     </head>
     <body>
         <section th:fragment="listadoRutas" id="rutas">
-            <div class="container mt-2">
+            <div class="container-fluid mt-2" >
                 <div class="row">
                     <div class="col-md-9">
                         <!-- Display success message if available -->
@@ -59,24 +59,40 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card text-center bg-warning text-white mb-3">
+                        <div class="card border-left-primary shadow mt-1 py-2">
                             <div class="card-body">
-                                <span class="fs-2"><i class="fa-solid fa-money-bill-wave"></i></span>
-                                <h5 class="display-6">
-                                    [[${new java.text.DecimalFormat('$#,##0.00').format(dineroPorCobrar)}]]
-                                </h5>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div th:text="#{ruta.porcobrar}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Earnings (Monthly)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            [[${new java.text.DecimalFormat('$#,##0.00').format(dineroPorCobrar)}]]
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-money-bill-wave fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card text-center bg-info text-white mb-3">
+                        <div class="card border-left-primary shadow mt-2 py-2">
                             <div class="card-body">
-                                <span class="fs-2"><i class="fa-solid fa-route"></i></span>
-                                <h5 class="display-6">
-                                    [[${totalRutas}]]
-                                </h5>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div th:text="#{ruta.rutas}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Earnings (Monthly)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            [[${totalRutas}]]
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-route fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
                 </div>
-
             </div>
         </section>
     </body>

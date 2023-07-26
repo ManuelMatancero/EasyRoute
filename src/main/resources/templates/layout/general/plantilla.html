@@ -16,7 +16,7 @@
     <body>
         <header th:fragment="header">
             <nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-dark p-0">
-                <div class="container">
+                <div class="container-fluid">
                     <a th:href="@{/}" class="navbar-brand">
                         <span><i class="fa-solid fa-route" style="color: #ffffff;"></i></span>
                     </a>
@@ -65,7 +65,7 @@
         </header>
 
         <footer th:fragment="footer" class="footer bg-dark text-white mt-5 p-5">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="col">
                     <p class="lead text-center">
                         <a th:href="@{/(lang=es)}">ES</a> |

@@ -5,114 +5,112 @@
     <head>
         <title>Listado Rutas</title>
         <meta charset="UTF-8"/>
-        <link href="/static/css/style.css" rel="stylesheet">
+        <link href="/css/style.css" rel="stylesheet">
     </head>
     <body>
         <section th:fragment="listadoHome" id="home">
-            <div class="container pt-5">
-                <div>
-                    <h1 class="display-5"><b>[[#{panel.panelprincipal}]]</b>  <span class="badge bg-secondary">Easy Route</span></h1>
-                </div>
-                <div class="card mt-3 shadow p-3 bg-body-tertiary rounded">
+            <div class="container-fluid pt-5">
+                <h3 th:text="#{barra.general}"></h3>
+                <div class="card mt-3 shadow p-1 rounded">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-black mb-3 shadow-sm">
+                                        <div class="card text-center mb-3 shadow-sm">
                                             <a th:href="@{/verrutas/}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
-                                                <i class="fa-solid fa-route"></i>
+                                            <span style="font-size: 3em;">
+                                                <i class="fa-solid fa-route text-gray-300"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.rutas}]]</p>
+                                                    <p class="fs-4">[[#{panel.rutas}]]</p>
                                                 </div>
                                             </a>
 
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-white mb-3 shadow-sm">
+                                        <div class="card text-center text-white mb-3 shadow-sm">
                                             <a th:href="@{/verclientes}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
+                                            <span style="font-size: 3em;">
                                                 <i class="fa-solid fa-person"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.clientes}]]</p>
+                                                    <p class="fs-4">[[#{panel.clientes}]]</p>
                                                 </div>
                                             </a>
 
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-white mb-3 shadow-sm">
+                                        <div class="card text-center text-white mb-3 shadow-sm">
                                             <a th:href="@{/verprestamos}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
+                                            <span style="font-size: 3em;">
                                                 <i class="fa-solid fa-hands-asl-interpreting"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.prestamos}]]</p>
+                                                    <p class="fs-4">[[#{panel.prestamos}]]</p>
                                                 </div>
                                             </a>
 
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-white mb-3 shadow-sm">
+                                        <div class="card text-center text-white mb-3 shadow-sm">
                                             <a th:href="@{/verpagares}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
+                                            <span style="font-size: 3em;">
                                                <i class="fa-solid fa-receipt"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.recibos}]]</p>
+                                                    <p class="fs-4">[[#{panel.recibos}]]</p>
                                                 </div>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-white mb-3 shadow-sm">
+                                        <div class="card text-center text-white mb-3 shadow-sm">
                                             <a th:href="@{/cuadres}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
+                                            <span style="font-size: 3em;">
                                                <i class="fa-regular fa-square-check"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.cuadre}]]</p>
+                                                    <p class="fs-4">[[#{panel.cuadre}]]</p>
                                                 </div>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-white mb-3 shadow-sm">
+                                        <div class="card text-center text-white mb-3 shadow-sm">
                                             <a th:href="@{/cobranzas}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
+                                            <span style="font-size: 3em;">
                                                <i class="fa-solid fa-file-invoice-dollar"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.cobranzas}]]</p>
+                                                    <p class="fs-4">[[#{panel.cobranzas}]]</p>
                                                 </div>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-white mb-3 shadow-sm">
+                                        <div class="card text-center text-white mb-3 shadow-sm">
                                             <a th:href="@{/usuarios}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
+                                            <span style="font-size: 3em;">
                                                <i class="fa-solid fa-users"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.usuarios}]]</p>
+                                                    <p class="fs-4">[[#{panel.usuarios}]]</p>
                                                 </div>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card text-center bg-dark text-white mb-3 shadow-sm">
+                                        <div class="card text-center text-white mb-3 shadow-sm">
                                             <a th:href="@{/empresa}" class="btn">
                                                 <div class="card-body">
-                                            <span style="font-size: 3em; color: white;">
+                                            <span style="font-size: 3em;">
                                                <i class="fa-solid fa-building"></i>
                                             </span>
-                                                    <p class="fs-4 text-light">[[#{panel.empresa}]]</p>
+                                                    <p class="fs-4">[[#{panel.empresa}]]</p>
                                                 </div>
                                             </a>
                                         </div>

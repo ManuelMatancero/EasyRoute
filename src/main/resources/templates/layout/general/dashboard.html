@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>SB Admin 2 - Cards</title>
+    <meta charset="UTF-8"/>
+</head>
+
+<body id="page-top">
+
+<section th:fragment="dashboard" id="board">
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.inversion}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${new java.text.DecimalFormat('$#,##0.00').format(invertido)}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-sack-dollar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.ganancias}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${new java.text.DecimalFormat('$#,##0.00').format(ganancias)}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.cobrado}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${new java.text.DecimalFormat('$#,##0.00').format(cobrado)}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-money-check-dollar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.clientes}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${cantidadClientes}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-users fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.cobradores}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${cantidadCobradores}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-user-tie fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.rutas}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${cantidadRutas}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-map-location-dot fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.atrasos}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${atrasos}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-square-caret-left fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-left-primary shadow mt-3 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div th:text="#{dashboard.prestamos}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    [[${cantidadPrestamos}]]
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-handshake-angle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+
+</html>

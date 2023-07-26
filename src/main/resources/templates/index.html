@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head th:replace="layout/plantilla :: head">
+    <head th:replace="layout/general/plantilla :: head">
         <title>Inicio</title>
     </head>
     <body>
-
-        <header th:replace="layout/plantilla :: header"></header>
-        <section th:replace="layout/listadoHome :: listadoHome"></section>
-        <footer th:replace="layout/plantilla :: footer"></footer>
+        <header th:replace="layout/general/plantilla :: header"></header>
+        <section th:replace="layout/general/dashboard :: dashboard"></section>
+        <section th:replace="layout/general/listadoHome :: listadoHome"></section>
+        <footer th:replace="layout/general/plantilla :: footer"></footer>
     </body>
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Imprimir contrato</title>
+  <meta charset="UTF-8"/>
+  <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+<section th:fragment="imprimirContrato" id="imprimir">
+  <div class="container-fluid mt-2">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Nombre:  <b></b></h4>
+      </div>
+      <div class="col-md-6">
+        <h4>Cod. empeño:<b></b></h4>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+  <section class="ms-3 mt-2 me-3">
+    <div class="row">
+      <div class="col-md-5">
+        <h3 th:text="#{contrato.desea}">Que desea hacer con el contrato?</h3>
+        <br>
+        <div class="d-grid gap-2">
+          <button th:text="#{contrato.imprimir}" class="btn btn-secondary" type="button" onclick="printPdf()" >
+            <i class="fa-solid fa-print"></i>
+            Imprimir contrato
+          </button>
+          <button th:text="#{contrato.descargar}" class="btn btn-secondary" type="button">
+            <i class="fa-solid fa-download"></i>
+            Descargar contrato
+          </button>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <iframe th:src="@{/imprimircontrato/} + ${prestamo.idPrestamo}" width="100%" height="410" style="border:1px solid black;" id="printf" name="printf"></iframe>
+      </div>
+    </div>
+    <script src="/js/printIframe.js"></script>
+  </section>
+</section>
+</body>
+</html>

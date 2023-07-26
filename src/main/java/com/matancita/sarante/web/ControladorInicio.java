@@ -3,6 +3,7 @@ package com.matancita.sarante.web;
 import com.matancita.sarante.domain.*;
 import com.matancita.sarante.servicio.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -36,9 +37,54 @@ public class ControladorInicio {
     private CobradorService cobradorService;
     
     @GetMapping("/")
-    public String inicio(@AuthenticationPrincipal User user){
+    public String inicio(@AuthenticationPrincipal User user, Model model){
+        List<Ruta> rutas = rutaService.listAll();
+        List<Cobrador> cobradores = cobradorService.listAll();
+        int cantidadRutas =0;
+        int cantidadCobradores=0;
+        double invertido =0;
+        double cobrado=0;
+        int cantidadPrestamos=0;
+        double ganancias=0;
+        int atrasos=0;
+        int cantidadClientes=0;
+        //Calcular cantidad de rutas
+        for(Ruta ruta : rutas){
+            cantidadRutas++;
+            List<Cliente> clientes = ruta.getClientes();
+            for(Cliente cliente: clientes){
+                cantidadClientes++;
+                List<Prestamo> prestamos = cliente.getPrestamos();
+                for (Prestamo prestamo: prestamos){
+                    cantidadPrestamos++;
+                    invertido += prestamo.getMonto();
+                    List<Pagare> pagares = prestamo.getPagares();
+                    for (Pagare pagare: pagares){
+                        if(!(pagare.getReciboGen()==null)){
+                            ganancias +=pagare.getInteres();
+                            cobrado +=pagare.getTotal();
+                        }
+                        if (pagare.getVencimiento().isBefore(LocalDateTime.now())){
+                            atrasos++;
+                        }
+                    }
+                }
+            }
+        }
+        //calcula la cantidad de cobradores
+        for (Cobrador cobrador: cobradores){
+            cantidadCobradores++;
+        }
         log.info("ejecutando el controlador Spring MVC");
         log.info("usuario que hizo login:" + user);
+        model.addAttribute("cantidadRutas", cantidadRutas);
+        model.addAttribute("invertido", invertido);
+        model.addAttribute("cantidadCobradores", cantidadCobradores);
+        model.addAttribute("cantidadClientes", cantidadClientes);
+        model.addAttribute("ganancias", ganancias);
+        model.addAttribute("cobrado", cobrado);
+        model.addAttribute("cantidadPrestamos", cantidadPrestamos);
+        model.addAttribute("atrasos", atrasos);
         return "index";
     }
     @GetMapping("/verrutas")

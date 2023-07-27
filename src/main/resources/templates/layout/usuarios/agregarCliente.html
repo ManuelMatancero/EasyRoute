@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Agregar Usuario</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+<section th:fragment="agregarUsuario">
+<div class="modal fade" id="agregarUsuario" tabindex="-1" aria-labelledby="agregarUsuarioLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" th:text="#{usuario.agregar}" id="agregarUsuario">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/guardarUsuario}" th:object="${usuario}"
+         method="POST" class="was-validated">
+          <div>
+            <input type="hidden" name="idRuta" th:value="${idRuta}" id="idRuta"/>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="nombre" th:text="#{usuario.nombre}" class="col-form-label">Nombre</label>
+                <input type="text" class="form-control" th:field="*{nombre}" id="nombre" required = "true"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="apellido" th:text="#{usuario.apellido}" class="col-form-label">Apellido</label>
+                <input type="text" class="form-control" th:field="*{apellido}" id="apellido" required = "true"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="cedula" th:text="#{usuario.cedula}" class="col-form-label">Cedula</label>
+                <input type="number" class="form-control" th:field="*{cedula}" id="cedula" required="true"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="date" th:text="#{usuario.nacimiento}">Pick a date:</label>
+                <input type="date" class="form-control" id="date" name="date"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="celular" th:text="#{usuario.celular}" class="col-form-label">Celular</label>
+                <input type="tel" class="form-control" th:field="*{celular}" id="celular" required="true"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="telefonoresidencia" th:text="#{usuario.telefonoresidencia}" class="col-form-label">Cedula</label>
+                <input type="tel" class="form-control" th:field="*{telResidencia}" id="telefonoresidencia"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="telefonotrabajo" th:text="#{usuario.telefonotrabajo}" class="col-form-label">Cedula</label>
+                <input type="tel" class="form-control" th:field="*{telTrabajo}" id="telefonotrabajo"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="email" th:text="#{usuario.email}" class="col-form-label">Email</label>
+                <input type="email" class="form-control" th:field="*{email}" id="email"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="ocupacion" th:text="#{usuario.ocupacion}" class="col-form-label">Ocupacion</label>
+                <input type="text" class="form-control" th:field="*{ocupacion}" id="ocupacion"/>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="lugartrabajo" th:text="#{usuario.trabajo}" class="col-form-label">Trabajo</label>
+            <input type="text" class="form-control" th:field="*{lugarTrabajo}" id="lugartrabajo"/>
+          </div>
+          <div class="mb-3">
+            <label for="direccion" th:text="#{usuario.direccion}" class="col-form-label">Direccion</label>
+            <textarea class="form-control" th:field="*{direccion}" id="direccion" required="true" rows="2"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="mb-3">
+                <label for="recomendado" th:text="#{usuario.recomendado}" class="col-form-label">Recomendado</label>
+                <input type="text" class="form-control" th:field="*{recomendado}" id="recomendado"/>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="mb-3">
+                <label for="observacion" th:text="#{usuario.observaciones}" class="col-form-label">Observaciones</label>
+                <textarea class="form-control" th:field="*{observaciones}" id="observacion" rows="2"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{barra.salir}">Close</button>
+            <button type="submit" class="btn btn-primary" th:text="#{usuario.agregar}">Send message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</body>
+</html>

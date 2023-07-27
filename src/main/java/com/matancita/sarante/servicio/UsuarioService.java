@@ -4,6 +4,7 @@ import com.matancita.sarante.dao.UsuarioDao;
 import com.matancita.sarante.domain.Rol;
 import com.matancita.sarante.domain.Usuario;
 import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +39,11 @@ public class UsuarioService implements UserDetailsService{
         }
         
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Usuario> getAllUsuarios() {
+        return usuarioDao.findAll();
     }
     
 }

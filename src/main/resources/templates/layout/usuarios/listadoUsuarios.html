@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Listado usuarios</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="listadoUsuarios" id="usuarios">
+            <div class="container-fluid mt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+                            <p th:text="${successMessage}"></p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div class="card">
+                            <div th:if="${usuarios != null and !usuarios.empty}">
+                                <div class="table-responsive">
+                                    <table class="table table-stryped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th th:text="#{usuario.nombre}">Nombre</th>
+                                                <th th:text="#{usuario.apellido}">Apellido</th>
+                                                <th th:text="#{usuario.cedula}">Cédula</th>
+                                                <th th:text="#{usuario.empresa}">Empresa</th>
+                                                <th th:text="#{usuario.estatus}">Estatus</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="usuario, contador : ${usuarios}">
+                                                <td>[[${contador.count}]]</td>
+                                                <td>[[${usuario.cobrador.nombre}]]</td>
+                                                <td>[[${usuario.cobrador.apellido}]]</td>
+                                                <td>[[${usuario.cobrador.cedula}]]</td>
+                                                <td>[[${usuario.empresa.nombre}]]</td>
+                                                <td>[[${usuario.estatus}]]</td>
+                                                <td>
+                                                    <a th:href="@{/verprestamos/} + ${usuario.idUsuario}"
+                                                       class="btn btn-success">
+                                                        <i class="fa-regular fa-address-card"></i>[[#{usuario.perfil}]]
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a th:href="@{/modificarusuario/} + ${usuario.idUsuario}"
+                                                       class="btn btn-secondary">
+                                                        <i class="fa-solid fa-pen-to-square"></i>[[#{usuario.editar}]]
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="alert alert-primary" role="alert" th:if="${usuarios == null or usuarios.empty}">
+                                <h4 class="alert-heading" th:text="#{usuario.vacia}">Well done!</h4>
+                                <i class="fa-solid fa-circle-plus" style="color: #023388;"></i><p th:text="#{usuario.paraagregar}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

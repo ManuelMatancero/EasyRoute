@@ -3,54 +3,56 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <title>Agregar Usuario</title>
+  <title>Editar Usuario</title>
   <meta charset="UTF-8"/>
 </head>
 <body>
-<section th:fragment="agregarUsuario">
-<div class="modal fade" id="agregarUsuario" tabindex="-1" aria-labelledby="agregarUsuarioLabel" aria-hidden="true">
+<section th:fragment="editarUsuario">
+<div class="modal fade" id="editarUsuario" tabindex="-1" aria-labelledby="editarUsuarioLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" th:text="#{usuario.agregar}" id="agregarUsuario">New message</h1>
+        <h1 class="modal-title fs-5" th:text="#{usuario.editar}" id="editarUsuario">Edit User</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form th:action="@{/guardarUsuario}" method="POST" class="was-validated">
-          <!-- Datos del cobrador (se pueden mostrar en el mismo formulario) -->
+        <form th:action="@{/editarUsuario}" method="POST" class="was-validated" th:object="${usuario}">
+          <!-- Datos del usuario a editar -->
+          <input type="hidden" th:field="*{idUsuario}" />
+
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="nombreCobrador" class="col-form-label">Nombre del Usuario</label>
-                <input type="text" class="form-control" name="nombreCobrador" id="nombreCobrador" required="true"/>
+                <label for="nombre" class="col-form-label">Nombre</label>
+                <input type="text" class="form-control" th:field="*{cobrador.nombre}" required="true"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="apellidoCobrador" class="col-form-label">Apellido del Usuario</label>
-                <input type="text" class="form-control" name="apellidoCobrador" id="apellidoCobrador" required="true"/>
+                <label for="apellido" class="col-form-label">Apellido</label>
+                <input type="text" class="form-control" th:field="*{cobrador.apellido}" required="true"/>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="cedulaCobrador" class="col-form-label">Cédula del Usuario</label>
-                <input type="number" class="form-control" name="cedulaCobrador" id="cedulaCobrador" required="true"/>
+                <label for="cedula" class="col-form-label">Cédula</label>
+                <input type="number" class="form-control" th:field="*{cobrador.cedula}" required="true"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="telefonoCobrador" class="col-form-label">Telefono del Usuario</label>
-                <input type="tel" class="form-control" name="telefonoCobrador" id="telefonoCobrador" required="true"/>
+                <label for="telefono" class="col-form-label">Télefono</label>
+                <input type="tel" class="form-control" th:field="*{cobrador.telefono}" required="true"/>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="mb-3">
-                <label for="direccionCobrador" class="col-form-label">Direccion del Usuario</label>
-                <textarea class="form-control" name="direccionCobrador" id="direccionCobrador" required="true" rows="2"></textarea>
+                <label for="direccion" class="col-form-label">Dirección</label>
+                <textarea class="form-control" th:field="*{cobrador.direccion}" required="true" rows="2"></textarea>
               </div>
             </div>
           </div>
@@ -58,13 +60,13 @@
             <div class="col-md-6">
               <div class="mb-3">
                 <label for="username" class="col-form-label">Username</label>
-                <input type="text" class="form-control" name="username" id="username" required="true"/>
+                <input type="text" class="form-control" th:field="*{username}" required="true"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
                 <label for="password" class="col-form-label">Password</label>
-                <input type="password" class="form-control" name="password" id="password" required="true"/>
+                <input type="password" class="form-control" th:field="*{password}" required="true"/>
               </div>
             </div>
           </div>
@@ -72,9 +74,9 @@
             <div class="col-md-12">
               <div class="mb-3">
                 <label for="idEmpresa" class="col-form-label">Empresa</label>
-                <select class="form-control" name="idEmpresa" id="idEmpresa" required="true">
+                <select class="form-control" th:field="*{empresa}" required="true">
                   <!-- Iterar sobre la lista de empresas y mostrarlas como opciones -->
-                  <option th:each="empresa : ${empresas}" th:value="${empresa.id}" th:text="${empresa.nombre}"></option>
+                  <option th:each="empresa : ${empresas}" th:value="${empresa.idEmpresa}" th:text="${empresa.nombre}"></option>
                 </select>
               </div>
             </div>
@@ -82,6 +84,7 @@
               <div class="mb-3">
                 <label for="rol" class="col-form-label">Rol</label>
                 <select class="form-control" name="rol" id="rol" required="true">
+                  <option value="0" th:text="${rolUsuario}" th:disabled="true" selected></option>
                   <option value="1">Admin</option>
                   <option value="2">Cobrador</option>
                 </select>
@@ -91,7 +94,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{barra.salir}">Close</button>
-            <button type="submit" class="btn btn-primary" th:text="#{usuario.agregar}">Send message</button>
+            <button type="submit" class="btn btn-primary" th:text="#{usuario.guardar}">Save changes</button>
           </div>
         </form>
       </div>

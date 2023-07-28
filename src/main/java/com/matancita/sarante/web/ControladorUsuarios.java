@@ -13,9 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -75,6 +77,7 @@ public class ControladorUsuarios {
         cobrador.setCedula(cedulaCobrador);
         cobrador.setTelefono(telefonoCobrador);
         cobrador.setDireccion(direccionCobrador);
+        cobrador.setFechaIngreso(LocalDateTime.now());
 
         // Guardar el cobrador en la base de datos
         cobradorService.insert(cobrador);
@@ -84,6 +87,13 @@ public class ControladorUsuarios {
 
         Empresa empresa = empresaService.getById(idEmpresa);
 
+        
+        // Guardar el usuario en la base de datos
+        usuario.setEmpresa(empresa);
+        usuario.setCobrador(cobrador);
+        usuarioService.guardarUsuario(usuario);
+        usuario = usuarioService.getUsuarioById(usuario.getIdUsuario());
+
         // Configurar el rol del usuario
         if (rol == 1) {
             rolService.insert(new Rol("Admin", usuario));
@@ -91,13 +101,44 @@ public class ControladorUsuarios {
         } else if (rol == 2) {
             rolService.insert(new Rol("Cobrador", usuario));
         }
+        
+        ra.addFlashAttribute("mensaje", "Usuario creado exitosamente");
+        return "redirect:/usuarios";
+    }
 
-        // Guardar el usuario en la base de datos
-        usuario.setEmpresa(empresa);
-        usuario.setCobrador(cobrador);
+    @GetMapping("editarUsuario/{id}")
+    public String mostrarFormularioEdicion(@PathVariable("id") Long idUsuario, Model model) {
+        Usuario usuario = usuarioService.getUsuarioById(idUsuario);
+        List<Rol> roles = rolService.listAll();
+        String rolUsuario = "";
+        for (Rol rol : roles) {
+            if (rol.getUsuario().getIdUsuario() == usuario.getIdUsuario()) {
+                if (rol.getIdRol() == 1){
+                    rolUsuario = "Admin";
+                } else if (rol.getIdRol() == 2) {
+                    rolUsuario = "Cobrador";
+                }
+            }            
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("empresas", empresaService.listAll());
+        model.addAttribute(rolUsuario, rolUsuario);
+        return "layout/usuarios/editarUsuario";
+    }
+
+    @PostMapping("/editarUsuario")
+    public String guardarEdicionUsuario(@ModelAttribute("usuario") @Valid Usuario usuario,
+                                        BindingResult result,
+                                        RedirectAttributes ra) {
+        if (result.hasErrors()) {
+            // Si hay errores en la validación, manejarlos como desees (redireccionar o mostrar mensajes)
+            return "layout/usuarios/editarUsuario";
+        }
+
+        // Actualizar los datos del usuario en la base de datos
         usuarioService.guardarUsuario(usuario);
 
-        ra.addFlashAttribute("mensaje", "Usuario creado exitosamente");
+        ra.addFlashAttribute("mensaje", "Usuario editado exitosamente");
         return "redirect:/usuarios";
     }
 }

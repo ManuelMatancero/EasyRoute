@@ -11,7 +11,7 @@
 <body id="page-top">
 
 <section th:fragment="dashboard" id="board">
-    <div class="container-fluid mt-5">
+    <div sec:authorize="hasRole('ROLE_ADMIN')"> <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-md-3">
                 <div class="card border-left-primary shadow mt-3 py-2">
@@ -159,8 +159,7 @@
             </div>
 
         </div>
-    </div>
-
+    </div></div>
 </section>
 
 </body>

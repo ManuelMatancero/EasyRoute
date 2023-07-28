@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @Slf4j
 public class ControladorInicio {
-    
+
     @Autowired
     private RutaService rutaService;
     @Autowired
@@ -36,44 +36,44 @@ public class ControladorInicio {
     private PagareService pagareService;
     @Autowired
     private CobradorService cobradorService;
-    
+
     @GetMapping("/")
-    public String inicio(@AuthenticationPrincipal User user, Model model){
+    public String inicio(@AuthenticationPrincipal User user, Model model) {
         List<Ruta> rutas = rutaService.listAll();
         List<Cobrador> cobradores = cobradorService.listAll();
-        int cantidadRutas =0;
-        int cantidadCobradores=0;
-        double invertido =0;
-        double cobrado=0;
-        int cantidadPrestamos=0;
-        double ganancias=0;
-        int atrasos=0;
-        int cantidadClientes=0;
-        //Calcular cantidad de rutas
-        for(Ruta ruta : rutas){
+        int cantidadRutas = 0;
+        int cantidadCobradores = 0;
+        double invertido = 0;
+        double cobrado = 0;
+        int cantidadPrestamos = 0;
+        double ganancias = 0;
+        int atrasos = 0;
+        int cantidadClientes = 0;
+        // Calcular cantidad de rutas
+        for (Ruta ruta : rutas) {
             cantidadRutas++;
             List<Cliente> clientes = ruta.getClientes();
-            for(Cliente cliente: clientes){
+            for (Cliente cliente : clientes) {
                 cantidadClientes++;
                 List<Prestamo> prestamos = cliente.getPrestamos();
-                for (Prestamo prestamo: prestamos){
+                for (Prestamo prestamo : prestamos) {
                     cantidadPrestamos++;
                     invertido += prestamo.getMonto();
                     List<Pagare> pagares = prestamo.getPagares();
-                    for (Pagare pagare: pagares){
-                        if(!(pagare.getReciboGen()==null)){
-                            ganancias +=pagare.getInteres();
-                            cobrado +=pagare.getTotal();
+                    for (Pagare pagare : pagares) {
+                        if (!(pagare.getReciboGen() == null)) {
+                            ganancias += pagare.getInteres();
+                            cobrado += pagare.getTotal();
                         }
-                        if (pagare.getVencimiento().isBefore(LocalDateTime.now())){
+                        if (pagare.getVencimiento().isBefore(LocalDateTime.now())) {
                             atrasos++;
                         }
                     }
                 }
             }
         }
-        //calcula la cantidad de cobradores
-        for (Cobrador cobrador: cobradores){
+        // calcula la cantidad de cobradores
+        for (Cobrador cobrador : cobradores) {
             cantidadCobradores++;
         }
         log.info("ejecutando el controlador Spring MVC");
@@ -88,36 +88,40 @@ public class ControladorInicio {
         model.addAttribute("atrasos", atrasos);
         return "index";
     }
+
     @GetMapping("/verrutas")
-    public String rutas (@AuthenticationPrincipal User user, Model model){
+    public String rutas(@AuthenticationPrincipal User user, Model model) {
         List<Zona> zonas = zonaService.listAll();
         List<Ruta> rutas;
         Cobrador cobrador;
         Usuario usuario;
-        //Here i check if the user has admin or user privileges
-        if(user.getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))){
-           rutas = rutaService.listAll();
-        }else{
+        // Here i check if the user has admin or user privileges
+        if (user.getAuthorities()
+                .contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            rutas = rutaService.listAll();
+        } else {
             usuario = usuarioService.findByUsuario(user.getUsername());
             rutas = usuario.getCobrador().getRutas();
         }
         List<Cobrador> cobradores = cobradorService.listAll();
-        //Numero total de rutas
+        // Numero total de rutas
         int totalRutas = rutas.size();
-        //Dinero en la ruta
+        int totalClientes = 0;
+        // Dinero en la ruta
         double dineroPorCobrar = 0;
-        for(Ruta ruta: rutas){
+        for (Ruta ruta : rutas) {
             List<Cliente> clientes = ruta.getClientes();
-            for (Cliente cliente: clientes){
+            for (Cliente cliente : clientes) {
                 List<Prestamo> prestamos = cliente.getPrestamos();
-                for (Prestamo prestamo: prestamos){
+                for (Prestamo prestamo : prestamos) {
                     List<Pagare> pagares = prestamo.getPagares();
-                    for (Pagare pagare: pagares){
-                        if(pagare.getReciboGen()==null){
+                    for (Pagare pagare : pagares) {
+                        if (pagare.getReciboGen() == null) {
                             dineroPorCobrar += pagare.getTotal();
                         }
                     }
                 }
+                totalClientes ++;
             }
         }
         model.addAttribute("dineroPorCobrar", dineroPorCobrar);
@@ -125,24 +129,26 @@ public class ControladorInicio {
         model.addAttribute("rutas", rutas);
         model.addAttribute("zonas", zonas);
         model.addAttribute("cobradores", cobradores);
-        //These are the objects to be filled in the form
+        model.addAttribute("totalClientes", totalClientes);
+        // These are the objects to be filled in the form
         model.addAttribute("ruta", new Ruta());
         model.addAttribute("zona", new Zona());
         return "rutas";
     }
 
     @GetMapping("/verclientes")
-    public String clientes (@AuthenticationPrincipal User user, Model model){
-        List<Cliente> clientes= new ArrayList<>();
+    public String clientes(@AuthenticationPrincipal User user, Model model) {
+        List<Cliente> clientes = new ArrayList<>();
         Usuario usuario;
         List<Ruta> rutas;
-        //Here i check if the user has admin or user privileges
-        if(user.getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))){
-           clientes = clienteService.listAll();
-        }else{
+        // Here i check if the user has admin or user privileges
+        if (user.getAuthorities()
+                .contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            clientes = clienteService.listAll();
+        } else {
             usuario = usuarioService.findByUsuario(user.getUsername());
             rutas = usuario.getCobrador().getRutas();
-            for(Ruta ruta: rutas){
+            for (Ruta ruta : rutas) {
                 clientes.addAll(ruta.getClientes());
             }
         }
@@ -152,58 +158,58 @@ public class ControladorInicio {
     }
 
     @GetMapping("/verpagares")
-    public String pagares (Model model){
+    public String pagares(Model model) {
         List<Pagare> pagares = pagareService.listAll();
         model.addAttribute("pagares", pagares);
         return "pagares";
     }
 
-    
     @GetMapping("/verprestamos")
-    public String prestamos (@AuthenticationPrincipal User user, Model model){
-        List<Cliente> clientes= new ArrayList<>();
+    public String prestamos(@AuthenticationPrincipal User user, Model model) {
+        List<Cliente> clientes=new ArrayList<>();
         Usuario usuario;
         List<Ruta> rutas;
-        List<Prestamo> prestamos=new ArrayList<>();
-        List<Pagare> pagares;
-        double totalPendiente=0;
-        int totalPrestamos=0;
-        int pagarespendientes=0;
-        double totalPagado=0;
-       //Here i check if the user has admin or user privileges
-        if(user.getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))){
-           prestamos = prestamoService.listAll();
-           for(Prestamo prestamo: prestamos){
-            pagares = prestamo.getPagares();
-            for(Pagare pagare: pagares){
-                if(pagare.getReciboGen()==null){
-                    totalPendiente += pagare.getTotal();
-                    pagarespendientes++;
-                }else{
-                    totalPagado += pagare.getTotal();
+        List<Prestamo> prestamos = new ArrayList<>();
+        List<Pagare> pagares = new ArrayList<>();
+        double totalPendiente = 0;
+        int totalPrestamos = 0;
+        int pagarespendientes = 0;
+        double totalPagado = 0;
+        // Here i check if the user has admin or user privileges
+        if (user.getAuthorities()
+                .contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            prestamos = prestamoService.listAll();
+            for (Prestamo prestamo : prestamos) {
+                pagares = prestamo.getPagares();
+                for (Pagare pagare : pagares) {
+                    if (pagare.getReciboGen() == null) {
+                        totalPendiente += pagare.getTotal();
+                        pagarespendientes++;
+                    } else {
+                        totalPagado += pagare.getTotal();
+                    }
                 }
+                totalPrestamos++;
             }
-            totalPrestamos++;
-           }
-        }else{
+        } else {
             usuario = usuarioService.findByUsuario(user.getUsername());
             rutas = usuario.getCobrador().getRutas();
-            for(Ruta ruta: rutas){
+            for (Ruta ruta : rutas) {
                 clientes.addAll(ruta.getClientes());
-                for(Cliente cliente: clientes){
-                    prestamos.addAll(cliente.getPrestamos());
-                    for(Prestamo prestamo: prestamos){
-                        pagares = prestamo.getPagares();
-                        for(Pagare pagare: pagares){
-                            if(pagare.getReciboGen()==null){
-                                totalPendiente += pagare.getTotal();
-                                pagarespendientes++;
-                            }else{
-                                totalPagado += pagare.getTotal();
-                            }
-                        }
-                        totalPrestamos++;
-                    }
+            }
+             for(Cliente c  : clientes){
+                    prestamos.addAll(c.getPrestamos());
+                }
+            for(Prestamo p : prestamos){
+                pagares.addAll(p.getPagares());
+                totalPrestamos++;
+            }
+            for(Pagare p : pagares){
+                if (p.getReciboGen() == null) {
+                    totalPendiente += p.getTotal();
+                    pagarespendientes++;
+                } else {
+                    totalPagado += p.getTotal();
                 }
             }
         }
@@ -214,31 +220,31 @@ public class ControladorInicio {
         model.addAttribute("prestamos", prestamos);
         return "prestamosGeneral";
     }
-    
-//    @GetMapping("/agregar")
-//    public String agregar(Persona persona){
-//        return "modificar";
-//    }
-//    
-//    @PostMapping("/guardar")
-//    public String guardar(@Valid Persona persona, Errors errores){
-//        if(errores.hasErrors()){
-//            return "modificar";
-//        }
-//        personaService.guardar(persona);
-//        return "redirect:/";
-//    }
-//    
-//    @GetMapping("/editar/{idPersona}")
-//    public String editar(Persona persona, Model model){
-//        persona = personaService.encontrarPersona(persona);
-//        model.addAttribute("persona", persona);
-//        return "modificar";
-//    }
-//    
-//    @GetMapping("/eliminar")
-//    public String eliminar(Persona persona){
-//        personaService.eliminar(persona);
-//        return "redirect:/";
-//    }
+
+    // @GetMapping("/agregar")
+    // public String agregar(Persona persona){
+    // return "modificar";
+    // }
+    //
+    // @PostMapping("/guardar")
+    // public String guardar(@Valid Persona persona, Errors errores){
+    // if(errores.hasErrors()){
+    // return "modificar";
+    // }
+    // personaService.guardar(persona);
+    // return "redirect:/";
+    // }
+    //
+    // @GetMapping("/editar/{idPersona}")
+    // public String editar(Persona persona, Model model){
+    // persona = personaService.encontrarPersona(persona);
+    // model.addAttribute("persona", persona);
+    // return "modificar";
+    // }
+    //
+    // @GetMapping("/eliminar")
+    // public String eliminar(Persona persona){
+    // personaService.eliminar(persona);
+    // return "redirect:/";
+    // }
 }

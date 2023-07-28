@@ -9,7 +9,7 @@
 
 <body>
     <section th:fragment="listadoprestamogeneral" id="prestamos">
-        <div class="container-fluid mt-5">
+        <div class="container-fluid mt-1">
             <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
                 <p th:text="${successMessage}"></p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -95,6 +95,43 @@
                         </div>
 
                     </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div th:if="${prestamos != null and !prestamos.empty}">
+                          <table class="table table-stryped">
+                            <thead class="thead-dark">
+                            <tr>
+                              <th>#</th>
+                              <th th:text="#{prestamo.codigo}">No</th>
+                              <th th:text="#{cliente.cliente}">Nombre</th>
+                              <th th:text="#{cliente.cedula}">Nombre</th>
+                              <th th:text="#{prestamo.monto1}">Capital</th>
+                              <th th:text="#{prestamo.interes}">Interes</th>
+                              <th th:text="#{prestamo.cuotas}">cuotas</th>
+                              <th th:text="#{tabla.fecha}">fecha</th>
+                              <th th:text="#{prestamo.tipo}">Tipo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="prestamo, contador : ${prestamos}">
+                              <td>[[${contador.count}]]</td>
+                              <td>[[${prestamo.idPrestamo}]]</td>
+                              <td th:text="${prestamo.cliente.nombre} + ' ' +${prestamo.cliente.apellido}"></td>
+                              <td>[[${prestamo.cliente.cedula}]]</td>
+                              <td>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)}]]</td>
+                              <td>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)}]]</td>
+                              <td>[[${prestamo.cuotas}]]</td>
+                              <td>[[${#temporals.format(prestamo.fecha, 'MMMM d, yyyy')}]]</td>
+                              <td>[[${prestamo.tipoPrestamo}]]</td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="text-center p-2" th:if="${prestamos == null or prestamos.empty}">
+                          <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>

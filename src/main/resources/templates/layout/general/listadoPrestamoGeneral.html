@@ -110,7 +110,10 @@
                               <th th:text="#{prestamo.interes}">Interes</th>
                               <th th:text="#{prestamo.cuotas}">cuotas</th>
                               <th th:text="#{tabla.fecha}">fecha</th>
+                              <th th:text="#{ruta.nombre}">fecha</th>
+                              <th th:text="#{ruta.dia}">dia</th>
                               <th th:text="#{prestamo.tipo}">Tipo</th>
+                              <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -123,7 +126,15 @@
                               <td>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)}]]</td>
                               <td>[[${prestamo.cuotas}]]</td>
                               <td>[[${#temporals.format(prestamo.fecha, 'MMMM d, yyyy')}]]</td>
+                              <td>[[${prestamo.cliente.ruta.nombre}]]</td>
+                              <td>[[${prestamo.cliente.ruta.dia}]]</td>
                               <td>[[${prestamo.tipoPrestamo}]]</td>
+                              <td>
+                                <a th:href="@{/verprestamos/} + ${prestamo.cliente.idCliente}"
+                                   class="btn btn-warning btn-sm">
+                                    <i class="fa-regular fa-address-card"></i>[[#{cliente.perfil}]]
+                                </a>
+                            </td>
                             </tr>
                             </tbody>
                           </table>

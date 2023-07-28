@@ -107,6 +107,7 @@ public class ControladorInicio {
         // Numero total de rutas
         int totalRutas = rutas.size();
         int totalClientes = 0;
+        int totalPrestamos = 0;
         // Dinero en la ruta
         double dineroPorCobrar = 0;
         for (Ruta ruta : rutas) {
@@ -120,6 +121,7 @@ public class ControladorInicio {
                             dineroPorCobrar += pagare.getTotal();
                         }
                     }
+                    totalPrestamos++;
                 }
                 totalClientes ++;
             }
@@ -130,6 +132,7 @@ public class ControladorInicio {
         model.addAttribute("zonas", zonas);
         model.addAttribute("cobradores", cobradores);
         model.addAttribute("totalClientes", totalClientes);
+        model.addAttribute("totalPrestamos", totalPrestamos);
         // These are the objects to be filled in the form
         model.addAttribute("ruta", new Ruta());
         model.addAttribute("zona", new Zona());

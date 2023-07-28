@@ -13,7 +13,7 @@
       <div class="col-md-6">
           <h2><i class="fa-solid fa-circle-user"></i>  <span th:text="${cliente.nombre} + ' ' + ${cliente.apellido}"></span></h2>
       </div>
-      <div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+      <div class="col-md-6" sec:authorize="hasRole('ROLE_USER')">
         <button class="btn btn-primary rounded-pill shadow float-end ms-3"
                 data-bs-toggle="modal" data-bs-target="#agregarPrestamo" data-bs-whatever="@mdo">
           <i class="fa-solid fa-plus"></i>

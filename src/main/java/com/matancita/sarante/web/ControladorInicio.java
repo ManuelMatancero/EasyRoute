@@ -4,6 +4,7 @@ import com.matancita.sarante.domain.*;
 import com.matancita.sarante.servicio.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -88,9 +89,18 @@ public class ControladorInicio {
         return "index";
     }
     @GetMapping("/verrutas")
-    public String rutas (Model model){
-        List<Ruta> rutas = rutaService.listAll();
+    public String rutas (@AuthenticationPrincipal User user, Model model){
         List<Zona> zonas = zonaService.listAll();
+        List<Ruta> rutas;
+        Cobrador cobrador;
+        Usuario usuario;
+        //Here i check if the user has admin or user privileges
+        if(user.getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))){
+           rutas = rutaService.listAll();
+        }else{
+            usuario = usuarioService.findByUsuario(user.getUsername());
+            rutas = usuario.getCobrador().getRutas();
+        }
         List<Cobrador> cobradores = cobradorService.listAll();
         //Numero total de rutas
         int totalRutas = rutas.size();
@@ -120,14 +130,26 @@ public class ControladorInicio {
         model.addAttribute("zona", new Zona());
         return "rutas";
     }
-/*
+
     @GetMapping("/verclientes")
-    public String clientes (Model model){
-        List<Cliente> clientes = clienteService.listAll();
+    public String clientes (@AuthenticationPrincipal User user, Model model){
+        List<Cliente> clientes= new ArrayList<>();
+        Usuario usuario;
+        List<Ruta> rutas;
+        //Here i check if the user has admin or user privileges
+        if(user.getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))){
+           clientes = clienteService.listAll();
+        }else{
+            usuario = usuarioService.findByUsuario(user.getUsername());
+            rutas = usuario.getCobrador().getRutas();
+            for(Ruta ruta: rutas){
+                clientes.addAll(ruta.getClientes());
+            }
+        }
         model.addAttribute("clientes", clientes);
         model.addAttribute("cliente", new Cliente());
         return "clientes";
-    }*/
+    }
 
     @GetMapping("/verpagares")
     public String pagares (Model model){
@@ -137,13 +159,61 @@ public class ControladorInicio {
     }
 
     
-   /* @GetMapping("/verprestamos/{idCliente}")
-    public String prestamos (Cliente cliente, Model model){
-        cliente = clienteService.getById(cliente.getIdCliente());
-        List<Prestamo> prestamos = cliente.getPrestamos();
+    @GetMapping("/verprestamos")
+    public String prestamos (@AuthenticationPrincipal User user, Model model){
+        List<Cliente> clientes= new ArrayList<>();
+        Usuario usuario;
+        List<Ruta> rutas;
+        List<Prestamo> prestamos=new ArrayList<>();
+        List<Pagare> pagares;
+        double totalPendiente=0;
+        int totalPrestamos=0;
+        int pagarespendientes=0;
+        double totalPagado=0;
+       //Here i check if the user has admin or user privileges
+        if(user.getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_ADMIN"))){
+           prestamos = prestamoService.listAll();
+           for(Prestamo prestamo: prestamos){
+            pagares = prestamo.getPagares();
+            for(Pagare pagare: pagares){
+                if(pagare.getReciboGen()==null){
+                    totalPendiente += pagare.getTotal();
+                    pagarespendientes++;
+                }else{
+                    totalPagado += pagare.getTotal();
+                }
+            }
+            totalPrestamos++;
+           }
+        }else{
+            usuario = usuarioService.findByUsuario(user.getUsername());
+            rutas = usuario.getCobrador().getRutas();
+            for(Ruta ruta: rutas){
+                clientes.addAll(ruta.getClientes());
+                for(Cliente cliente: clientes){
+                    prestamos.addAll(cliente.getPrestamos());
+                    for(Prestamo prestamo: prestamos){
+                        pagares = prestamo.getPagares();
+                        for(Pagare pagare: pagares){
+                            if(pagare.getReciboGen()==null){
+                                totalPendiente += pagare.getTotal();
+                                pagarespendientes++;
+                            }else{
+                                totalPagado += pagare.getTotal();
+                            }
+                        }
+                        totalPrestamos++;
+                    }
+                }
+            }
+        }
+        model.addAttribute("totalPendiente", totalPendiente);
+        model.addAttribute("totalPrestamos", totalPrestamos);
+        model.addAttribute("pagaresPendientes", pagarespendientes);
+        model.addAttribute("totalPagado", totalPagado);
         model.addAttribute("prestamos", prestamos);
-        return "prestamos";
-    }*/
+        return "prestamosGeneral";
+    }
     
 //    @GetMapping("/agregar")
 //    public String agregar(Persona persona){

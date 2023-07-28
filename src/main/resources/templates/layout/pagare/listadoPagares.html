@@ -40,10 +40,12 @@
                 <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</td>
                 <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
                 <td>
-                  <a href="#"
+                  <div class="col-md-6" sec:authorize="hasRole('ROLE_USER')">
+                    <a href="#"
                      class="btn btn-success">
                     <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
                   </a>
+                  </div>
                 </td>
               </tr>
               </tbody>

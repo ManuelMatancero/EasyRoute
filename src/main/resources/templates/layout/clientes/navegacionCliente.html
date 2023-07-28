@@ -15,8 +15,7 @@
           [[#{cliente.clientes}]]
         </h3>
       </div>
-
-      <div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+      <div class="col-md-6" sec:authorize="hasRole('ROLE_USER')">
           <button class="btn btn-primary rounded-pill shadow float-end ms-3"
                   data-bs-toggle="modal" data-bs-target="#agregarCliente" data-bs-whatever="@mdo">
             <i class="fa-solid fa-user-plus"></i>

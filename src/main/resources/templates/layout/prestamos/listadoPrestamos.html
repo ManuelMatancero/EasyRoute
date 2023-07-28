@@ -118,7 +118,7 @@
                                                                                <h4>[[#{pagare.listapagares}]]</h4>
                                                                            </div>
                                                                            <div class="col-md-8">
-                                                                               <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/paginaimprimir/} + ${prestamo.idPrestamo}"
+                                                                               <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/paginaimprimir/} + ${prestamo.idPrestamo}"
                                                                                   class="btn btn-warning float-end">
                                                                                    <i class="fa-solid fa-file-contract"></i> [[#{cliente.contrato}]]
                                                                                </a>
@@ -146,7 +146,7 @@
                                                                                <td><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
                                                                                <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
                                                                                <td>
-                                                                                   <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/imprimirpagare/} + ${pagare.idPagare}"
+                                                                                   <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/imprimirpagare/} + ${pagare.idPagare}"
                                                                                       class="btn btn-success">
                                                                                        <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
                                                                                    </a>

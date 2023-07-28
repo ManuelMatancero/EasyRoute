@@ -109,6 +109,7 @@ public class ControladorClientes {
             Cliente clienteFromDb = clienteService.getById(cliente.getIdCliente());
             cliente.setPrestamos(clienteFromDb.getPrestamos());
         }
+        //Here i insert the cliente
         clienteService.insert(cliente);
         redirectAttributes.addFlashAttribute("successMessage", "Customer saved successfully!");
         return "redirect:/verclientes/"+idRuta;

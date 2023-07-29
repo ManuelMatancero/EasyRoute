@@ -110,19 +110,26 @@ public class ControladorUsuarios {
     public String mostrarFormularioEdicion(@PathVariable("id") Long idUsuario, Model model) {
         Usuario usuario = usuarioService.getUsuarioById(idUsuario);
         List<Rol> roles = rolService.listAll();
-        String rolUsuario = "";
+        String rolUsuario = null;
         for (Rol rol : roles) {
-            if (rol.getUsuario().getIdUsuario() == usuario.getIdUsuario()) {
-                if (rol.getIdRol() == 1){
-                    rolUsuario = "Admin";
-                } else if (rol.getIdRol() == 2) {
-                    rolUsuario = "Cobrador";
-                }
-            }            
+            if (rol != null && rol.getUsuario() != null) {
+                if (rol.getUsuario().getIdUsuario() == idUsuario) {
+                    if (rol.getIdRol() == 1){
+                        rolUsuario = "Admin";
+                    } else if (rol.getIdRol() == 2) {
+                        if (rolUsuario != null){
+                            rolUsuario = "Admin";
+                        }
+                        else {
+                            rolUsuario = "Cobrador";
+                        }
+                    }
+                }  
+            }          
         }
         model.addAttribute("usuario", usuario);
         model.addAttribute("empresas", empresaService.listAll());
-        model.addAttribute(rolUsuario, rolUsuario);
+        model.addAttribute("rolUsuario", rolUsuario);
         return "layout/usuarios/editarUsuario";
     }
 

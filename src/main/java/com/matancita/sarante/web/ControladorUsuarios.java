@@ -1,11 +1,11 @@
 package com.matancita.sarante.web;
 
 import com.matancita.sarante.domain.Cobrador;
+import com.matancita.sarante.util.EncriptarPassword;
 import com.matancita.sarante.domain.Empresa;
 import com.matancita.sarante.domain.Rol;
 import com.matancita.sarante.domain.Usuario;
 import com.matancita.sarante.servicio.CobradorService;
-import com.matancita.sarante.servicio.CobradorServiceImpl;
 import com.matancita.sarante.servicio.EmpresaService;
 import com.matancita.sarante.servicio.RolService;
 import com.matancita.sarante.servicio.UsuarioService;
@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,9 +45,9 @@ public class ControladorUsuarios {
     @GetMapping("/usuarios")
     public String usuarios(Model model) {
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
-        List<Empresa> empresas = empresaService.listAll(); // Obtener lista de empresas desde el servicio
+        List<Empresa> empresas = empresaService.listAll();
         model.addAttribute("usuarios", usuarios);
-        model.addAttribute("empresas", empresas); // Enviar lista de empresas a la vista
+        model.addAttribute("empresas", empresas);
         model.addAttribute("usuario", new Usuario());
         return "usuarios";
     }
@@ -66,9 +65,18 @@ public class ControladorUsuarios {
             RedirectAttributes ra) {
 
         if (errors.hasErrors()) {
-            // Si hay errores en la validación, manejarlos como desees (redireccionar o
-            // mostrar mensajes)
             return "usuarios";
+        }
+
+        List<Usuario> usuarios = usuarioService.getAllUsuarios();
+        for (Usuario user : usuarios) {
+            if (user.getUsername().equals(usuario.getUsername())) {
+                ra.addFlashAttribute(
+                    "errorMessage",
+                    "El nombre de usuario ya existe, por favor utilice otro."
+                );
+                return "redirect:/usuarios";
+            }            
         }
 
         Cobrador cobrador = new Cobrador();
@@ -79,22 +87,20 @@ public class ControladorUsuarios {
         cobrador.setDireccion(direccionCobrador);
         cobrador.setFechaIngreso(LocalDateTime.now());
 
-        // Guardar el cobrador en la base de datos
         cobradorService.insert(cobrador);
-
-        // Obtener el cobrador recién guardado
         cobrador = cobradorService.getById(cobrador.getIdCobrador());
 
         Empresa empresa = empresaService.getById(idEmpresa);
 
-        
-        // Guardar el usuario en la base de datos
         usuario.setEmpresa(empresa);
         usuario.setCobrador(cobrador);
+
+        String userPassword = EncriptarPassword.encriptarPassword(usuario.getPassword());
+        usuario.setPassword(userPassword);
+
         usuarioService.guardarUsuario(usuario);
         usuario = usuarioService.getUsuarioById(usuario.getIdUsuario());
 
-        // Configurar el rol del usuario
         if (rol == 1) {
             rolService.insert(new Rol("Admin", usuario));
             rolService.insert(new Rol("Cobrador", usuario));
@@ -102,13 +108,17 @@ public class ControladorUsuarios {
             rolService.insert(new Rol("Cobrador", usuario));
         }
         
-        ra.addFlashAttribute("mensaje", "Usuario creado exitosamente");
+        ra.addFlashAttribute(
+            "successMessage",
+            "Usuario creado exitosamente"
+        );
         return "redirect:/usuarios";
     }
 
     @GetMapping("editarUsuario/{id}")
     public String mostrarFormularioEdicion(@PathVariable("id") Long idUsuario, Model model) {
         Usuario usuario = usuarioService.getUsuarioById(idUsuario);
+
         List<Rol> roles = rolService.listAll();
         String rolUsuario = null;
         for (Rol rol : roles) {
@@ -127,6 +137,7 @@ public class ControladorUsuarios {
                 }  
             }          
         }
+
         model.addAttribute("usuario", usuario);
         model.addAttribute("empresas", empresaService.listAll());
         model.addAttribute("rolUsuario", rolUsuario);
@@ -135,17 +146,45 @@ public class ControladorUsuarios {
 
     @PostMapping("/editarUsuario")
     public String guardarEdicionUsuario(@ModelAttribute("usuario") @Valid Usuario usuario,
+                                        @RequestParam("rol") int roUser,
                                         BindingResult result,
                                         RedirectAttributes ra) {
         if (result.hasErrors()) {
-            // Si hay errores en la validación, manejarlos como desees (redireccionar o mostrar mensajes)
             return "layout/usuarios/editarUsuario";
         }
 
-        // Actualizar los datos del usuario en la base de datos
+        if (roUser == 1) {
+            // delete all rows in Rol database with the IdUsuario
+            rolService.deleteAllByUsuario(usuario);
+            rolService.insert(new Rol("Admin", usuario));
+            rolService.insert(new Rol("Cobrador", usuario));
+        } else if (roUser == 2) {
+            rolService.deleteAllByUsuario(usuario);
+            rolService.insert(new Rol("Cobrador", usuario));
+        }
+
+        List<Usuario> usuarios = usuarioService.getAllUsuarios();
+        for (Usuario user : usuarios) {
+            if (user.getIdUsuario() != usuario.getIdUsuario() && user.getUsername().equals(usuario.getUsername())) {
+                ra.addFlashAttribute(
+                    "errorMessage",
+                    "El nombre de usuario ya existe, por favor utilice otro."
+                );
+                // return to the path /editarUsuario/{id}
+                return "redirect:/editarUsuario/" + usuario.getIdUsuario(); 
+            }            
+        }
+
+
+
+        String userPassword = EncriptarPassword.encriptarPassword(usuario.getPassword());
+        usuario.setPassword(userPassword);
         usuarioService.guardarUsuario(usuario);
 
-        ra.addFlashAttribute("mensaje", "Usuario editado exitosamente");
+        ra.addFlashAttribute(
+            "successMessage",
+            "Usuario editado exitosamente"
+        );
         return "redirect:/usuarios";
     }
 }

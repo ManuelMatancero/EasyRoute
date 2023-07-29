@@ -16,15 +16,17 @@
 <body>
     <header th:replace="layout/general/plantilla :: header"></header>
     <main>
-        <div class="container-fluid" id="editarUsuario">
-            <div class="d-flex justify-content-center mt-4">
-                <div class="col-md-6 p-4 custom-card"> <!-- Aplicamos la clase custom-card -->
-                    <h1 class="title fs-5" th:text="#{usuario.editando}" id="editarUsuario">Edit User</h1>
+      <div class="container-fluid" id="editarUsuario">
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show mt-5">
+          <p th:text="${errorMessage}"></p>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+                <div class="col-md-6 p-4 custom-card mt-5">
+                    <h1 class="title fs-5 text-center" th:text="#{usuario.editando}" id="editarUsuario">Edit User</h1>
                     <form th:action="@{/editarUsuario}" method="POST" class="was-validated" th:object="${usuario}">
-                        <!-- Datos del usuario a editar -->
                         <input type="hidden" th:field="*{idUsuario}" />
                         <input type="hidden" th:field="*{cobrador.fechaIngreso}" />
-                        <!-- Resto del código del formulario -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -126,7 +128,6 @@
                                   th:field="*{empresa}"
                                   required="true"
                                 >
-                                  <!-- Iterar sobre la lista de empresas y mostrarlas como opciones -->
                                   <option
                                     th:each="empresa : ${empresas}"
                                     th:value="${empresa.idEmpresa}"
@@ -157,7 +158,7 @@
                             </div>
                           </div>
                           <div class="justify-content-between float-end">
-                              <button type="button" class="btn btn-secondary" th:text="#{barra.salir}">Close</button>
+                              <a href="/usuarios" type="button" class="btn btn-secondary" th:text="#{barra.salir}">Close</a>
                               <button type="submit" class="btn btn-primary" th:text="#{usuario.guardar}">Save changes</button>
                           </div>
                         </div>

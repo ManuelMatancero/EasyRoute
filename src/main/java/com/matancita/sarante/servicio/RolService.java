@@ -9,4 +9,5 @@ public interface RolService {
     public void insert(Rol rol);
     public void update(Rol rol);
     public void delete(Rol rol);
+    public void deleteAllByUsuario(Usuario usuario);
 }

@@ -102,10 +102,10 @@ public class ControladorUsuarios {
         usuario = usuarioService.getUsuarioById(usuario.getIdUsuario());
 
         if (rol == 1) {
-            rolService.insert(new Rol("Admin", usuario));
-            rolService.insert(new Rol("Cobrador", usuario));
+            rolService.insert(new Rol("ROLE_ADMIN", usuario));
+            rolService.insert(new Rol("ROLE_USER", usuario));
         } else if (rol == 2) {
-            rolService.insert(new Rol("Cobrador", usuario));
+            rolService.insert(new Rol("ROLE_USER", usuario));
         }
         
         ra.addFlashAttribute(
@@ -152,15 +152,18 @@ public class ControladorUsuarios {
         if (result.hasErrors()) {
             return "layout/usuarios/editarUsuario";
         }
-
+        //Encriptamos el password antes de obtener el usuario
+        String userPassword = EncriptarPassword.encriptarPassword(usuario.getPassword());
+        //obtenemos el usuario para editarlo
+        usuario = usuarioService.getUsuarioById(usuario.getIdUsuario());
         if (roUser == 1) {
             // delete all rows in Rol database with the IdUsuario
             rolService.deleteAllByUsuario(usuario);
-            rolService.insert(new Rol("Admin", usuario));
-            rolService.insert(new Rol("Cobrador", usuario));
+            rolService.insert(new Rol("ROLE_ADMIN", usuario));
+            rolService.insert(new Rol("ROLE_USER", usuario));
         } else if (roUser == 2) {
             rolService.deleteAllByUsuario(usuario);
-            rolService.insert(new Rol("Cobrador", usuario));
+            rolService.insert(new Rol("ROLE_USER", usuario));
         }
 
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
@@ -174,10 +177,6 @@ public class ControladorUsuarios {
                 return "redirect:/editarUsuario/" + usuario.getIdUsuario(); 
             }            
         }
-
-
-
-        String userPassword = EncriptarPassword.encriptarPassword(usuario.getPassword());
         usuario.setPassword(userPassword);
         usuarioService.guardarUsuario(usuario);
 

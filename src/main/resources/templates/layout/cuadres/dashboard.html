@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <title>Cuadres</title>
+    <meta charset="UTF-8"/>
+  </head>
+  <body>
+    <main th:fragment="dashboard">
+      <section class="container mt-5">
+        <div class="row mx-auto">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-bold mt-4 text-center text-primary"><i class='bx bxs-bank text-primary'></i> CUADRES</h1>
+                <p class="fs-3 fw-bold text-secondary mt-1 text-center">
+                    Aquí puedes visualizar los cierres diarios de las fechas que desees. <i class="text-white">🚀</i>
+                </p>
+            </div>
+        </div>
+      </section>
+
+      <section class="row mb-5 ms-0 ps-0 pe-0 mt-3">
+       <!--  <h2 class="text-dark fw-bold mt-5 ms-5"><i class='bx bx-grid-alt'></i> DASHBOARD</h2> -->
+        <div class="col-md-6 ms-0">
+            <div class="col-8 card bg-dark text-white mt-3 ms-0" style="border-radius: 1rem;">
+                <div class="card-body p-3 pb-4">
+                    <h4 class="fw-bold mb-3 text-uppercase mt-2 fs-4 text-primary pt-3 ps-3"><i class='bx bx-grid-alt'></i> Filtros</h4>
+                    <form>
+                      <div class="row border border-2 border-white rounded-3 p-3">
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Filtrar por Fecha</p>
+                          <input type="date" class="form-control form-control-sm mb-2" placeholder="Fecha Inicial" name="start-date" aria-label="Fecha inicial">
+                          <input type="date" class="form-control form-control-sm mb-3" placeholder="Fecha Final" name="end-date">
+                        </div>
+                        <style>
+                          input[type="date"]:before {
+                            content: attr(placeholder) !important;
+                            color: rgb(95, 93, 93);
+                            margin-right: 0.5em;
+                          }
+                          input[type="date"]:focus:before,
+                          input[type="date"]:valid:before {
+                            content: "";
+                          }
+                        </style>
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Filtrar por Zona</p>
+                          <select class="form-select form-select-sm mb-3" aria-label="Default select example">
+                            <option selected>Elige una ruta</option>
+                            <option value="ruta1">Ruta 1</option>
+                            <option value="ruta2">Ruta 2</option>
+                            <option value="ruta3">Ruta 3</option>
+                            <option value="ruta4">Ruta 4</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Filtrar por Ruta</p>
+                          <select class="form-select form-select-sm mb-3" aria-label="Default select example">
+                            <option selected>Elige una ruta</option>
+                            <option value="ruta1">Ruta 1</option>
+                            <option value="ruta2">Ruta 2</option>
+                            <option value="ruta3">Ruta 3</option>
+                            <option value="ruta4">Ruta 4</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Filtrar por Cobrador</p>
+                          <select class="form-select form-select-sm mb-3" aria-label="Default select example">
+                            <option selected>Elige un cobrador</option>
+                            <option value="ruta1">Ruta 1</option>
+                            <option value="ruta2">Ruta 2</option>
+                            <option value="ruta3">Ruta 3</option>
+                            <option value="ruta4">Ruta 4</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Filtrar por Empresa</p>
+                          <select class="form-select form-select-sm mb-3" aria-label="Default select example">
+                            <option selected>Elige una empresa</option>
+                            <option value="ruta1">Ruta 1</option>
+                            <option value="ruta2">Ruta 2</option>
+                            <option value="ruta3">Ruta 3</option>
+                            <option value="ruta4">Ruta 4</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Filtrar por Cliente</p>
+                          <select class="form-select form-select-sm mb-3" aria-label="Default select example">
+                            <option selected>Elige un cliente</option>
+                            <option value="ruta1">Ruta 1</option>
+                            <option value="ruta2">Ruta 2</option>
+                            <option value="ruta3">Ruta 3</option>
+                            <option value="ruta4">Ruta 4</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Filtrar por Prestamo</p>
+                          <select class="form-select form-select-sm mb-3" aria-label="Default select example">
+                            <option selected>Elige una prestamo</option>
+                            <option value="ruta1">Ruta 1</option>
+                            <option value="ruta2">Ruta 2</option>
+                            <option value="ruta3">Ruta 3</option>
+                            <option value="ruta4">Ruta 4</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <p class="fs-6 me-3 fw-bold">Pagares con Recibo</p>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                            <label class="form-check-label" for="inlineRadio1">Sí</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ms-0 ps-0 pe-3 mt-3">
+<!--             <div class="card bg-dark text-white mt-3" style="border-radius: 1rem;">
+                <div class="card-body"> -->
+                  <div class="dash-content pe-4">
+                    <div class="overview">        
+                        <div class="boxes">
+                            <div class="box box1">
+                                <i class="bi bi-currency-dollar"></i>
+                                <span class="text">Monto Total</span>
+                                <span class="number">RD$506,856.25</span>
+                            </div>
+                            <div class="box box2">
+                                <i class="bi bi-credit-card"></i>
+                                <span class="text">Cantidad de Pagos</span>
+                                <span class="number">65</span>
+                            </div>
+                            <div class="box box3 mt-3">
+                                <i class="bi bi-exclamation-circle"></i>
+                                <span class="text">Monto Pendiente</span>
+                                <span class="number">RD$27,856.25</span>
+                            </div>
+                            <div class="box box4 mt-3">
+                                <i class="bi bi-clock"></i>
+                                <span class="text">Cantidad de Pagos Pendientes</span>
+                                <span class="number">18</span>
+                            </div>
+                            <div class="box box2 mt-3">
+                                <i class="bi bi-globe"></i>
+                                <span class="text">Cantidad de Zonas</span>
+                                <span class="number">7</span>
+                            </div>
+                            <div class="box box3 mt-3">
+                              <i class="bi bi-map"></i>
+                              <span class="text">Cantidad de Rutas</span>
+                              <span class="number">23</span>
+                          </div>
+                          <div class="box box1 mt-3">
+                            <i class="bi bi-person"></i>
+                            <span class="text">Cantidad de Clientes</span>
+                            <span class="number">15</span>
+                          </div>
+                          <div class="box box2 mt-3">
+                              <i class="bi bi-stack"></i>
+                              <span class="text">Cantidad de Prestamos</span>
+                              <span class="number">50</span>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+<!--                 </div>
+            </div> -->
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

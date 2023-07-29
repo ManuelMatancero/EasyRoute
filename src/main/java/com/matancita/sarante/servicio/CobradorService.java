@@ -9,7 +9,7 @@ public interface CobradorService {
 
     public List<Cobrador> listAll();
     public Cobrador getById(Long id);
-    public void insert(Cobrador cobrador);
+    public Long insert(Cobrador cobrador);
     public void update(Cobrador cobrador);
     public void delete(Cobrador cobrador);
 }

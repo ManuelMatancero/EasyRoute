@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Editar Usuario</title>
+    <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <style>
+        .custom-card {
+            background-color: #f8f9fa; /* Fondo blanco ligeramente más oscuro */
+            border-radius: 15px; /* Bordes redondos */
+        }
+    </style>
+</head>
+
+<body>
+    <header th:replace="layout/general/plantilla :: header"></header>
+    <main>
+      <div class="container-fluid" id="editarUsuario">
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show mt-5">
+          <p th:text="${errorMessage}"></p>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+                <div class="col-md-6 p-4 custom-card mt-5">
+                    <h1 class="title fs-5 text-center" th:text="#{usuario.editando}" id="editarUsuario">Edit User</h1>
+                    <form th:action="@{/editarUsuario}" method="POST" class="was-validated" th:object="${usuario}">
+                        <input type="hidden" th:field="*{idUsuario}" />
+                        <input type="hidden" th:field="*{cobrador.fechaIngreso}" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="nombre" class="col-form-label">Nombre</label>
+                                    <input type="text" class="form-control" th:field="*{cobrador.nombre}" required="true" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="apellido" class="col-form-label"
+                                  >Apellido</label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  th:field="*{cobrador.apellido}"
+                                  required="true"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="cedula" class="col-form-label">Cédula</label>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  th:field="*{cobrador.cedula}"
+                                  required="true"
+                                />
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="telefono" class="col-form-label"
+                                  >Télefono</label
+                                >
+                                <input
+                                  type="tel"
+                                  class="form-control"
+                                  th:field="*{cobrador.telefono}"
+                                  required="true"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="mb-3">
+                                <label for="direccion" class="col-form-label"
+                                  >Dirección</label
+                                >
+                                <textarea
+                                  class="form-control"
+                                  th:field="*{cobrador.direccion}"
+                                  required="true"
+                                  rows="2"
+                                ></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="username" class="col-form-label"
+                                  >Username</label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  th:field="*{username}"
+                                  required="true"
+                                />
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="password" class="col-form-label"
+                                  >Password</label
+                                >
+                                <input
+                                  type="password"
+                                  class="form-control"
+                                  th:field="*{password}"
+                                  required="true"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="idEmpresa" class="col-form-label"
+                                  >Empresa</label
+                                >
+                                <select
+                                  class="form-control"
+                                  th:field="*{empresa}"
+                                  required="true"
+                                >
+                                  <option
+                                    th:each="empresa : ${empresas}"
+                                    th:value="${empresa.idEmpresa}"
+                                    th:text="${empresa.nombre}"
+                                  ></option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="rol" class="col-form-label">Rol</label>
+                                <select
+                                  class="form-control"
+                                  name="rol"
+                                  id="rol"
+                                  required="true"
+                                >
+                                  <option
+                                    value="0"
+                                    th:text="${rolUsuario}"
+                                    th:disabled="true"
+                                    selected
+                                  ></option>
+                                  <option value="1">Admin</option>
+                                  <option value="2">Cobrador</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="justify-content-between float-end">
+                              <a href="/usuarios" type="button" class="btn btn-secondary" th:text="#{barra.salir}">Close</a>
+                              <button type="submit" class="btn btn-primary" th:text="#{usuario.guardar}">Save changes</button>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="layout/general/plantilla :: footer"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+
+</html>

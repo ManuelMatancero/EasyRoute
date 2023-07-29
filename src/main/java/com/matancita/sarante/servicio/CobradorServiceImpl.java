@@ -27,8 +27,8 @@ public class CobradorServiceImpl implements CobradorService{
 
     @Override
     @Transactional
-    public void insert(Cobrador cobrador) {
-        cobradorDao.save(cobrador);
+    public Long insert(Cobrador cobrador) {
+        return cobradorDao.save(cobrador).getIdCobrador();
     }
 
     @Override

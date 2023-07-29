@@ -41,4 +41,17 @@ public class RolServiceImpl implements RolService {
     public void delete(Rol rol) {
         rolDao.delete(rol);
     }
+
+    @Override
+    @Transactional
+    public void deleteAllByUsuario(Usuario usuario) {
+        List<Rol> roles = rolDao.findAll();
+        for (Rol rol : roles) {
+            if (rol.getUsuario() != null){
+                if (rol.getUsuario().getIdUsuario() == usuario.getIdUsuario()) {
+                    rolDao.delete(rol);
+                }
+            }
+        }
+    }
 }

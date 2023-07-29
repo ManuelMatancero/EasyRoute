@@ -15,6 +15,10 @@
                             <p th:text="${successMessage}"></p>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+                            <p th:text="${errorMessage}"></p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="card">
                             <div th:if="${usuarios != null and !usuarios.empty}">
                                 <div class="table-responsive">
@@ -24,9 +28,10 @@
                                                 <th>#</th>
                                                 <th th:text="#{usuario.nombre}">Nombre</th>
                                                 <th th:text="#{usuario.apellido}">Apellido</th>
+                                                <th th:text="#{usuario.usuario}">Usuario</th>
                                                 <th th:text="#{usuario.cedula}">Cédula</th>
                                                 <th th:text="#{usuario.empresa}">Empresa</th>
-                                                <th th:text="#{usuario.estatus}">Estatus</th>
+                                                <th th:text="#{usuario.telefono}">Teléfono</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -36,9 +41,10 @@
                                                 <td>[[${contador.count}]]</td>
                                                 <td>[[${usuario.cobrador.nombre}]]</td>
                                                 <td>[[${usuario.cobrador.apellido}]]</td>
+                                                <td>[[${usuario.username}]]</td>
                                                 <td>[[${usuario.cobrador.cedula}]]</td>
                                                 <td>[[${usuario.empresa.nombre}]]</td>
-                                                <td>[[${usuario.estatus}]]</td>
+                                                <td>[[${usuario.cobrador.telefono}]]</td>
                                                 <td>
                                                     <a th:href="@{/verprestamos/} + ${usuario.idUsuario}"
                                                        class="btn btn-success">
@@ -46,7 +52,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a th:href="@{/modificarusuario/} + ${usuario.idUsuario}"
+                                                    <a th:href="@{/editarUsuario/} + ${usuario.idUsuario}"
                                                        class="btn btn-secondary">
                                                         <i class="fa-solid fa-pen-to-square"></i>[[#{usuario.editar}]]
                                                     </a>

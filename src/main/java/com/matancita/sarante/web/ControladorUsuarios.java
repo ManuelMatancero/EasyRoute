@@ -118,23 +118,19 @@ public class ControladorUsuarios {
     @GetMapping("editarUsuario/{id}")
     public String mostrarFormularioEdicion(@PathVariable("id") Long idUsuario, Model model) {
         Usuario usuario = usuarioService.getUsuarioById(idUsuario);
-
-        List<Rol> roles = rolService.listAll();
+        //Solo se debe listar los roles de ese usuario
+        List<Rol> roles = usuario.getRoles();
         String rolUsuario = null;
         for (Rol rol : roles) {
             if (rol != null && rol.getUsuario() != null) {
-                if (rol.getUsuario().getIdUsuario() == idUsuario) {
-                    if (rol.getIdRol() == 1){
+                    //Aqui estaba el problema porque no se encontraba ese id de rol, 
+                    //Lo solucione agregandole el nombre rol
+                    if (rol.getNombre().equalsIgnoreCase("ROLE_ADMIN")){
                         rolUsuario = "Admin";
-                    } else if (rol.getIdRol() == 2) {
-                        if (rolUsuario != null){
-                            rolUsuario = "Admin";
-                        }
-                        else {
-                            rolUsuario = "Cobrador";
-                        }
-                    }
-                }  
+                        break;//Si se encuentra Admin ya no es mecesario segir iterando
+                    } else if (rol.getNombre().equalsIgnoreCase("ROLE_USER")) {
+                       rolUsuario = "Cobrador";
+                    }  
             }          
         }
 

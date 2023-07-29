@@ -41,7 +41,7 @@
                 <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
                 <td>
                   <div class="col-md-6" sec:authorize="hasRole('ROLE_USER')">
-                    <a href="#"
+                    <a th:href="@{/imprimirrecibo/} + ${pagare.idPagare}"
                      class="btn btn-success">
                     <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
                   </a>

@@ -140,17 +140,45 @@
                                                                            </thead>
                                                                            <tbody>
                                                                            <tr th:each="pagare: ${prestamo.pagares}">
-                                                                               <td>[[${pagare.noPagare}]]</td>
-                                                                               <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
-                                                                               <td>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
-                                                                               <td><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
-                                                                               <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
-                                                                               <td>
-                                                                                   <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/imprimirpagare/} + ${pagare.idPagare}"
-                                                                                      class="btn btn-success">
-                                                                                       <i class="fas fa-angle-double-right"></i> [[#{pagare.pagar}]]
-                                                                                   </a>
-                                                                               </td>
+                                                                            <div th:if="${pagare.reciboGen != null}">  
+                                                                                <td class="bg-success-subtle">[[${pagare.noPagare}]]</td>
+                                                                                <td class="bg-success-subtle">[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
+                                                                                <td class="bg-success-subtle">[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
+                                                                                <td class="bg-success-subtle"><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
+                                                                                <td class="bg-success-subtle">[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
+                                                                                <td class="bg-success-subtle">
+                                                                                    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
+                                                                                       class="btn btn-warning">
+                                                                                        <i class="fas fa-print"></i> [[#{barra.imprimir}]]
+                                                                                    </a>
+                                                                                </td>
+                                                                            </div>
+                                                                            <div th:if="${pagare.reciboGen == null and pagare.vencimiento.isAfter(currentTime)}">  
+                                                                                <td class="bg-primary-subtle">[[${pagare.noPagare}]]</td>
+                                                                                <td class="bg-primary-subtle">[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
+                                                                                <td class="bg-primary-subtle">[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
+                                                                                <td class="bg-primary-subtle"><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
+                                                                                <td class="bg-primary-subtle">[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
+                                                                                <td class="bg-primary-subtle">
+                                                                                    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
+                                                                                       class="btn btn-success">
+                                                                                        <i class="fa-solid fa-angle-double-right"></i> [[#{pagare.pagar}]]
+                                                                                    </a>
+                                                                                </td>
+                                                                            </div>
+                                                                            <div th:if="${pagare.vencimiento.isBefore(currentTime) and pagare.reciboGen == null}">  
+                                                                                <td class="bg-danger-subtle">[[${pagare.noPagare}]]</td>
+                                                                                <td class="bg-danger-subtle">[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]</td>
+                                                                                <td class="bg-danger-subtle">[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]</td>
+                                                                                <td class="bg-danger-subtle"><b>[[${new java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b></td>
+                                                                                <td class="bg-danger-subtle">[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
+                                                                                <td class="bg-danger-subtle">
+                                                                                    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
+                                                                                       class="btn btn-success">
+                                                                                        <i class="fa-solid fa-angle-double-right"></i> [[#{pagare.pagar}]]
+                                                                                    </a>
+                                                                                </td>
+                                                                            </div>
                                                                            </tr>
                                                                            </tbody>
                                                                        </table>

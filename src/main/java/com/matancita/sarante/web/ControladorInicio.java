@@ -157,7 +157,7 @@ public class ControladorInicio {
         }
         model.addAttribute("clientes", clientes);
         model.addAttribute("cliente", new Cliente());
-        return "clientes";
+        return "clientesGeneral";
     }
 
     @GetMapping("/verpagares")

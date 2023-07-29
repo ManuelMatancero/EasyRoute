@@ -3,9 +3,11 @@ package com.matancita.sarante.web;
 
 import com.matancita.sarante.domain.*;
 import com.matancita.sarante.servicio.ClienteService;
+import com.matancita.sarante.servicio.PagareService;
 import com.matancita.sarante.servicio.PrestamoService;
 import com.matancita.sarante.servicio.RutaService;
 import com.matancita.sarante.specialfunctions.ContratoPDFGenerator;
+import com.matancita.sarante.specialfunctions.ReciboPDFGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ public class ControladorClientes {
     private  ClienteService clienteService;
     @Autowired
     private PrestamoService prestamoService;
+    @Autowired
+    private PagareService pagareService;
 
     @GetMapping("/verclientes/{idRuta}")
     public String clientes(Ruta ruta, Model model){
@@ -59,6 +63,8 @@ public class ControladorClientes {
         int totalPrestamos=0;
         int pagarespendientes=0;
         double totalPagado=0;
+        //this variable is to check if there is a late pagare on the pagare list
+        LocalDateTime currenTime = LocalDateTime.now();
         for(Prestamo prestamo: prestamos){
             totalPrestamos++;
             List<Pagare> pagares = prestamo.getPagares();
@@ -78,6 +84,7 @@ public class ControladorClientes {
         model.addAttribute("totalPagado", totalPagado);
         model.addAttribute("cliente", cliente);
         model.addAttribute("prestamos", prestamos);
+        model.addAttribute("currentTime", currenTime);
         model.addAttribute("prestamo", new Prestamo());
         return "perfilCliente";
     }
@@ -143,6 +150,35 @@ public class ControladorClientes {
         printContrato.setPrestamo(prestamo);
         printContrato.generate(response);
     }
+
+    @GetMapping("paginaimprimirrecibo/{idPagare}")
+    public String pageImprimirRecibo(Pagare pagare, Model model){
+        pagare = pagareService.getById(pagare.getIdPagare());
+        if(pagare.getReciboGen()==null){
+            RecibosGen recibosGen = new RecibosGen();
+            recibosGen.setFecha(LocalDateTime.now());
+            recibosGen.setValor(pagare.getTotal());
+            pagare.setReciboGen(recibosGen);
+            pagareService.update(pagare);
+        }
+        model.addAttribute("pagare", pagare);
+        return "genRecibo";
+    }
+
+    @GetMapping("imprimirrecibo/{idPagare}")
+    public void imprimirRecibo(Pagare pagare, HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+                DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+                String currentDateTime = dateFormat.format(new Date());
+                String headerkey = "Content-disposition";
+                String headervalue = "inline; filename=pdf_" + currentDateTime + ".pdf";
+                response.setHeader(headerkey, headervalue);
+                pagare = pagareService.getById(pagare.getIdPagare());
+                ReciboPDFGenerator printRecibo = new ReciboPDFGenerator();
+                printRecibo.setPagare(pagare);
+                printRecibo.generate(response);
+    }
+
     @GetMapping("/eliminarCliente")
     public String eliminarCliente(Cliente cliente, RedirectAttributes redirectAttributes){
         cliente = clienteService.getById(cliente.getIdCliente());

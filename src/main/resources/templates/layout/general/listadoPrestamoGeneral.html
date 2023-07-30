@@ -112,7 +112,7 @@
                               <th th:text="#{tabla.fecha}">fecha</th>
                               <th th:text="#{ruta.nombre}">fecha</th>
                               <th th:text="#{ruta.dia}">dia</th>
-                              <th th:text="#{prestamo.tipo}">Tipo</th>
+                              <th th:text="#{ruta.cobrador}">Tipo</th>
                               <th></th>
                             </tr>
                             </thead>
@@ -128,7 +128,7 @@
                               <td>[[${#temporals.format(prestamo.fecha, 'MMMM d, yyyy')}]]</td>
                               <td>[[${prestamo.cliente.ruta.nombre}]]</td>
                               <td>[[${prestamo.cliente.ruta.dia}]]</td>
-                              <td>[[${prestamo.tipoPrestamo}]]</td>
+                              <td>[[${prestamo.cliente.ruta.cobrador.nombre} +' '+${prestamo.cliente.ruta.cobrador.apellido}]]</td>
                               <td>
                                 <a th:href="@{/verprestamos/} + ${prestamo.cliente.idCliente}"
                                    class="btn btn-warning btn-sm">

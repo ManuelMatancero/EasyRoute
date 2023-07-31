@@ -32,6 +32,7 @@
                     <form th:action="@{/editarUsuario}" method="POST" class="was-validated" th:object="${usuario}">
                         <input type="hidden" th:field="*{idUsuario}" />
                         <input type="hidden" th:field="*{cobrador.fechaIngreso}" />
+                        <input type="text" th:field="*{cobrador.idCobrador}" /><!--Se estaban creando cobradores cada vez que se editaba debido a que no se estaba enviando el id del cobrador-->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -141,26 +142,36 @@
                                 </select>
                               </div>
                             </div>
-                            <div class="col-md-6">
-                              <div class="mb-3">
-                                <label for="rol" class="col-form-label">Rol</label>
-                                <select
-                                  class="form-control"
-                                  name="rol"
-                                  id="rol"
-                                  required="true"
-                                >
-                                  <option
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                  <label for="rol" class="col-form-label">Rol</label>
+                                  <select
+                                    class="form-control"
+                                    name="rol"
+                                    id="rol"
+                                    required="true"
+                                  >
+                                  <div th:if="${rolUsuario == 'Admin'}">
+                                    <option
                                     value="1"
                                     th:text="${rolUsuario}"
-                                    th:disabled="true"
+                                    selected
+                                  ></option>
+                                  
+                                  <option value="2">Cobrador</option>
+                                  </div>
+                                  <div th:if="${rolUsuario == 'Cobrador'}">
+                                    <option
+                                    value="2"
+                                    th:text="${rolUsuario}"
                                     selected
                                   ></option>
                                   <option value="1">Admin</option>
-                                  <option value="2">Cobrador</option>
-                                </select>
+                                 
+                                  </div>
+                                  </select>
+                                </div>
                               </div>
-                            </div>
                           </div>
                           <div class="justify-content-between float-end">
                               <a href="/usuarios" type="button" class="btn btn-secondary" th:text="#{barra.salir}">Close</a>

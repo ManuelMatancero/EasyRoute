@@ -26,7 +26,7 @@ public class Rol implements Serializable {
     @NotEmpty
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     private Usuario usuario;
 }

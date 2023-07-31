@@ -25,8 +25,7 @@ public class Usuario implements Serializable {
 
     private int estatus;
 
-    @OneToMany
-    @JoinColumn(name="id_usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Rol> roles;
 
     @ManyToOne

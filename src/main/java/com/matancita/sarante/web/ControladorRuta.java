@@ -64,7 +64,8 @@ public class ControladorRuta {
         redirectAttributes.addFlashAttribute("successMessage", "Route saved successfully!");
         return "redirect:/verrutas";
     }
-
+    
+    
     @GetMapping("/modificarruta/{idRuta}")
     public String modificarRuta(Ruta ruta, Model model){
         List<Cobrador> cobradores = cobradorService.listAll();

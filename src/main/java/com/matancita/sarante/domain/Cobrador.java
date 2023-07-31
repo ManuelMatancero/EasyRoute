@@ -39,7 +39,7 @@ public class Cobrador implements Serializable {
     @Column(name="fecha_ingreso")
     private LocalDateTime fechaIngreso;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cobrador")
     private List<Ruta> rutas;
 }

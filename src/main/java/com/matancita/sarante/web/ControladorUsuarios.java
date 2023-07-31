@@ -4,6 +4,7 @@ import com.matancita.sarante.domain.Cobrador;
 import com.matancita.sarante.util.EncriptarPassword;
 import com.matancita.sarante.domain.Empresa;
 import com.matancita.sarante.domain.Rol;
+import com.matancita.sarante.domain.Ruta;
 import com.matancita.sarante.domain.Usuario;
 import com.matancita.sarante.servicio.CobradorService;
 import com.matancita.sarante.servicio.EmpresaService;
@@ -150,16 +151,21 @@ public class ControladorUsuarios {
         }
         //Encriptamos el password antes de obtener el usuario
         String userPassword = EncriptarPassword.encriptarPassword(usuario.getPassword());
-        //obtenemos el usuario para editarlo
-        usuario = usuarioService.getUsuarioById(usuario.getIdUsuario());
+        //Obtenemos todas las rutas de ese usuario
+        List<Ruta> rutas = usuarioService.getUsuarioById(usuario.getIdUsuario()).getCobrador().getRutas();
+        //Se las asignamos a ese mismo usuario porque no vienen en el form de editar usuarios y estaba dando error
+        usuario.getCobrador().setRutas(rutas);
+        //Usuario para asignar al rol
+        Usuario userToRol = usuarioService.getUsuarioById(usuario.getIdUsuario());
+
         if (roUser == 1) {
             // delete all rows in Rol database with the IdUsuario
             rolService.deleteAllByUsuario(usuario);
-            rolService.insert(new Rol("ROLE_ADMIN", usuario));
-            rolService.insert(new Rol("ROLE_USER", usuario));
+            rolService.insert(new Rol("ROLE_ADMIN", userToRol));
+            rolService.insert(new Rol("ROLE_USER", userToRol));
         } else if (roUser == 2) {
             rolService.deleteAllByUsuario(usuario);
-            rolService.insert(new Rol("ROLE_USER", usuario));
+            rolService.insert(new Rol("ROLE_USER", userToRol));
         }
 
         List<Usuario> usuarios = usuarioService.getAllUsuarios();

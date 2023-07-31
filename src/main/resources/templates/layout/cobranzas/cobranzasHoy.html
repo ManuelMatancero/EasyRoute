@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Botones Agregar Cliente</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <section th:fragment="cobranzasHoy" class="py-2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>
+                        [[#{ruta.acobrar}]]
+                    </h3>
+                    <div class="list-group">
+                        <div th:each="ruta : ${rutas}">
+                            <div th:if="${ruta.dia} == ${currentDate}">
+                                <a th:href="@{/verclientes/} + ${ruta.idRuta}" class="list-group-item list-group-item-action rounded shadow" aria-current="true">
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        [[${ruta.clientes.size()}]]
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">[[${ruta.nombre}]] - [[${ruta.idRuta}]] </h5>
+                                        <small>[[${ruta.dia}]]</small>
+                                    </div>
+                                    <p class="mb-1">[[${ruta.zona.nombre}]], [[${ruta.zona.direccion}]]</p>
+                                </a>
+                            </br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-4">
+                    <div class="card border-left-primary shadow mt-1 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div th:text="#{ruta.porcobrar}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Earnings (Monthly)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        [[${new java.text.DecimalFormat('$#,##0.00').format(porCobrar)}]]
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-money-bill-wave fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-left-primary shadow mt-2 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div th:text="#{ruta.rutas}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Earnings (Monthly)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        [[${cantidadRutas}]]
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-route fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-left-primary shadow mt-2 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div th:text="#{prestamo.prestamos}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Earnings (Monthly)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        [[${cantidadPrestamos}]]
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-handshake fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-left-primary shadow mt-2 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div th:text="#{pagare.pendiente}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Earnings (Monthly)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        [[${pagaresPendientes}]]
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-file-invoice-dollar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+</body>
+
+</html>

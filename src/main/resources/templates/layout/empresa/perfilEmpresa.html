@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>navegacion empresa</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <section th:fragment="perfilEmpresa" class="py-2">
+        <div class="container-fluid mt-2 mb-3">
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
+                <p th:text="${successMessage}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <img src="/img/undraw_rocket.svg" class="card-img rounded-start d-block mx-auto mt-3"
+                            style="width: 200px; height: 150px;" alt="Image">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fa-solid fa-circle-info"></i> [[#{empresa.informacion}]]
+                            </h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <span><b>[[#{cliente.nombre}]]: </b></span>
+                                <span th:text="${empresa.nombre}">An item</span>
+                            </li>
+                            <li class="list-group-item">
+                                <span><b>[[#{cliente.direccion}]]: </b></span>
+                                <span th:text="${empresa.direccion}">An item</span>
+                            </li>
+                            <li class="list-group-item">
+                                <span><b>[[#{cliente.telefonotrabajo}]]: </b></span>
+                                <span th:text="${empresa.telefono}">An item</span>
+                            </li>
+                            <li class="list-group-item">
+                                <span><b>[[#{cliente.email}]]: </b></span>
+                                <span th:text="${empresa.email}">An item</span>
+                            </li>
+                        </ul>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="collapse collapse-vertical" id="collapseWidthExample">
+                        <div class="card card-body">
+                            <div class="d-flex justify-content-center">
+                                <div class="col-md-6 p-4 custom-card bg-light rounded">
+                                    <h1 class="title fs-5 text-center" th:text="#{empresa.editar}" id="editarEmpresa">Edit
+                                        User</h1>
+                                    <form th:action="@{/editarEmpresa}" method="POST" class="was-validated"
+                                        th:object="${empresa}">
+                                        <input type="hidden" th:field="*{idEmpresa}" />
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="nombre" class="col-form-label">Nombre</label>
+                                                    <input type="text" class="form-control" th:field="*{nombre}"
+                                                        required="true" />
+                                                </div>
+        
+                                                <div class="mb-3">
+                                                    <label for="apellido" class="col-form-label">Email</label>
+                                                    <input type="text" class="form-control" th:field="*{email}"
+                                                        required="true" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="cedula" class="col-form-label">telefono</label>
+                                                    <input type="text" class="form-control" th:field="*{telefono}"
+                                                        required="true" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="direccion" class="col-form-label">Dirección</label>
+                                                    <textarea class="form-control" th:field="*{direccion}" required="true"
+                                                        rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="justify-content-between float-end">
+                                            <a href="/" type="button" class="btn btn-secondary"
+                                                th:text="#{barra.salir}">Close</a>
+                                            <button type="submit" class="btn btn-primary" th:text="#{usuario.guardar}">Save
+                                                changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+</body>
+
+</html>

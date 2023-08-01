@@ -15,25 +15,31 @@
                     <h3>
                         [[#{ruta.acobrar}]]
                     </h3>
-                    <div class="list-group">
-                        <div th:each="ruta : ${rutas}">
-                            <div th:if="${ruta.dia} == ${currentDate}">
-                                <a th:href="@{/verclientes/} + ${ruta.idRuta}" class="list-group-item list-group-item-action rounded shadow" aria-current="true">
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        [[${ruta.clientes.size()}]]
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">[[${ruta.nombre}]] - [[${ruta.idRuta}]] </h5>
-                                        <small>[[${ruta.dia}]]</small>
-                                    </div>
-                                    <p class="mb-1">[[${ruta.zona.nombre}]], [[${ruta.zona.direccion}]]</p>
-                                </a>
-                            </br>
+                    <div th:if="${rutas != null and !rutas.empty}">
+                        <div class="list-group">
+                            <div th:each="ruta : ${rutas}">
+                                <div th:if="${ruta.dia} == ${currentDate}">
+                                    <a th:href="@{/verclientes/} + ${ruta.idRuta}" class="list-group-item list-group-item-action rounded shadow" aria-current="true">
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            [[${ruta.clientes.size()}]]
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">[[${ruta.nombre}]] - [[${ruta.idRuta}]] </h5>
+                                            <small>[[${ruta.dia}]]</small>
+                                        </div>
+                                        <p class="mb-1">[[${ruta.zona.nombre}]], [[${ruta.zona.direccion}]]</p>
+                                    </a>
+                                </br>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </br>
+                <div class="alert alert-primary" role="alert">
+                    <h4 class="alert-heading"><i class="fa-solid fa-triangle-exclamation" style="color: #023388;"></i> [[#{ruta.nohay}]]</h4>         
+                </div>
                 </div>
                 <div class="col-md-4 mt-4">
                     <div class="card border-left-primary shadow mt-1 py-2">

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title>Botones Agregar Cliente</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <section th:fragment="navegacionEmpresa" class="py-2 bg-light">
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="display-6">
+            [[#{panel.empresa}]]
+          </h3>
+        </div>
+        <div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+          <a th:href="@{/editarempresa}" class="btn btn-warning rounded-pill shadow float-end ms-3" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <b>[[#{empresa.editar}]]</b>
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 package com.matancita.sarante.servicio;
 
 import com.matancita.sarante.dao.UsuarioDao;
+import com.matancita.sarante.domain.Pagare;
 import com.matancita.sarante.domain.Rol;
 import com.matancita.sarante.domain.Usuario;
 import java.util.ArrayList;
@@ -54,6 +55,20 @@ public class UsuarioService implements UserDetailsService{
     @Transactional(readOnly = true)
     public Usuario getUsuarioById(Long idUsuario) {
         return usuarioDao.findById(idUsuario).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario getUsuarioByCobradorId(Long cobradorId) {
+        List<Usuario> usuarios = usuarioDao.findAll();
+        Usuario selectedUser = null;
+        
+        for (Usuario usuario : usuarios) {
+            if(usuario.getCobrador().getIdCobrador() == cobradorId){
+                selectedUser = usuario;
+            }
+        }
+
+        return selectedUser;
     }
     
 }

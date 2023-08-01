@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -161,8 +162,26 @@ public class ControladorInicio {
     }
 
     @GetMapping("/verpagares")
-    public String pagares(Model model) {
-        List<Pagare> pagares = pagareService.listAll();
+    public String pagares(@AuthenticationPrincipal User user,  Model model) {
+        List<Pagare> pagares = new ArrayList<>();
+        //here i get all the data for pagares for Admin
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+            pagares = pagareService.listAll();  
+        }else{
+            Usuario usuario = usuarioService.findByUsuario(user.getUsername());
+            List<Ruta> rutas = usuario.getCobrador().getRutas();
+            List<Cliente> clientes = new ArrayList<>();
+            for(Ruta ruta : rutas){
+                clientes.addAll(ruta.getClientes());
+            }
+            List<Prestamo> prestamos = new ArrayList<>();
+            for(Cliente cliente : clientes){
+                prestamos.addAll(cliente.getPrestamos());
+            }
+            for(Prestamo prestamo : prestamos){
+                pagares.addAll(prestamo.getPagares());
+            }
+        }
         model.addAttribute("pagares", pagares);
         return "pagares";
     }

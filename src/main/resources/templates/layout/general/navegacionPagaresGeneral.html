@@ -15,6 +15,21 @@
           [[#{pagare.pagares}]]
         </h3>
       </div>
+      <div class="col-md-6">
+        <input type="text" class="form-control" id="filterInput" th:placeholder="#{panel.filtrar}">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1" th:text="#{pagare.nopagare}" value="numeroPagare" checked>
+            <label class="form-check-label" for="inlineRadio1"></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="filterType" id="inlineRadio2" th:text="#{cliente.cliente}" value="nombreCliente">
+            <label class="form-check-label" for="inlineRadio2"></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="filterType" id="inlineRadio3" th:text="#{pagare.vencimiento}" value="vencimiento">
+            <label class="form-check-label" for="inlineRadio3"></label>
+          </div>
+      </div>
     </div>
   </div>
   </div>

@@ -22,11 +22,35 @@
             <i class="fas fa-plus"></i>
             <b>[[#{ruta.agregar}]]</b>
           </button>
-        <button class="btn btn-primary rounded-pill shadow float-end"
+        <button class="btn btn-primary rounded-pill shadow float-end mb-3"
                 data-bs-toggle="modal" data-bs-target="#agregarZona" data-bs-whatever="@mdo">
           <i class="fa-solid fa-map-location-dot"></i>
           <b>[[#{zona.agregarzona}]]</b>
         </button>
+
+        <div>
+          <input type="text" class="form-control mt-3" id="filterInput" th:placeholder="#{panel.filtrar}">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1" th:text="#{ruta.nombre}"
+              value="rutaNombre" checked>
+            <label class="form-check-label" for="inlineRadio1"></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="filterType" id="inlineRadio2" th:text="#{ruta.dia}"
+              value="rutaDia">
+            <label class="form-check-label" for="inlineRadio2"></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="filterType" id="inlineRadio3" th:text="#{ruta.zona}"
+              value="rutaZona">
+            <label class="form-check-label" for="inlineRadio3"></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="filterType" id="inlineRadio4" th:text="#{panel.cobrador}"
+              value="rutaCobrador">
+            <label class="form-check-label" for="inlineRadio4"></label>
+          </div>
+        </div>  
       </div>
     </div>
   </div>

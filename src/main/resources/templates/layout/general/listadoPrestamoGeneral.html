@@ -99,7 +99,7 @@
                 <div class="col-md-12 mt-3">
                     <div class="card">
                         <div th:if="${prestamos != null and !prestamos.empty}">
-                          <table class="table table-stryped">
+                          <table id="dataTable" class="table table-stryped">
                             <thead class="thead-dark">
                             <tr>
                               <th>#</th>
@@ -148,5 +148,4 @@
         </div>
     </section>
 </body>
-
 </html>

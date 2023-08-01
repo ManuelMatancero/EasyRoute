@@ -33,7 +33,6 @@
                                                 <th th:text="#{usuario.empresa}">Empresa</th>
                                                 <th th:text="#{usuario.telefono}">Teléfono</th>
                                                 <th></th>
-                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -45,12 +44,6 @@
                                                 <td>[[${usuario.cobrador.cedula}]]</td>
                                                 <td>[[${usuario.empresa.nombre}]]</td>
                                                 <td>[[${usuario.cobrador.telefono}]]</td>
-                                                <td>
-                                                    <a th:href="@{/verprestamos/} + ${usuario.idUsuario}"
-                                                       class="btn btn-success">
-                                                        <i class="fa-regular fa-address-card"></i>[[#{usuario.perfil}]]
-                                                    </a>
-                                                </td>
                                                 <td>
                                                     <a th:href="@{/editarUsuario/} + ${usuario.idUsuario}"
                                                        class="btn btn-secondary">

@@ -23,7 +23,6 @@ public class ControladorEmpresa {
     public String verEmpresa(Model model) {
         log.info("Ejecutando el controlador Spring MVC");
         Empresa empresa = empresaService.listAll().get(0);
-
         model.addAttribute("empresa", empresa);
         return "empresa";
     }

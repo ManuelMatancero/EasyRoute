@@ -18,15 +18,15 @@
                         <div class="card">
                             <div th:if="${clientes != null and !clientes.empty}">
                                 <div class="table-responsive">
-                                    <table class="table table-stryped">
+                                    <table id="dataTable" class="table table-stryped">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>#</th>
                                                 <th th:text="#{cliente.nombre}">Nombre</th>
                                                 <th th:text="#{cliente.apellido}">Apellido</th>
                                                 <th th:text="#{cliente.cedula}">Cedula</th>
-                                                <th th:text="#{cliente.direccion}">Direccion</th>
-                                                <th th:text="#{cliente.celular}">Celular</th>
+                                                <th th:text="#{ruta.nombre}">Ruta</th>
+                                                <th th:text="#{panel.cobrador}">Direccion</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -37,8 +37,9 @@
                                                 <td>[[${cliente.nombre}]]</td>
                                                 <td>[[${cliente.apellido}]]</td>
                                                 <td>[[${cliente.cedula}]]</td>
-                                                <td>[[${cliente.direccion}]]</td>
-                                                <td>[[${cliente.celular}]]</td>
+                                                <td>[[${cliente.ruta.nombre}]]</td>
+                                                <td>[[${cliente.ruta.cobrador.nombre} + ' ' + ${cliente.ruta.cobrador.apellido}]]</td>
+                                                
                                                 <td>
                                                     <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
                                                        class="btn btn-success">

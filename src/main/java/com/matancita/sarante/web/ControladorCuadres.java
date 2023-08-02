@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -170,6 +171,12 @@ public class ControladorCuadres {
         model.addAttribute("clientes", clientes);
         model.addAttribute("prestamos", prestamos);
 
+        // Filter default values
+        String startDateField = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String endDateField = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        model.addAttribute("startDateField", startDateField);
+        model.addAttribute("endDateField", endDateField);
+
         return "cuadres";
     }
 
@@ -333,15 +340,15 @@ public class ControladorCuadres {
         model.addAttribute("cantidadPrestamos", formatoConComasEnteros.format(cantidadPrestamos));
 
         // Filter values
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
-        model.addAttribute("zona", zonaId);
-        model.addAttribute("ruta", rutaId);
-        model.addAttribute("cobrador", cobradorId);
-        model.addAttribute("empresa", empresaId);
-        model.addAttribute("cliente", clienteId);
-        model.addAttribute("prestamo", prestamoId);
-        model.addAttribute("pagare-con-recibo", pagareConRecibo);
+        model.addAttribute("startDateField", startDateField);
+        model.addAttribute("endDateField", endDateField);
+        model.addAttribute("zonaField", zonaId);
+        model.addAttribute("rutaField", rutaId);
+        model.addAttribute("cobradorField", cobradorId);
+        model.addAttribute("empresaField", empresaId);
+        model.addAttribute("clienteField", clienteId);
+        model.addAttribute("prestamoField", prestamoId);
+        model.addAttribute("pagareConReciboField", soloPagaresConRecibo);
 
         // Filter attributes
         model.addAttribute("zonas", zonas);

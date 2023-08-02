@@ -46,7 +46,7 @@
                         <div class="col-md-6">
                           <p class="fs-6 me-3 fw-bold">Filtrar por Zona</p>
                           <select name="zona" class="form-select form-select-sm mb-3" aria-label="Filtrar Zona">
-                            <option selected>Elige una ruta</option>
+                            <option value="default" selected>Elige una zona</option>
                             <th:block th:each="zona : ${zonas}">
                               <option th:value="${zona.idZona}" th:text="${zona.nombre}"></option>
                             </th:block>
@@ -55,7 +55,7 @@
                         <div class="col-md-6">
                           <p class="fs-6 me-3 fw-bold">Filtrar por Ruta</p>
                           <select name="ruta" class="form-select form-select-sm mb-3" aria-label="Filtrar Ruta">
-                            <option selected>Elige una ruta</option>
+                            <option value="default" selected>Elige una ruta</option>
                             <th:block th:each="ruta : ${rutas}">
                               <option th:value="${ruta.idRuta}" th:text="${ruta.nombre}"></option>
                             </th:block>
@@ -64,7 +64,7 @@
                         <div class="col-md-6">
                           <p class="fs-6 me-3 fw-bold">Filtrar por Cobrador</p>
                           <select name="cobrador" class="form-select form-select-sm mb-3" aria-label="Filtrar Cobrador">
-                            <option selected>Elige un cobrador</option>
+                            <option value="default" selected>Elige un cobrador</option>
                             <th:block th:each="cobrador : ${cobradores}">
                               <option th:value="${cobrador.idCobrador}" th:text="${cobrador.nombre}"></option>
                             </th:block>
@@ -73,7 +73,7 @@
                         <div class="col-md-6">
                           <p class="fs-6 me-3 fw-bold">Filtrar por Empresa</p>
                           <select name="empresa" class="form-select form-select-sm mb-3" aria-label="Filtrar Empresa">
-                            <option selected>Elige una empresa</option>
+                            <option value="default" selected>Elige una empresa</option>
                             <th:block th:each="empresa : ${empresas}">
                               <option th:value="${empresa.idEmpresa}" th:text="${empresa.nombre}"></option>
                             </th:block>
@@ -82,7 +82,7 @@
                         <div class="col-md-6">
                           <p class="fs-6 me-3 fw-bold">Filtrar por Cliente</p>
                           <select name="cliente" class="form-select form-select-sm mb-3" aria-label="Filtrar Cliente">
-                            <option selected>Elige un cliente</option>
+                            <option value="default" selected>Elige un cliente</option>
                             <th:block th:each="cliente : ${clientes}">
                               <option th:value="${cliente.idCliente}" th:text="${cliente.nombre}"></option>
                             </th:block>
@@ -91,7 +91,7 @@
                         <div class="col-md-6">
                           <p class="fs-6 me-3 fw-bold">Filtrar por Prestamo</p>
                           <select name="prestamo" class="form-select form-select-sm mb-3" aria-label="Filtrar Prestamo">
-                            <option selected>Elige una prestamo</option>
+                            <option value="default" selected>Elige una prestamo</option>
                             <th:block th:each="prestamo : ${prestamos}">
                               <option th:value="${prestamo.idPrestamo}" th:text="${prestamo.tipoPrestamo}"></option>
                             </th:block>

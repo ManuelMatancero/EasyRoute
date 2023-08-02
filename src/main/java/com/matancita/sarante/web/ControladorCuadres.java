@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -120,8 +121,10 @@ public class ControladorCuadres {
                     }
                 }
             } else {
-                montoPendiente += pagare.getTotal();
-                cantidadPagosPendientes++;
+                if (pagare.getVencimiento().isBefore(LocalDateTime.now())) {
+                    montoPendiente += pagare.getTotal();
+                    cantidadPagosPendientes++;
+                }
             }
         }
 
@@ -171,23 +174,64 @@ public class ControladorCuadres {
     }
 
     @PostMapping("/cuadres")
-    public String cuadresFiltrados(Model model,
-            @RequestParam("start-date") LocalDateTime startDate,
-            @RequestParam("end-date") LocalDateTime endDate,
-            @RequestParam("zona") Long zonaId,
-            @RequestParam("ruta") Long rutaId,
-            @RequestParam("cobrador") Long cobradorId,
-            @RequestParam("empresa") Long empresaId,
-            @RequestParam("cliente") Long clienteId,
-            @RequestParam("prestamo") Long prestamoId,
-            @RequestParam("pagare-con-recibo") String pagareConRecibo,
-            BindingResult result,
-            RedirectAttributes ra) {
+    public String cuadresFiltrados(
+            Model model,
+            @RequestParam("start-date") String startDateField,
+            @RequestParam("end-date") String endDateField,
+            @RequestParam("zona") String zonaIdField,
+            @RequestParam("ruta") String rutaIdField,
+            @RequestParam("cobrador") String cobradorIdField,
+            @RequestParam("empresa") String empresaIdField,
+            @RequestParam("cliente") String clienteIdField,
+            @RequestParam("prestamo") String prestamoIdField,
+            @RequestParam("pagare-con-recibo") String pagareConRecibo) {
+
+        LocalDateTime startDate = null;
+        LocalDateTime endDate = null;
+        Long zonaId = null;
+        Long rutaId = null;
+        Long cobradorId = null;
+        Long empresaId = null;
+        Long clienteId = null;
+        Long prestamoId = null;
+
+        if (!startDateField.isEmpty()) {
+            startDate = LocalDateTime.parse(startDateField + "T00:00:00");
+        }
+
+        if (!endDateField.isEmpty()) {
+            endDate = LocalDateTime.parse(endDateField + "T23:59:59");
+        }
+
+        if (!zonaIdField.equals("default")) {
+            zonaId = Long.parseLong(zonaIdField);
+        }
+
+        if (!rutaIdField.equals("default")) {
+            rutaId = Long.parseLong(rutaIdField);
+        }
+
+        if (!cobradorIdField.equals("default")) {
+            cobradorId = Long.parseLong(cobradorIdField);
+        }
+
+        if (!empresaIdField.equals("default")) {
+            empresaId = Long.parseLong(empresaIdField);
+        }
+
+        if (!clienteIdField.equals("default")) {
+            clienteId = Long.parseLong(clienteIdField);
+        }
+
+        if (!prestamoIdField.equals("default")) {
+            prestamoId = Long.parseLong(prestamoIdField);
+        }
 
         boolean soloPagaresConRecibo = true;
         if (pagareConRecibo.equals("false")) {
             soloPagaresConRecibo = false;
         }
+
         List<Pagare> pagaresFiltrados = pagareService.GetAllWithFilters(startDate, endDate, zonaId, rutaId, cobradorId,
                 empresaId, clienteId, prestamoId, soloPagaresConRecibo);
 

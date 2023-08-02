@@ -243,30 +243,4 @@ public class ControladorInicio {
         return "prestamosGeneral";
     }
 
-    // @GetMapping("/agregar")
-    // public String agregar(Persona persona){
-    // return "modificar";
-    // }
-    //
-    // @PostMapping("/guardar")
-    // public String guardar(@Valid Persona persona, Errors errores){
-    // if(errores.hasErrors()){
-    // return "modificar";
-    // }
-    // personaService.guardar(persona);
-    // return "redirect:/";
-    // }
-    //
-    // @GetMapping("/editar/{idPersona}")
-    // public String editar(Persona persona, Model model){
-    // persona = personaService.encontrarPersona(persona);
-    // model.addAttribute("persona", persona);
-    // return "modificar";
-    // }
-    //
-    // @GetMapping("/eliminar")
-    // public String eliminar(Persona persona){
-    // personaService.eliminar(persona);
-    // return "redirect:/";
-    // }
 }

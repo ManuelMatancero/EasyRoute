@@ -342,7 +342,6 @@ public class ControladorCuadres {
         model.addAttribute("cliente", clienteId);
         model.addAttribute("prestamo", prestamoId);
         model.addAttribute("pagare-con-recibo", pagareConRecibo);
-        //model.addAttribute("pagare-sin-recibo", pagareSinRecibo);//I comment this line because was giving me an error
 
         // Filter attributes
         model.addAttribute("zonas", zonas);

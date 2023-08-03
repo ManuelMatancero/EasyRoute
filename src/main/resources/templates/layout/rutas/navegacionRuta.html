@@ -14,15 +14,20 @@
         <h3 class="display-6">
           [[#{ruta.rutas}]]
         </h3>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-white rounded w-50">
+              <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{panel.home}">Clientes</a></li>
+              <li class="breadcrumb-item active" aria-current="page">[[#{ruta.nombre}]]</li>
+          </ol>
+      </nav>
       </div>
-
-      <div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
-          <button class="btn btn-primary rounded-pill shadow float-end ms-3"
+      <div class="col-md-6">
+          <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary rounded-pill shadow float-end ms-3"
                   data-bs-toggle="modal" data-bs-target="#agregarRuta" data-bs-whatever="@mdo">
             <i class="fas fa-plus"></i>
             <b>[[#{ruta.agregar}]]</b>
           </button>
-        <button class="btn btn-primary rounded-pill shadow float-end mb-3"
+        <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary rounded-pill shadow float-end mb-3"
                 data-bs-toggle="modal" data-bs-target="#agregarZona" data-bs-whatever="@mdo">
           <i class="fa-solid fa-map-location-dot"></i>
           <b>[[#{zona.agregarzona}]]</b>

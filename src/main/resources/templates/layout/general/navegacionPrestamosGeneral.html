@@ -15,7 +15,9 @@
           <h3 class="display-6">
             [[#{prestamo.prestamos}]]
           </h3>
-          <input type="text" class="form-control" id="filterInput" th:placeholder="#{panel.filtrar}">
+        </div>
+      <div class="col-md-6">
+        <input type="text" class="form-control" id="filterInput" th:placeholder="#{panel.filtrar}">
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1" th:text="#{cliente.nombre}" value="name" checked>
             <label class="form-check-label" for="inlineRadio1"></label>
@@ -32,7 +34,7 @@
             <input class="form-check-input" type="radio" name="filterType" id="inlineRadio4" th:text="#{ruta.nombre}" value="route">
             <label class="form-check-label" for="inlineRadio4"></label>
           </div>
-        </div>
+      </div>
       </div>
     </div>
     </div>

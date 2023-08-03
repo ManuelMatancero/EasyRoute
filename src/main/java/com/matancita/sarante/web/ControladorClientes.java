@@ -57,6 +57,7 @@ public class ControladorClientes {
     @GetMapping("/verprestamos/{idCliente}")
     public String prestamos (Cliente cliente, Model model){
         cliente = clienteService.getById(cliente.getIdCliente());
+        Long idRuta = cliente.getRuta().getIdRuta();
         List<Prestamo> prestamos = cliente.getPrestamos();
         //Here I know how much money that customer is pending
         double totalPendiente=0;
@@ -78,6 +79,7 @@ public class ControladorClientes {
                 }
             }
         }
+        model.addAttribute("idRuta", idRuta);
         model.addAttribute("totalPrestamos", totalPrestamos);
         model.addAttribute("totalPendiente", totalPendiente);
         model.addAttribute("pagaresPendientes", pagarespendientes);

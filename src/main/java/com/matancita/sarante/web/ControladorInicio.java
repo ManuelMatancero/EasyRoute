@@ -164,6 +164,7 @@ public class ControladorInicio {
     @GetMapping("/verpagares")
     public String pagares(@AuthenticationPrincipal User user,  Model model) {
         List<Pagare> pagares = new ArrayList<>();
+        LocalDateTime currentTime = LocalDateTime.now();
         //here i get all the data for pagares for Admin
         if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
             pagares = pagareService.listAll();  
@@ -182,6 +183,7 @@ public class ControladorInicio {
                 pagares.addAll(prestamo.getPagares());
             }
         }
+        model.addAttribute("currentTime", currentTime);
         model.addAttribute("pagares", pagares);
         return "pagares";
     }
@@ -242,5 +244,4 @@ public class ControladorInicio {
         model.addAttribute("prestamos", prestamos);
         return "prestamosGeneral";
     }
-
 }

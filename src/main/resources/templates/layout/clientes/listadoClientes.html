@@ -46,7 +46,7 @@
                                                         <i class="fa-regular fa-address-card"></i>[[#{cliente.perfil}]]
                                                     </a>
                                                 </td>
-                                                <td>
+                                                <td sec:authorize="hasRole('ROLE_ADMIN')" >
                                                     <a th:href="@{/modificarcliente/} + ${cliente.idCliente}"
                                                        class="btn btn-secondary">
                                                         <i class="fa-solid fa-pen-to-square"></i>[[#{cliente.editar}]]

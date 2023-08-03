@@ -44,7 +44,7 @@
                                                 <td>[[${usuario.cobrador.cedula}]]</td>
                                                 <td>[[${usuario.empresa.nombre}]]</td>
                                                 <td>[[${usuario.cobrador.telefono}]]</td>
-                                                <td>
+                                                <td sec:authorize="hasRole('ROLE_ADMIN')" >
                                                     <a th:href="@{/editarUsuario/} + ${usuario.idUsuario}"
                                                        class="btn btn-secondary">
                                                         <i class="fa-solid fa-pen-to-square"></i>[[#{usuario.editar}]]

@@ -15,6 +15,13 @@
           <h3 class="display-6">
             [[#{cliente.clientes}]]
           </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-white rounded w-50">
+                <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{panel.home}">Clientes</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/verrutas}">[[#{ruta.nombre}]]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">[[#{panel.clientes}]]</li>
+            </ol>
+        </nav>
         </div>
         <div class="col-md-6">
           <div sec:authorize="hasRole('ROLE_USER')">

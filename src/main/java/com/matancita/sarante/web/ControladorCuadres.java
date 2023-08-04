@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -72,10 +73,10 @@ public class ControladorCuadres {
         int cantidadRutasVisitadas = 0;
         int cantidadClientesPagaron = 0;
         int cantidadPrestamos = 0;
-        List<Long> prestamosList = null;
-        List<Long> clientesList = null;
-        List<Long> rutasList = null;
-        List<Long> zonasList = null;
+        List<Long> prestamosList = new ArrayList<>();
+        List<Long> clientesList = new ArrayList<>();
+        List<Long> rutasList = new ArrayList<>();
+        List<Long> zonasList = new ArrayList<>();
 
         for (Pagare pagare : pagares) {
             if (pagare.getReciboGen() != null) {
@@ -90,7 +91,7 @@ public class ControladorCuadres {
                     cantidadPagares++;
 
                     Prestamo prestamo = pagare.getPrestamo();
-                    if (prestamo != null && prestamosList != null) {
+                    if (prestamo != null) {
                         if (!prestamosList.contains(prestamo.getIdPrestamo())) {
                             prestamosList.add(prestamo.getIdPrestamo());
                             cantidadPrestamos++;
@@ -98,7 +99,7 @@ public class ControladorCuadres {
                     }
 
                     Cliente cliente = prestamo.getCliente();
-                    if (cliente != null && clientesList != null) {
+                    if (cliente != null) {
                         if (!clientesList.contains(cliente.getIdCliente())) {
                             clientesList.add(cliente.getIdCliente());
                             cantidadClientesPagaron++;
@@ -106,7 +107,7 @@ public class ControladorCuadres {
                     }
 
                     Ruta ruta = cliente.getRuta();
-                    if (ruta != null && rutasList != null) {
+                    if (ruta != null) {
                         if (!rutasList.contains(ruta.getIdRuta())) {
                             rutasList.add(ruta.getIdRuta());
                             cantidadRutasVisitadas++;
@@ -114,7 +115,7 @@ public class ControladorCuadres {
                     }
 
                     Zona zona = ruta.getZona();
-                    if (zona != null && zonasList != null) {
+                    if (zona != null) {
                         if (!zonasList.contains(zona.getIdZona())) {
                             zonasList.add(zona.getIdZona());
                             cantidadZonasVisitadas++;
@@ -154,7 +155,7 @@ public class ControladorCuadres {
         List<Prestamo> prestamos = prestamoService.listAll();
 
         // Dashboard values
-        model.addAttribute("montoTotal", montoPendienteFormat);
+        model.addAttribute("montoTotal", montoTotalFormat);
         model.addAttribute("cantidadPagares", formatoConComasEnteros.format(cantidadPagares));
         model.addAttribute("montoPendiente", montoPendienteFormat);
         model.addAttribute("cantidadPagosPendientes", formatoConComasEnteros.format(cantidadPagosPendientes));
@@ -250,10 +251,10 @@ public class ControladorCuadres {
         int cantidadRutasVisitadas = 0;
         int cantidadClientesPagaron = 0;
         int cantidadPrestamos = 0;
-        List<Long> prestamosList = null;
-        List<Long> clientesList = null;
-        List<Long> rutasList = null;
-        List<Long> zonasList = null;
+        List<Long> prestamosList = new ArrayList<>();
+        List<Long> clientesList = new ArrayList<>();
+        List<Long> rutasList = new ArrayList<>();
+        List<Long> zonasList = new ArrayList<>();
 
         for (Pagare pagare : pagaresFiltrados) {
             if (pagare.getReciboGen() != null) {
@@ -264,11 +265,12 @@ public class ControladorCuadres {
                 if (fechaRecibo.getDayOfMonth() == fechaActual.getDayOfMonth()
                         && fechaRecibo.getMonthValue() == fechaActual.getMonthValue()
                         && fechaRecibo.getYear() == fechaActual.getYear()) {
+
                     montoTotal += pagare.getTotal();
                     cantidadPagares++;
 
                     Prestamo prestamo = pagare.getPrestamo();
-                    if (prestamo != null && prestamosList != null) {
+                    if (prestamo != null) {
                         if (!prestamosList.contains(prestamo.getIdPrestamo())) {
                             prestamosList.add(prestamo.getIdPrestamo());
                             cantidadPrestamos++;
@@ -276,7 +278,7 @@ public class ControladorCuadres {
                     }
 
                     Cliente cliente = prestamo.getCliente();
-                    if (cliente != null && clientesList != null) {
+                    if (cliente != null) {
                         if (!clientesList.contains(cliente.getIdCliente())) {
                             clientesList.add(cliente.getIdCliente());
                             cantidadClientesPagaron++;
@@ -284,7 +286,7 @@ public class ControladorCuadres {
                     }
 
                     Ruta ruta = cliente.getRuta();
-                    if (ruta != null && rutasList != null) {
+                    if (ruta != null) {
                         if (!rutasList.contains(ruta.getIdRuta())) {
                             rutasList.add(ruta.getIdRuta());
                             cantidadRutasVisitadas++;
@@ -292,7 +294,7 @@ public class ControladorCuadres {
                     }
 
                     Zona zona = ruta.getZona();
-                    if (zona != null && zonasList != null) {
+                    if (zona != null) {
                         if (!zonasList.contains(zona.getIdZona())) {
                             zonasList.add(zona.getIdZona());
                             cantidadZonasVisitadas++;
@@ -330,7 +332,7 @@ public class ControladorCuadres {
         List<Prestamo> prestamos = prestamoService.listAll();
 
         // Dashboard values
-        model.addAttribute("montoTotal", montoPendienteFormat);
+        model.addAttribute("montoTotal", montoTotalFormat);
         model.addAttribute("cantidadPagares", formatoConComasEnteros.format(cantidadPagares));
         model.addAttribute("montoPendiente", montoPendienteFormat);
         model.addAttribute("cantidadPagosPendientes", formatoConComasEnteros.format(cantidadPagosPendientes));

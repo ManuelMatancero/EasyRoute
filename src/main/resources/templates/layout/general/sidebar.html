@@ -1,0 +1,84 @@
+<nav th:fragment="sidebar">
+  <div class="logo-name">
+    <div class="logo-image">
+      <img src="/img/logo.png" alt="" />
+    </div>
+
+    <span class="logo_name">EasyRoute</span>
+  </div>
+
+  <div class="menu-items">
+    <ul class="nav-links">
+      <li>
+        <a th:href="@{/}">
+          <i class="uil uil-estate"></i>
+          <span class="link-name">Dahsboard</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/verrutas}">
+          <i class="uil uil-files-landscapes"></i>
+          <span class="link-name">Rutas</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/verclientes}">
+          <i class="uil uil-chart"></i>
+          <span class="link-name">Clientes</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/verprestamos}">
+          <i class="uil uil-thumbs-up"></i>
+          <span class="link-name">Prestamos</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/verpagares}">
+          <i class="uil uil-comments"></i>
+          <span class="link-name">Recibos</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/cuadres}">
+          <i class="uil uil-share"></i>
+          <span class="link-name">Cuadres</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/vercobranzas}">
+          <i class="uil uil-comments"></i>
+          <span class="link-name">Cobranzas</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/verempresa}">
+          <i class="uil uil-share"></i>
+          <span class="link-name">Empresa</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="logout-mode">
+      <li>
+        <form method="POST" th:action="@{/logout}">
+          <a href="#" onclick="this.parentNode.submit();">
+            <i class="uil uil-signout"></i>
+            <span class="link-name">Logout</span>
+          </a>
+        </form>
+      </li>
+
+      <li class="mode">
+        <a href="#">
+          <i class="uil uil-moon"></i>
+          <span class="link-name">Dark Mode</span>
+        </a>
+
+        <div class="mode-toggle">
+          <span class="switch"></span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

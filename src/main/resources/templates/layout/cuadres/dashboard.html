@@ -1,31 +1,21 @@
-<!DOCTYPE html>
-<html
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<section
+  th:fragment="dashboard"
+  class="dashboard"
+  sec:authorize="hasRole('ROLE_ADMIN')"
 >
-  <head>
-    <title>Cuadres</title>
-    <meta charset="UTF-8" />
-  </head>
-  <body>
-    <main th:fragment="dashboard">
-      <section class="container mt-5">
-        <div class="row mx-auto">
-          <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-bold mt-4 text-center text-primary">
-              <i class="bx bxs-bank text-primary"></i> CUADRES
-            </h1>
-            <p class="fs-3 fw-bold text-secondary mt-1 text-center">
-              Aquí puedes visualizar los cierres diarios de las fechas que
-              desees. <i class="text-white">🚀</i>
-            </p>
-          </div>
-        </div>
-      </section>
+  <link rel="stylesheet" th:href="@{/css/cuadres.css}" />
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <img src="/img/profile.jpg" alt="" />
+  </div>
 
-      <section class="row mb-5 ms-0 ps-0 pe-0 mt-3">
-        <!--  <h2 class="text-dark fw-bold mt-5 ms-5"><i class='bx bx-grid-alt'></i> DASHBOARD</h2> -->
+  <div class="dash-content">
+    <div class="overview">
+      <div class="title">
+        <i class="uil uil-tachometer-fast-alt"></i>
+        <span class="text">Cuadre</span>
+      </div>
+      <div class="row">
         <div class="col-md-6 ms-0">
           <div
             class="col-8 card bg-dark text-white mt-3 ms-0"
@@ -38,7 +28,7 @@
                 <i class="bx bx-grid-alt"></i> Filtros
               </h4>
               <form th:action="@{/cuadres}" method="POST">
-                <div class="row border border-2 border-white rounded-3 p-3">
+                <div class="row p-3">
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Fecha</p>
                     <input
@@ -48,7 +38,7 @@
                       name="start-date"
                       aria-label="Fecha inicial"
                       th:value="${startDateField != null ? startDateField : ''}"
-                      style="font-size: small;"
+                      style="font-size: small"
                     />
 
                     <input
@@ -57,7 +47,7 @@
                       placeholder="Fecha Final:"
                       name="end-date"
                       th:value="${endDateField != null ? endDateField : ''}"
-                      style="font-size: small;"
+                      style="font-size: small"
                     />
                   </div>
                   <style>
@@ -215,9 +205,7 @@
                         value="true"
                         th:checked="${pagareConReciboField == null || pagareConReciboField == true}"
                       />
-                      <label
-                        class="form-check-label"
-                        for="inlineRadio1"
+                      <label class="form-check-label" for="inlineRadio1"
                         >Sí</label
                       >
                     </div>
@@ -230,9 +218,7 @@
                         value="false"
                         th:checked="${pagareConReciboField == false}"
                       />
-                      <label
-                        class="form-check-label"
-                        for="inlineRadio2"
+                      <label class="form-check-label" for="inlineRadio2"
                         >No</label
                       >
                     </div>
@@ -250,72 +236,51 @@
             </div>
           </div>
         </div>
-
-        <div class="col-6 ms-0 ps-0 pe-3 mt-3">
-          <!--             <div class="card bg-dark text-white mt-3" style="border-radius: 1rem;">
-                <div class="card-body"> -->
-          <div class="dash-content pe-4">
-            <div class="overview">
-              <div class="boxes">
-                <div class="box box1">
-                  <i class="bi bi-currency-dollar"></i>
-                  <span class="text">Monto Total</span>
-                  <span class="number" th:text="${montoTotal}"></span>
-                </div>
-                <div class="box box2">
-                  <i class="bi bi-credit-card"></i>
-                  <span class="text">Cantidad de Pagos</span>
-                  <span class="number" th:text="${cantidadPagares}"></span>
-                </div>
-                <div class="box box3 mt-3">
-                  <i class="bi bi-exclamation-circle"></i>
-                  <span class="text">Monto Pendiente</span>
-                  <span class="number" th:text="${montoPendiente}"></span>
-                </div>
-                <div class="box box4 mt-3">
-                  <i class="bi bi-clock"></i>
-                  <span class="text">Cantidad de Pagos Pendientes</span>
-                  <span
-                    class="number"
-                    th:text="${cantidadPagosPendientes}"
-                  ></span>
-                </div>
-                <div class="box box2 mt-3">
-                  <i class="bi bi-globe"></i>
-                  <span class="text">Cantidad de Zonas</span>
-                  <span
-                    class="number"
-                    th:text="${cantidadZonasVisitadas}"
-                  ></span>
-                </div>
-                <div class="box box3 mt-3">
-                  <i class="bi bi-map"></i>
-                  <span class="text">Cantidad de Rutas</span>
-                  <span
-                    class="number"
-                    th:text="${cantidadRutasVisitadas}"
-                  ></span>
-                </div>
-                <div class="box box1 mt-3">
-                  <i class="bi bi-person"></i>
-                  <span class="text">Cantidad de Clientes</span>
-                  <span
-                    class="number"
-                    th:text="${cantidadClientesPagaron}"
-                  ></span>
-                </div>
-                <div class="box box2 mt-3">
-                  <i class="bi bi-stack"></i>
-                  <span class="text">Cantidad de Prestamos</span>
-                  <span class="number" th:text="${cantidadPrestamos}"></span>
-                </div>
-              </div>
+        <div class="col-md-6">
+          <div class="boxes-cuadre">
+            <div class="box-cuadre box1 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Monto Total</span>
+              <span class="number" th:text="${montoTotal}"></span>
+            </div>
+            <div class="box-cuadre box2 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Cantidad de Pagos</span>
+              <span class="number" th:text="${cantidadPagares}"></span>
+            </div>
+            <div class="box-cuadre box3 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Monto Pendiente</span>
+              <span class="number" th:text="${montoPendiente}"></span>
+            </div>
+            <div class="box-cuadre box1 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Cantidad de Pagos Pendientes</span>
+              <span class="number" th:text="${cantidadPagosPendientes}"></span>
+            </div>
+            <div class="box-cuadre box2 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Cantidad de Zonas</span>
+              <span class="number" th:text="${cantidadZonasVisitadas}"></span>
+            </div>
+            <div class="box-cuadre box3 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Cantidad de Rutas</span>
+              <span class="number" th:text="${cantidadRutasVisitadas}"></span>
+            </div>
+            <div class="box-cuadre box1 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Cantidad de Clientes</span>
+              <span class="number" th:text="${cantidadClientesPagaron}"></span>
+            </div>
+            <div class="box-cuadre box2 mb-3">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="text">Cantidad de Prestamos</span>
+              <span class="number" th:text="${cantidadPrestamos}"></span>
             </div>
           </div>
-          <!--                 </div>
-            </div> -->
         </div>
-      </section>
-    </main>
-  </body>
-</html>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,37 +1,50 @@
-.dash-content .boxes-cuadre{
+.dash-content .boxes-ruta{
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.dash-content .boxes-cuadre .box-cuadre{
+.dash-content .boxes-ruta .box-ruta{
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 12px;
-    width: calc(100% / 2 - 15px);
+    width: calc(100% / 1 - 15px);
     padding: 15px 20px;
     background-color: var(--box1-color);
     transition: var(--tran-05);
 }
-.boxes-cuadre .box-cuadre i{
-    font-size: 35px;
+.boxes-ruta .box-ruta i{
+    font-size: 25px;
     color: var(--text-color);
 }
-.boxes-cuadre .box-cuadre .text{
+.boxes-ruta .box-ruta .text{
     white-space: nowrap;
     font-size: 18px;
     font-weight: 500;
     color: var(--text-color);
 }
-.boxes-cuadre .box-cuadre .number{
-    font-size: 40px;
+.boxes-ruta .box-ruta .number{
+    font-size: 20px;
     font-weight: 500;
     color: var(--text-color);
 }
-.boxes-cuadre .box-cuadre.box2{
+.boxes-ruta .box-ruta.box2{
     background-color: var(--box2-color);
 }
-.boxes-cuadre .box-cuadre.box3{
+.boxes-ruta .box-ruta.box3{
     background-color: var(--box3-color);
+}
+
+@media (max-width: 780px) {
+    .dash-content .boxes-ruta .box-ruta{
+        width: calc(100% / 1 - 15px);
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
+@media (max-width: 560px) {
+    .dash-content .boxes-ruta .box-ruta{
+        width: 100% ;
+    }
 }

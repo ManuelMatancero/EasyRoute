@@ -1,71 +1,108 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <title>Listado Clientes</title>
-        <meta charset="UTF-8"/>
-    </head>
-    <body>
-        <section th:fragment="listadoClientes" id="clientes">
-            <div class="container-fluid mt-3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
-                            <p th:text="${successMessage}"></p>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <div class="card">
-                            <div th:if="${clientes != null and !clientes.empty}">
-                                <div class="table-responsive">
-                                    <table id="dataTable" class="table table-stryped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>#</th>
-                                                <th th:text="#{cliente.nombre}">Nombre</th>
-                                                <th th:text="#{cliente.apellido}">Apellido</th>
-                                                <th th:text="#{cliente.cedula}">Cedula</th>
-                                                <th th:text="#{ruta.nombre}">Ruta</th>
-                                                <th th:text="#{panel.cobrador}">Direccion</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="cliente, contador : ${clientes}">
-                                                <td>[[${contador.count}]]</td>
-                                                <td>[[${cliente.nombre}]]</td>
-                                                <td>[[${cliente.apellido}]]</td>
-                                                <td>[[${cliente.cedula}]]</td>
-                                                <td>[[${cliente.ruta.nombre}]]</td>
-                                                <td>[[${cliente.ruta.cobrador.nombre} + ' ' + ${cliente.ruta.cobrador.apellido}]]</td>
-                                                
-                                                <td>
-                                                    <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
-                                                       class="btn btn-success">
-                                                        <i class="fa-regular fa-address-card"></i>[[#{cliente.perfil}]]
-                                                    </a>
-                                                </td>
-                                                <td sec:authorize="hasRole('ROLE_ADMIN')" >
-                                                    <a th:href="@{/modificarcliente/} + ${cliente.idCliente}"
-                                                       class="btn btn-secondary">
-                                                        <i class="fa-solid fa-pen-to-square"></i>[[#{cliente.editar}]]
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="alert alert-primary" role="alert" th:if="${clientes == null or clientes.empty}">
-                                <h4 class="alert-heading" th:text="#{cliente.vacia}">Well done!</h4>
-                                <i class="fa-solid fa-circle-plus" style="color: #023388;"></i><p th:text="#{cliente.paraagregar}"></p>
-                            </div>
-                        </div>
-                    </div>
+<section th:fragment="listadoClientes" id="clientes" class="dashboard">
+    <link rel="stylesheet" th:href="@{/css/rutas.css}" />
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <div class="search-box-ruta">
+            <i class="uil uil-search"></i>
+            <input type="text" id="filterInput" th:placeholder="#{panel.filtrar}" class="search-box" />
+            <div class="radio-box text-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1" th:text="#{cliente.nombre}"
+                      value="nameCustomer" checked>
+                    <label class="form-check-label" for="inlineRadio1"></label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio2" th:text="#{cliente.cedula}"
+                      value="idCustomer">
+                    <label class="form-check-label" for="inlineRadio2"></label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio3" th:text="#{ruta.nombre}"
+                      value="routeCustomer">
+                    <label class="form-check-label" for="inlineRadio3"></label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio4" th:text="#{panel.cobrador}"
+                      value="cobradorCustomer">
+                    <label class="form-check-label" for="inlineRadio4"></label>
+                  </div>
+            </div>
+        </div>
+        <div sec:authorize="hasRole('ROLE_USER')">
+            <button class="btn btn-primary rounded-pill shadow float-end mb-2" data-bs-toggle="modal"
+                data-bs-target="#agregarCliente" data-bs-whatever="@mdo">
+                <i class="fa-solid fa-user-plus"></i>
+                <b>[[#{cliente.agregar}]]</b>
+            </button>
+        </div>
 
+        <img src="/img/profile.jpg" alt="" />
+    </div>
+    <div class="dash-content">
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
+            <p th:text="${successMessage}"></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="overview">
+            <div class="title">
+                <i class="uil uil-tachometer-fast-alt"></i>
+                <span class="text">Clientes</span>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-1">
+        <div class="row">
+            <div class="col-md-12 mt-3 bg-dark border border-2 rounded-3">
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+                    <p th:text="${successMessage}"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div class="card bg-dark border border-0">
+                    <div th:if="${clientes != null and !clientes.empty}" class="border border-0 bg-dark border-dark">
+                        <table id="dataTable" class="table table-dark table-borderless border-0 border-dark">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th th:text="#{cliente.nombre}">Nombre</th>
+                                    <th th:text="#{cliente.apellido}">Apellido</th>
+                                    <th th:text="#{cliente.cedula}">Cedula</th>
+                                    <th th:text="#{ruta.nombre}">Ruta</th>
+                                    <th th:text="#{panel.cobrador}">Direccion</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="cliente, contador : ${clientes}">
+                                    <td>[[${contador.count}]]</td>
+                                    <td>[[${cliente.nombre}]]</td>
+                                    <td>[[${cliente.apellido}]]</td>
+                                    <td>[[${cliente.cedula}]]</td>
+                                    <td>[[${cliente.ruta.nombre}]]</td>
+                                    <td>[[${cliente.ruta.cobrador.nombre} + ' ' +
+                                        ${cliente.ruta.cobrador.apellido}]]</td>
+
+                                    <td>
+                                        <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
+                                            class="btn btn-primary me-2 rounded">
+                                            <i class="fa-regular fa-address-card"></i>
+                                        </a>
+                                        <a sec:authorize="hasRole('ROLE_ADMIN')"
+                                            th:href="@{/modificarcliente/} + ${cliente.idCliente}"
+                                            class="btn btn-light rounded">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="alert alert-primary" role="alert" th:if="${clientes == null or clientes.empty}">
+                    <h4 class="alert-heading" th:text="#{cliente.vacia}">Well done!</h4>
+                    <i class="fa-solid fa-circle-plus" style="color: #023388;"></i>
+                    <p th:text="#{cliente.paraagregar}"></p>
                 </div>
             </div>
-        </section>
-    </body>
-</html>
+        </div>
+    </div>
+</section>

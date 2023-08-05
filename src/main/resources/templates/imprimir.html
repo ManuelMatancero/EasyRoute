@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="layout/general/plantilla :: head">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/general/head :: head">
   <title>Imprimir</title>
 </head>
-<body>
 
-<header th:replace="layout/general/plantilla :: header"></header>
-<section th:replace="layout/pagare/imprimirContrato :: imprimirContrato"></section>
-<footer th:replace="layout/general/plantilla :: footer"></footer>
+<body>
+  <section th:replace="layout/pagare/imprimirContrato :: imprimirContrato"></section>
 </body>
+
 </html>

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="layout/general/plantilla :: head">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/general/head :: head">
   <title>Recibos</title>
 </head>
-<body>
 
-<header th:replace="layout/general/plantilla :: header"></header>
-<section th:replace="layout/general/navegacionPagaresGeneral :: navegacionPagaresGeneral"></section>
-<section th:replace="layout/pagare/listadoPagares :: listadoPagares"></section>
-<footer th:replace="layout/general/plantilla :: footer"></footer>
-<script src ="/js/filterTable.js"></script>
+<body>
+  <nav th:replace="layout/general/sidebar :: sidebar"></nav>
+  <section th:replace="layout/pagare/listadoPagares :: listadoPagares"></section>
+  
+  <script th:src="@{/js/layout.js}"></script>
+  <script src="/js/filterTable.js"></script>
 </body>
+
 </html>

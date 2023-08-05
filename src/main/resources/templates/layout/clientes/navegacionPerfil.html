@@ -1,29 +1,21 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-  <title>Botones Perfil</title>
-  <meta charset="UTF-8"/>
-</head>
-<body>
 <section th:fragment="navegacionPerfil" class="py-2 bg-light">
   <div class="container-fluid mt-5">
     <div class="row">
       <div class="col-md-6">
-          <h2><i class="fa-solid fa-circle-user"></i>  <span th:text="${cliente.nombre} + ' ' + ${cliente.apellido}"></span></h2>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb bg-white rounded w-80">
-                <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{panel.home}">Clientes</a></li>
-                <li class="breadcrumb-item"><a th:href="@{/verrutas}">[[#{ruta.nombre}]]</a></li>
-                <li class="breadcrumb-item"><a th:href="@{/verclientes/} + ${idRuta}">[[#{panel.clientes}]]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">[[#{panel.prestamos}]]</li>
-            </ol>
+        <h2><i class="fa-solid fa-circle-user"></i> <span
+            th:text="${cliente.nombre} + ' ' + ${cliente.apellido}"></span></h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-white rounded w-80">
+            <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{panel.home}">Clientes</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/verrutas}">[[#{ruta.nombre}]]</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/verclientes/} + ${idRuta}">[[#{panel.clientes}]]</a></li>
+            <li class="breadcrumb-item active" aria-current="page">[[#{panel.prestamos}]]</li>
+          </ol>
         </nav>
       </div>
       <div class="col-md-6" sec:authorize="hasRole('ROLE_USER')">
-        <button class="btn btn-primary rounded-pill shadow float-end ms-3"
-                data-bs-toggle="modal" data-bs-target="#agregarPrestamo" data-bs-whatever="@mdo">
+        <button class="btn btn-primary rounded-pill shadow float-end ms-3" data-bs-toggle="modal"
+          data-bs-target="#agregarPrestamo" data-bs-whatever="@mdo">
           <i class="fa-solid fa-plus"></i>
           <b th:text="#{accion.agregarprestamo}"></b>
         </button>
@@ -32,5 +24,3 @@
   </div>
   </div>
 </section>
-</body>
-</html>

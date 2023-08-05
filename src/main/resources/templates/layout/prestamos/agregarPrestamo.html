@@ -1,50 +1,42 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <title>Agregar prestamo</title>
-        <meta charset="UTF-8"/>
-    </head>
-    <body>
-        <section th:fragment="agregarPrestamo">
-            <div class="modal fade" id="agregarPrestamo" tabindex="-1" aria-labelledby="agregarPrestamo" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" th:text="#{prestamo.agregar}" id="agregarPrestamo">New message</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<section th:fragment="agregarPrestamo">
+    <div class="modal fade" id="agregarPrestamo" tabindex="-1" aria-labelledby="agregarPrestamo" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" th:text="#{prestamo.agregar}" id="agregarPrestamo">New message</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/guardarPrestamo}" th:object="${prestamo}" method="POST" class="was-validated">
+                        <div>
+                            <input type="hidden" name="idCliente" th:value="${cliente.idCliente}" id="idCliente" />
                         </div>
-                        <div class="modal-body">
-                            <form th:action="@{/guardarPrestamo}" th:object="${prestamo}"
-                                  method="POST" class="was-validated">
-                                <div>
-                                    <input type="hidden" name="idCliente" th:value="${cliente.idCliente}" id="idCliente"/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="monto" th:text="#{prestamo.monto}" class="col-form-label">Monto</label>
+                                    <input type="number" class="form-control" th:field="*{monto}" id="monto" step="any"
+                                        required="true" />
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="monto" th:text="#{prestamo.monto}" class="col-form-label">Monto</label>
-                                            <input type="number" class="form-control" th:field="*{monto}" id="monto" step="any" required = "true"/>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="cuotas" th:text="#{prestamo.cuotas}" class="col-form-label">Cuotas</label>
-                                        <select class="form-select" id="cuotas" th:field="*{cuotas}" aria-label="Default select example" required="required">
-                                            <option value=10 >10</option>
-                                            <option value=13>13</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{barra.salir}">Close</button>
-                                    <button type="submit" class="btn btn-primary" th:text="#{prestamo.agregar}">Send message</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cuotas" th:text="#{prestamo.cuotas}" class="col-form-label">Cuotas</label>
+                                <select class="form-select" id="cuotas" th:field="*{cuotas}"
+                                    aria-label="Default select example" required="required">
+                                    <option value=10>10</option>
+                                    <option value=13>13</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                th:text="#{barra.salir}">Close</button>
+                            <button type="submit" class="btn btn-primary" th:text="#{prestamo.agregar}">Send
+                                message</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
-    </body>
-</html>
+        </div>
+    </div>
+</section>

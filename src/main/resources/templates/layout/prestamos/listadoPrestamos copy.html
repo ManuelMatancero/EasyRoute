@@ -1,0 +1,301 @@
+<section th:fragment="listadoPrestamos1" id="prestamos">
+    <div class="container-fluid">
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
+            <p th:text="${successMessage}"></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card border-left-primary shadow mt-3 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div th:text="#{prestamo.pendiente}"
+                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Earnings (Monthly)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            [[${new java.text.DecimalFormat('$#,##0.00').format(totalPendiente)}]]
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-money-bill-wave fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-left-primary shadow mt-3 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div th:text="#{pagare.pendiente}"
+                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Earnings (Monthly)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            [[${pagaresPendientes}]]
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-file-invoice-dollar fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-left-primary shadow mt-3 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div th:text="#{pagare.totalpagado}"
+                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Earnings (Monthly)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            [[${new java.text.DecimalFormat('$#,##0.00').format(totalPagado)}]]
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-regular fa-money-bill-1 fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-left-primary shadow mt-3 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div th:text="#{prestamo.prestamos}"
+                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Earnings (Monthly)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            [[${totalPrestamos}]]
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-regular fa-handshake fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-lg bg-Light-subtle rounded mt-3">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-handshake"></i> <span th:text="#{panel.prestamos}"></span></h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-primary" role="alert" th:if="${prestamos == null or prestamos.empty}">
+                            <h4 class="alert-heading" th:text="#{prestamo.sinprestamos}">Well done!</h4>
+                            <i class="fa-solid fa-circle-plus" style="color: #023388;"></i>
+                            <p th:text="#{prestamo.vacia}"></p>
+                        </div>
+                        <div class="list-group">
+                            <div class="accordion" id="accordionExample">
+                                <div th:each="prestamo : ${prestamos}">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed lead"
+                                                th:text="'Codigo de prestamo: #'+ ${prestamo.idPrestamo} + ' CAPITAL: ' +${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)} + ' INTERES: ' + ${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)} "
+                                                type="button" data-bs-toggle="collapse"
+                                                th:attr="data-bs-target='#'+${prestamo.idPrestamo}" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                                Accordion Item #1
+                                            </button>
+                                        </h2>
+                                        <div th:attr="id=${prestamo.idPrestamo}" class="accordion-collapse collapse"
+                                            data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <h4>[[#{pagare.listapagares}]]</h4>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <a sec:authorize="hasRole('ROLE_USER')"
+                                                                            th:href="@{/paginaimprimir/} + ${prestamo.idPrestamo}"
+                                                                            class="btn btn-warning float-end">
+                                                                            <i class="fa-solid fa-file-contract"></i>
+                                                                            [[#{cliente.contrato}]]
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                th:if="${prestamo.pagares != null and !prestamo.pagares.empty}">
+                                                                <table class="table table-stryped">
+                                                                    <thead class="thead-dark">
+                                                                        <tr>
+                                                                            <th th:text="#{pagare.nopagare}">No</th>
+                                                                            <th th:text="#{pagare.capital}">Capital</th>
+                                                                            <th th:text="#{pagare.interes}">Interes</th>
+                                                                            <th th:text="#{pagare.total}">Total</th>
+                                                                            <th th:text="#{pagare.vencimiento}">
+                                                                                Vencimiento</th>
+                                                                            <th></th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr th:each="pagare: ${prestamo.pagares}">
+                                                                            <div th:if="${pagare.reciboGen != null}">
+                                                                                <td class="bg-success-subtle">
+                                                                                    [[${pagare.noPagare}]]</td>
+                                                                                <td class="bg-success-subtle">[[${new
+                                                                                    java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]
+                                                                                </td>
+                                                                                <td class="bg-success-subtle">[[${new
+                                                                                    java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]
+                                                                                </td>
+                                                                                <td class="bg-success-subtle"><b>[[${new
+                                                                                        java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b>
+                                                                                </td>
+                                                                                <td class="bg-success-subtle">
+                                                                                    [[${#temporals.format(pagare.vencimiento,
+                                                                                    'MMMM d, yyyy')}]]</td>
+                                                                                <td class="bg-success-subtle">
+                                                                                    <a sec:authorize="hasRole('ROLE_USER')"
+                                                                                        th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
+                                                                                        class="btn btn-warning">
+                                                                                        <i class="fas fa-print"></i>
+                                                                                        [[#{barra.imprimir}]]
+                                                                                    </a>
+                                                                                </td>
+                                                                            </div>
+                                                                            <div
+                                                                                th:if="${pagare.reciboGen == null and pagare.vencimiento.isAfter(currentTime)}">
+                                                                                <td class="bg-primary-subtle">
+                                                                                    [[${pagare.noPagare}]]</td>
+                                                                                <td class="bg-primary-subtle">[[${new
+                                                                                    java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]
+                                                                                </td>
+                                                                                <td class="bg-primary-subtle">[[${new
+                                                                                    java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]
+                                                                                </td>
+                                                                                <td class="bg-primary-subtle"><b>[[${new
+                                                                                        java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b>
+                                                                                </td>
+                                                                                <td class="bg-primary-subtle">
+                                                                                    [[${#temporals.format(pagare.vencimiento,
+                                                                                    'MMMM d, yyyy')}]]</td>
+                                                                                <td class="bg-primary-subtle">
+                                                                                    <a sec:authorize="hasRole('ROLE_USER')"
+                                                                                        th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
+                                                                                        class="btn btn-success">
+                                                                                        <i
+                                                                                            class="fa-solid fa-angle-double-right"></i>
+                                                                                        [[#{pagare.pagar}]]
+                                                                                    </a>
+                                                                                </td>
+                                                                            </div>
+                                                                            <div
+                                                                                th:if="${pagare.vencimiento.isBefore(currentTime) and pagare.reciboGen == null}">
+                                                                                <td class="bg-danger-subtle">
+                                                                                    [[${pagare.noPagare}]]</td>
+                                                                                <td class="bg-danger-subtle">[[${new
+                                                                                    java.text.DecimalFormat('$#,##0.00').format(pagare.capital)}]]
+                                                                                </td>
+                                                                                <td class="bg-danger-subtle">[[${new
+                                                                                    java.text.DecimalFormat('$#,##0.00').format(pagare.interes)}]]
+                                                                                </td>
+                                                                                <td class="bg-danger-subtle"><b>[[${new
+                                                                                        java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</b>
+                                                                                </td>
+                                                                                <td class="bg-danger-subtle">
+                                                                                    [[${#temporals.format(pagare.vencimiento,
+                                                                                    'MMMM d, yyyy')}]]</td>
+                                                                                <td class="bg-danger-subtle">
+                                                                                    <a sec:authorize="hasRole('ROLE_USER')"
+                                                                                        th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
+                                                                                        class="btn btn-success">
+                                                                                        <i
+                                                                                            class="fa-solid fa-angle-double-right"></i>
+                                                                                        [[#{pagare.pagar}]]
+                                                                                    </a>
+                                                                                </td>
+                                                                            </div>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mt-3">
+                            <img src="/img/undraw_profile.svg" class="card-img rounded-start d-block mx-auto mt-2"
+                                style="width: 200px; height: 150px;" alt="Image">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fa-solid fa-circle-info"></i>
+                                    [[#{cliente.informacion}]]</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.nombre}]]: </b></span>
+                                    <span th:text="${cliente.nombre} + ' ' + ${cliente.apellido}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.apellido}]]: </b></span>
+                                    <span th:text="${cliente.cedula}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.trabajo}]]: </b></span>
+                                    <span th:text="${cliente.lugarTrabajo}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.celular}]]: </b></span>
+                                    <span th:text="${cliente.celular}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.telefonoresidencia}]]: </b></span>
+                                    <span th:text="${cliente.telResidencia}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.telefonotrabajo}]]: </b></span>
+                                    <span th:text="${cliente.telTrabajo}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.email}]]: </b></span>
+                                    <span th:text="${cliente.email}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.ocupacion}]]: </b></span>
+                                    <span th:text="${cliente.ocupacion}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.recomendado}]]: </b></span>
+                                    <span th:text="${cliente.recomendado}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.observaciones}]]: </b></span>
+                                    <span th:text="${cliente.observaciones}">An item</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span><b>[[#{cliente.direccion}]]: </b></span>
+                                    <span th:text="${cliente.direccion}">An item</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

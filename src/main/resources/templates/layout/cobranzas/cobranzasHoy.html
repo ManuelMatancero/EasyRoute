@@ -1,25 +1,30 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<section th:fragment="cobranzasHoy" class="dashboard">
+    <link rel="stylesheet" th:href="@{/css/rutas.css}" />
 
-<head>
-    <title>Botones Agregar Cliente</title>
-    <meta charset="UTF-8">
-</head>
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
 
-<body>
-    <section th:fragment="cobranzasHoy" class="py-2">
-        <div class="container-fluid">
+        <div class="mt-3 center-text">
+            <h1 style="color: var(--text-color);">FELIZ [[${currentDate}]] 🚀</h1>
+        </div>
+
+        <img src="/img/profile.jpg" alt="" />
+    </div>
+    <div class="dash-content">
+        <div class="overview">
+            <div class="title">
+                <i class="uil uil-tachometer-fast-alt"></i>
+                <span class="text">Rutas a cobrar hoy</span>
+            </div>
             <div class="row">
                 <div class="col-md-8">
-                    <h3>
-                        [[#{ruta.acobrar}]]
-                    </h3>
                     <div th:if="${rutas != null and !rutas.empty}">
                         <div class="list-group">
                             <div th:each="ruta : ${rutas}">
                                 <div th:if="${ruta.dia} == ${currentDate}">
-                                    <a th:href="@{/verclientes/} + ${ruta.idRuta}" class="list-group-item list-group-item-action rounded shadow" aria-current="true">
+                                    <a th:href="@{/verclientes/} + ${ruta.idRuta}"
+                                        class="list-group-item list-group-item-action rounded shadow"
+                                        aria-current="true">
                                         <span
                                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             [[${ruta.clientes.size()}]]
@@ -31,87 +36,45 @@
                                         </div>
                                         <p class="mb-1">[[${ruta.zona.nombre}]], [[${ruta.zona.direccion}]]</p>
                                     </a>
-                                </br>
+                                    </br>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </br>
-                <div class="alert alert-primary" role="alert">
-                    <h4 class="alert-heading"><i class="fa-solid fa-triangle-exclamation" style="color: #023388;"></i> [[#{ruta.nohay}]]</h4>         
+                    </br>
+                    <div class="alert alert-primary" role="alert">
+                        <h4 class="alert-heading"><i class="fa-solid fa-triangle-exclamation"
+                                style="color: #023388;"></i>
+                            [[#{ruta.nohay}]]</h4>
+                    </div>
                 </div>
-                </div>
-                <div class="col-md-4 mt-4">
-                    <div class="card border-left-primary shadow mt-1 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div th:text="#{ruta.porcobrar}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Earnings (Monthly)</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        [[${new java.text.DecimalFormat('$#,##0.00').format(porCobrar)}]]
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fa-solid fa-money-bill-wave fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                <div class="col-md-4">
+                    <div class="boxes-ruta">
+                        <div class="box-ruta box1 mb-2">
+                            <i class="uil uil-thumbs-up"></i>
+                            <span class="text" th:text="#{ruta.porcobrar}"></span>
+                            <span class="number">[[${new
+                                java.text.DecimalFormat('$#,##0.00').format(porCobrar)}]]</span>
                         </div>
-                    </div>
-                    <div class="card border-left-primary shadow mt-2 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div th:text="#{ruta.rutas}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Earnings (Monthly)</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        [[${cantidadRutas}]]
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fa-solid fa-route fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                        <div class="box-ruta box2 mb-2">
+                            <i class="uil uil-comments"></i>
+                            <span class="text" th:text="#{ruta.rutas}"></span>
+                            <span class="number">[[${cantidadRutas}]]</span>
                         </div>
-                    </div>
-                    <div class="card border-left-primary shadow mt-2 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div th:text="#{prestamo.prestamos}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Earnings (Monthly)</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        [[${cantidadPrestamos}]]
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fa-solid fa-handshake fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                        <div class="box-ruta box3 mb-2">
+                            <i class="uil uil-share"></i>
+                            <span class="text" th:text="#{prestamo.prestamos}"></span>
+                            <span class="number">[[${cantidadPrestamos}]]</span>
                         </div>
-                    </div>
-                    <div class="card border-left-primary shadow mt-2 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div th:text="#{pagare.pendiente}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Earnings (Monthly)</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        [[${pagaresPendientes}]]
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fa-solid fa-file-invoice-dollar fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                        <div class="box-ruta box1 mb-2">
+                            <i class="uil uil-thumbs-up"></i>
+                            <span class="text" th:text="#{pagare.pendiente}"></span>
+                            <span class="number">[[${pagaresPendientes}]]</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        </div>
-    </section>
-</body>
-
-</html>
+    </div>
+    </div>
+</section>

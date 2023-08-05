@@ -1,151 +1,124 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<section th:fragment="listadoprestamogeneral" class="dashboard" id="prestamos">
+    <link rel="stylesheet" th:href="@{/css/rutas.css}" />
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
 
-<head>
-    <title>Listado Prestamos</title>
-    <meta charset="UTF-8" />
-</head>
-
-<body>
-    <section th:fragment="listadoprestamogeneral" id="prestamos">
-        <div class="container-fluid mt-1">
-            <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
-                <p th:text="${successMessage}"></p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card border-left-primary shadow mt-3 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div th:text="#{prestamo.pendiente}"
-                                                class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                [[${new java.text.DecimalFormat('$#,##0.00').format(totalPendiente)}]]
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa-solid fa-money-bill-wave fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card border-left-primary shadow mt-3 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div th:text="#{pagare.pendiente}"
-                                                class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                [[${pagaresPendientes}]]
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa-solid fa-file-invoice-dollar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card border-left-primary shadow mt-3 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div th:text="#{pagare.totalpagado}"
-                                                class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                [[${new java.text.DecimalFormat('$#,##0.00').format(totalPagado)}]]
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa-regular fa-money-bill-1 fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card border-left-primary shadow mt-3 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div th:text="#{prestamo.prestamos}"
-                                                class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                [[${totalPrestamos}]]
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa-regular fa-handshake fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+        <div class="search-box-ruta">
+            <i class="uil uil-search"></i>
+            <input type="text" id="filterInput" th:placeholder="#{panel.filtrar}" class="search-box" />
+            <div class="radio-box text-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1"
+                        th:text="#{cliente.nombre}" value="name" checked>
+                    <label class="form-check-label" for="inlineRadio1"></label>
                 </div>
-                <div class="col-md-12 mt-3">
-                    <div class="card">
-                        <div th:if="${prestamos != null and !prestamos.empty}">
-                          <table id="dataTable" class="table table-stryped">
-                            <thead class="thead-dark">
-                            <tr>
-                              <th>#</th>
-                              <th th:text="#{prestamo.codigo}">No</th>
-                              <th th:text="#{cliente.cliente}">Nombre</th>
-                              <th th:text="#{cliente.cedula}">Nombre</th>
-                              <th th:text="#{prestamo.monto1}">Capital</th>
-                              <th th:text="#{prestamo.interes}">Interes</th>
-                              <th th:text="#{prestamo.cuotas}">cuotas</th>
-                              <th th:text="#{tabla.fecha}">fecha</th>
-                              <th th:text="#{ruta.nombre}">fecha</th>
-                              <th th:text="#{ruta.dia}">dia</th>
-                              <th th:text="#{ruta.cobrador}">Tipo</th>
-                              <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="prestamo, contador : ${prestamos}">
-                              <td>[[${contador.count}]]</td>
-                              <td>[[${prestamo.idPrestamo}]]</td>
-                              <td th:text="${prestamo.cliente.nombre} + ' ' +${prestamo.cliente.apellido}"></td>
-                              <td>[[${prestamo.cliente.cedula}]]</td>
-                              <td>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)}]]</td>
-                              <td>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)}]]</td>
-                              <td>[[${prestamo.cuotas}]]</td>
-                              <td>[[${#temporals.format(prestamo.fecha, 'MMMM d, yyyy')}]]</td>
-                              <td>[[${prestamo.cliente.ruta.nombre}]]</td>
-                              <td>[[${prestamo.cliente.ruta.dia}]]</td>
-                              <td>[[${prestamo.cliente.ruta.cobrador.nombre} +' '+${prestamo.cliente.ruta.cobrador.apellido}]]</td>
-                              <td>
-                                <a th:href="@{/verprestamos/} + ${prestamo.cliente.idCliente}"
-                                   class="btn btn-warning btn-sm">
-                                    <i class="fa-regular fa-address-card"></i>[[#{cliente.perfil}]]
-                                </a>
-                            </td>
-                            </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="text-center p-2" th:if="${prestamos == null or prestamos.empty}">
-                          <span th:text="#{persona.lista-vacia}">Lista vacía</span>
-                        </div>
-                      </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio2"
+                        th:text="#{prestamo.codigo}" value="code">
+                    <label class="form-check-label" for="inlineRadio2"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio3"
+                        th:text="#{ruta.dia}" value="day">
+                    <label class="form-check-label" for="inlineRadio3"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio4"
+                        th:text="#{ruta.nombre}" value="route">
+                    <label class="form-check-label" for="inlineRadio4"></label>
                 </div>
             </div>
         </div>
-    </section>
-</body>
-</html>
+        <img src="/img/profile.jpg" alt="" />
+    </div>
+    <div class="dash-content">
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
+            <p th:text="${successMessage}"></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="overview">
+            <div class="title">
+                <i class="uil uil-tachometer-fast-alt"></i>
+                <span class="text">Prestamos</span>
+            </div>
+
+            <div class="boxes">
+                <div class="box box1">
+                    <i class="uil uil-thumbs-up"></i>
+                    <span class="text" th:text="#{prestamo.pendiente}"></span>
+                    <span class="number">[[${new java.text.DecimalFormat('$#,##0.00').format(totalPendiente)}]]</span>
+                </div>
+                <div class="box box2">
+                    <i class="uil uil-comments"></i>
+                    <span class="text" th:text="#{pagare.pendiente}"></span>
+                    <span class="number">[[${pagaresPendientes}]]</span>
+                </div>
+                <div class="box box3">
+                    <i class="uil uil-share"></i>
+                    <span class="text" th:text="#{pagare.totalpagado}"></span>
+                    <span class="number">[[${new java.text.DecimalFormat('$#,##0.00').format(totalPagado)}]]</span>
+                </div>
+                <div class="box box1">
+                    <i class="uil uil-thumbs-up"></i>
+                    <span class="text" th:text="#{prestamo.prestamos}"></span>
+                    <span class="number">[[${totalPrestamos}]]</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-1">
+        <div class="row">
+            <div class="col-md-12 mt-3 bg-dark border border-2 rounded-3">
+                <div class="card bg-dark border border-0">
+                    <div th:if="${prestamos != null and !prestamos.empty}" class="border border-0 bg-dark border-dark">
+                        <table id="dataTable" class="table table-dark table-borderless border-0 border-dark">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th th:text="#{prestamo.codigo}">No</th>
+                                    <th th:text="#{cliente.cliente}">Nombre</th>
+                                    <th th:text="#{cliente.cedula}">Nombre</th>
+                                    <th th:text="#{prestamo.monto1}">Capital</th>
+                                    <th th:text="#{prestamo.interes}">Interes</th>
+                                    <th th:text="#{prestamo.cuotas}">cuotas</th>
+                                    <th th:text="#{tabla.fecha}">fecha</th>
+                                    <th th:text="#{ruta.nombre}">fecha</th>
+                                    <th th:text="#{ruta.dia}">dia</th>
+                                    <th th:text="#{ruta.cobrador}">Tipo</th>
+                                    <th>Perfil</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="prestamo, contador : ${prestamos}">
+                                    <td>[[${contador.count}]]</td>
+                                    <td>[[${prestamo.idPrestamo}]]</td>
+                                    <td th:text="${prestamo.cliente.nombre} + ' ' +${prestamo.cliente.apellido}">
+                                    </td>
+                                    <td>[[${prestamo.cliente.cedula}]]</td>
+                                    <td>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)}]]</td>
+                                    <td>[[${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)}]]
+                                    </td>
+                                    <td>[[${prestamo.cuotas}]]</td>
+                                    <td>[[${#temporals.format(prestamo.fecha, 'MMMM d, yyyy')}]]</td>
+                                    <td>[[${prestamo.cliente.ruta.nombre}]]</td>
+                                    <td>[[${prestamo.cliente.ruta.dia}]]</td>
+                                    <td>[[${prestamo.cliente.ruta.cobrador.nombre} +'
+                                        '+${prestamo.cliente.ruta.cobrador.apellido}]]</td>
+                                    <td>
+                                        <a th:href="@{/verprestamos/} + ${prestamo.cliente.idCliente}"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fa-regular fa-address-card"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center p-2" th:if="${prestamos == null or prestamos.empty}">
+                        <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

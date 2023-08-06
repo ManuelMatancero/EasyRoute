@@ -45,12 +45,11 @@ public class ControladorInicio {
     public String inicio(@AuthenticationPrincipal User user, Model model) {
         List<Ruta> rutas = rutaService.listAll();
         List<Cobrador> cobradores = cobradorService.listAll();
+        List<Cliente> clientes = new ArrayList<>();
         List<Cliente> lastTenAdded = new ArrayList<>();
-         // Sort the list based on the LocalDateTime attribute in descending order
-         lastTenAdded = clienteService.listAll();
-         lastTenAdded.sort(Comparator.comparing(Cliente::getFechaIngreso).reversed());
-         // Select the last 10 added items
-         List<Cliente> lastTenClientesAdded = lastTenAdded.stream().limit(10).collect(Collectors.toList());
+        List<Cliente> lastTenClientesAdded =new ArrayList<>();
+        List<Prestamo> prestamos = new ArrayList<>();
+        List<Pagare> pagares = new ArrayList<>();
         int cantidadRutas = 0;
         int cantidadCobradores = 0;
         double invertido = 0;
@@ -59,33 +58,74 @@ public class ControladorInicio {
         double ganancias = 0;
         int atrasos = 0;
         int cantidadClientes = 0;
-        // Calcular cantidad de rutas
-        for (Ruta ruta : rutas) {
-            cantidadRutas++;
-            List<Cliente> clientes = ruta.getClientes();
-            for (Cliente cliente : clientes) {
-                cantidadClientes++;
-                List<Prestamo> prestamos = cliente.getPrestamos();
-                for (Prestamo prestamo : prestamos) {
-                    cantidadPrestamos++;
-                    invertido += prestamo.getMonto();
-                    List<Pagare> pagares = prestamo.getPagares();
-                    for (Pagare pagare : pagares) {
-                        if (!(pagare.getReciboGen() == null)) {
-                            ganancias += pagare.getInteres();
-                            cobrado += pagare.getTotal();
-                        }
-                        if (pagare.getVencimiento().isBefore(LocalDateTime.now()) && pagare.getReciboGen() == null) {
-                            atrasos++;
+        if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+        // Sort the list based on the LocalDateTime attribute in descending order
+        lastTenAdded = clienteService.listAll();
+        lastTenAdded.sort(Comparator.comparing(Cliente::getFechaIngreso).reversed());
+        // Select the last 10 added items
+        lastTenClientesAdded = lastTenAdded.stream().limit(10).collect(Collectors.toList());
+            rutas = rutaService.listAll();
+            // Calcular cantidad de rutas
+            for (Ruta ruta : rutas) {
+                cantidadRutas++;
+                clientes = ruta.getClientes();
+                for (Cliente cliente : clientes) {
+                    cantidadClientes++;
+                    prestamos = cliente.getPrestamos();
+                    for (Prestamo prestamo : prestamos) {
+                        cantidadPrestamos++;
+                        invertido += prestamo.getMonto();
+                        pagares = prestamo.getPagares();
+                        for (Pagare pagare : pagares) {
+                            if (!(pagare.getReciboGen() == null)) {
+                                ganancias += pagare.getInteres();
+                                cobrado += pagare.getTotal();
+                            }
+                            if (pagare.getVencimiento().isBefore(LocalDateTime.now())
+                                    && pagare.getReciboGen() == null) {
+                                atrasos++;
+                            }
                         }
                     }
                 }
             }
+            // calcula la cantidad de cobradores
+            for (Cobrador cobrador : cobradores) {
+                cantidadCobradores++;
+            }
+        } else {
+            Usuario usuario = usuarioService.findByUsuario(user.getUsername());
+            rutas = usuario.getCobrador().getRutas();
+            // Calcular cantidad de rutas
+            for (Ruta ruta : rutas) {
+                cantidadRutas++;
+                clientes= ruta.getClientes();
+                lastTenAdded.addAll(clientes);
+                lastTenAdded.sort(Comparator.comparing(Cliente::getFechaIngreso).reversed());
+                 // Select the last 10 added items
+                lastTenClientesAdded = lastTenAdded.stream().limit(10).collect(Collectors.toList());
+                for (Cliente cliente : clientes) {
+                    prestamos=cliente.getPrestamos();
+                    for (Prestamo prestamo : prestamos) {
+                        cantidadPrestamos++;
+                        invertido += prestamo.getMonto();
+                        pagares = prestamo.getPagares();
+                        for (Pagare pagare : pagares) {
+                            if (!(pagare.getReciboGen() == null)) {
+                                ganancias += pagare.getInteres();
+                                cobrado += pagare.getTotal();
+                            }
+                            if (pagare.getVencimiento().isBefore(LocalDateTime.now())
+                                    && pagare.getReciboGen() == null) {
+                                atrasos++;
+                            }
+                        }
+                    }
+                    cantidadClientes++;
+                }
+            }
         }
-        // calcula la cantidad de cobradores
-        for (Cobrador cobrador : cobradores) {
-            cantidadCobradores++;
-        }
+
         log.info("ejecutando el controlador Spring MVC");
         log.info("usuario que hizo login:" + user);
         model.addAttribute("cantidadRutas", cantidadRutas);
@@ -134,7 +174,7 @@ public class ControladorInicio {
                     }
                     totalPrestamos++;
                 }
-                totalClientes ++;
+                totalClientes++;
             }
         }
         model.addAttribute("dineroPorCobrar", dineroPorCobrar);
@@ -172,24 +212,24 @@ public class ControladorInicio {
     }
 
     @GetMapping("/verpagares")
-    public String pagares(@AuthenticationPrincipal User user,  Model model) {
+    public String pagares(@AuthenticationPrincipal User user, Model model) {
         List<Pagare> pagares = new ArrayList<>();
         LocalDateTime currentTime = LocalDateTime.now();
-        //here i get all the data for pagares for Admin
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
-            pagares = pagareService.listAll();  
-        }else{
+        // here i get all the data for pagares for Admin
+        if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            pagares = pagareService.listAll();
+        } else {
             Usuario usuario = usuarioService.findByUsuario(user.getUsername());
             List<Ruta> rutas = usuario.getCobrador().getRutas();
             List<Cliente> clientes = new ArrayList<>();
-            for(Ruta ruta : rutas){
+            for (Ruta ruta : rutas) {
                 clientes.addAll(ruta.getClientes());
             }
             List<Prestamo> prestamos = new ArrayList<>();
-            for(Cliente cliente : clientes){
+            for (Cliente cliente : clientes) {
                 prestamos.addAll(cliente.getPrestamos());
             }
-            for(Prestamo prestamo : prestamos){
+            for (Prestamo prestamo : prestamos) {
                 pagares.addAll(prestamo.getPagares());
             }
         }
@@ -200,7 +240,7 @@ public class ControladorInicio {
 
     @GetMapping("/verprestamos")
     public String prestamos(@AuthenticationPrincipal User user, Model model) {
-        List<Cliente> clientes=new ArrayList<>();
+        List<Cliente> clientes = new ArrayList<>();
         Usuario usuario;
         List<Ruta> rutas;
         List<Prestamo> prestamos = new ArrayList<>();
@@ -231,14 +271,14 @@ public class ControladorInicio {
             for (Ruta ruta : rutas) {
                 clientes.addAll(ruta.getClientes());
             }
-             for(Cliente c  : clientes){
-                    prestamos.addAll(c.getPrestamos());
-                }
-            for(Prestamo p : prestamos){
+            for (Cliente c : clientes) {
+                prestamos.addAll(c.getPrestamos());
+            }
+            for (Prestamo p : prestamos) {
                 pagares.addAll(p.getPagares());
                 totalPrestamos++;
             }
-            for(Pagare p : pagares){
+            for (Pagare p : pagares) {
                 if (p.getReciboGen() == null) {
                     totalPendiente += p.getTotal();
                     pagarespendientes++;

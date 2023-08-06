@@ -1,7 +1,6 @@
 <section
   th:fragment="dashboard"
   class="dashboard"
-  sec:authorize="hasRole('ROLE_ADMIN')"
 >
   <div class="top">
     <i class="uil uil-bars sidebar-toggle"></i>
@@ -46,7 +45,7 @@
           <span class="text" th:text="#{dashboard.clientes}"></span>
           <span class="number">[[${cantidadClientes}]]</span>
         </div>
-        <div class="box box2 mt-3">
+        <div class="box box2 mt-3" sec:authorize="hasRole('ROLE_ADMIN')">
           <i class="uil uil-comments"></i>
           <span class="text" th:text="#{dashboard.cobradores}"></span>
           <span class="number">[[${cantidadCobradores}]]</span>

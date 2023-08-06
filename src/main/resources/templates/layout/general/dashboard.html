@@ -1,7 +1,4 @@
-<section
-  th:fragment="dashboard"
-  class="dashboard"
->
+<section th:fragment="dashboard" class="dashboard">
   <div class="top">
     <i class="uil uil-bars sidebar-toggle"></i>
 
@@ -17,51 +14,45 @@
 
       <div class="boxes">
         <div class="box box1">
-          <i class="uil uil-thumbs-up"></i>
+          <i class="uil uil-money-withdrawal"></i>
           <span class="text" th:text="#{dashboard.inversion}"></span>
-          <span class="number"
-            >[[${new
-            java.text.DecimalFormat('$#,##0.00').format(invertido)}]]</span
-          >
+          <span class="number">[[${new
+            java.text.DecimalFormat('$#,##0.00').format(invertido)}]]</span>
         </div>
         <div class="box box2">
-          <i class="uil uil-comments"></i>
+          <i class="uil uil-dollar-alt"></i>
           <span class="text" th:text="#{dashboard.ganancias}"></span>
-          <span class="number"
-            >[[${new
-            java.text.DecimalFormat('$#,##0.00').format(ganancias)}]]</span
-          >
+          <span class="number">[[${new
+            java.text.DecimalFormat('$#,##0.00').format(ganancias)}]]</span>
         </div>
         <div class="box box3">
-          <i class="uil uil-share"></i>
+          <i class="bi bi-piggy-bank"></i>
           <span class="text" th:text="#{dashboard.cobrado}"></span>
-          <span class="number"
-            >[[${new
-            java.text.DecimalFormat('$#,##0.00').format(cobrado)}]]</span
-          >
+          <span class="number">[[${new
+            java.text.DecimalFormat('$#,##0.00').format(cobrado)}]]</span>
         </div>
         <div class="box box1">
-          <i class="uil uil-thumbs-up"></i>
+          <i class="uil uil-user-square"></i>
           <span class="text" th:text="#{dashboard.clientes}"></span>
           <span class="number">[[${cantidadClientes}]]</span>
         </div>
         <div class="box box2 mt-3" sec:authorize="hasRole('ROLE_ADMIN')">
-          <i class="uil uil-comments"></i>
+          <i class="uil uil-user-arrows"></i>
           <span class="text" th:text="#{dashboard.cobradores}"></span>
           <span class="number">[[${cantidadCobradores}]]</span>
         </div>
         <div class="box box3 mt-3">
-          <i class="uil uil-share"></i>
+          <i class="uil uil-map-marker"></i>
           <span class="text" th:text="#{dashboard.rutas}"></span>
           <span class="number">[[${cantidadRutas}]]</span>
         </div>
         <div class="box box1 mt-3">
-          <i class="uil uil-thumbs-up"></i>
+          <i class="uil uil-clock-two"></i>
           <span class="text" th:text="#{dashboard.atrasos}"></span>
           <span class="number">[[${atrasos}]]</span>
         </div>
         <div class="box box2 mt-3">
-          <i class="uil uil-thumbs-up"></i>
+          <i class="uil uil-money-stack"></i>
           <span class="text" th:text="#{dashboard.prestamos}"></span>
           <span class="number">[[${cantidadPrestamos}]]</span>
         </div>
@@ -71,42 +62,38 @@
     <div class="activity">
       <div class="title">
         <i class="uil uil-clock-three"></i>
-        <span class="text">Recent Activity</span>
+        <span class="text">Nuevos Clientes</span>
       </div>
 
       <div class="activity-data">
         <div class="data names">
           <span class="data-title">Name</span>
-          <div th:each=" cliente : ${lastTenClientesAdded}">
+          <div class="data names" th:each=" cliente : ${lastTenClientesAdded}">
             <span class="data-list" th:text="${cliente.nombre} + ' ' + ${cliente.apellido}"></span>
           </div>
         </div>
         <div class="data email">
-          <span class="data-title">Cedula</span>
-          <div th:each=" cliente : ${lastTenClientesAdded}">
+          <span class="data-title">Cédula</span>
+          <div class="data names" th:each=" cliente : ${lastTenClientesAdded}">
             <span class="data-list" th:text="${cliente.cedula}"></span>
           </div>
         </div>
         <div class="data joined">
-          <span class="data-title">Joined</span>
-          <div th:each=" cliente : ${lastTenClientesAdded}">
+          <span class="data-title">Ingreso</span>
+          <div class="data names" th:each=" cliente : ${lastTenClientesAdded}">
             <span class="data-list" th:text="${cliente.fechaIngreso}"></span>
           </div>
         </div>
         <div class="data type">
-          <span class="data-title">Status</span>
-          <div th:each=" cliente : ${lastTenClientesAdded}">
-            <div th:if="${cliente.estatus == 1}">
-              <span class="data-list">🟢 Activo</span>
-            </div>
-            <div th:if="${cliente.estatus == 0}">
-              <span class="data-list" >🔴 Anulado</span>
-            </div>
+          <span class="data-title">Estado</span>
+          <div class="data names" th:each=" cliente : ${lastTenClientesAdded}">
+            <span th:if="${cliente.estatus == 1}" class="data-list">🟢 Activo</span>
+            <span th:if="${cliente.estatus == 0}" class="data-list">🔴 Anulado</span>
           </div>
         </div>
         <div class="data status">
-          <span class="data-title">Direccion</span>
-          <div th:each=" cliente : ${lastTenClientesAdded}">
+          <span class="data-title">Dirección</span>
+          <div class="data names" th:each=" cliente : ${lastTenClientesAdded}">
             <span class="data-list" th:text="${cliente.direccion}"></span>
           </div>
         </div>

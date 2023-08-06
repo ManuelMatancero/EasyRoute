@@ -1,7 +1,4 @@
-<section
-  th:fragment="dashboard"
-  class="dashboard"
->
+<section th:fragment="dashboard" class="dashboard">
   <link rel="stylesheet" th:href="@{/css/cuadres.css}" />
   <div class="top">
     <i class="uil uil-bars sidebar-toggle"></i>
@@ -11,43 +8,27 @@
   <div class="dash-content">
     <div class="overview">
       <div class="title">
-        <i class="uil uil-tachometer-fast-alt"></i>
+        <i class="uil uil-chart-bar"></i>
         <span class="text">Cuadres</span>
       </div>
       <div class="row">
-        <div class="col-md-6 ms-0">
-          <div
-            class="col-8 card text-white mt-3 ms-0"
-            style="border-radius: 1rem; background-color: var(--primary-color);"
-          >
+        <div class="col-md-5 ms-0">
+          <div class="col-md-12 card text-white mt-3 ms-0"
+            style="border-radius: 1rem; background-color: var(--primary-color); max-width: 430px;">
             <div class="card-body p-3 pb-4">
-              <h4
-                class="fw-bold mb-3 text-uppercase mt-2 fs-4 pt-3 ps-3"
-              >
-                <i class="bx bx-grid-alt"></i> Filtros
+              <h4 class="fw-bold mb-3 text-uppercase mt-2 fs-4 pt-3 ps-3">
+                <i class="uil uil-filter"></i> Filtros
               </h4>
               <form th:action="@{/cuadres}" method="POST">
                 <div class="row p-3">
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Fecha</p>
-                    <input
-                      type="date"
-                      class="form-control form-control-sm mb-2"
-                      placeholder="Fecha Inicial:"
-                      name="start-date"
-                      aria-label="Fecha inicial"
-                      th:value="${startDateField != null ? startDateField : ''}"
-                      style="font-size: small"
-                    />
+                    <input type="date" class="form-control form-control-sm mb-2" placeholder="Fecha Inicial:"
+                      name="start-date" aria-label="Fecha inicial"
+                      th:value="${startDateField != null ? startDateField : ''}" style="font-size: small" />
 
-                    <input
-                      type="date"
-                      class="form-control form-control-sm mb-3"
-                      placeholder="Fecha Final:"
-                      name="end-date"
-                      th:value="${endDateField != null ? endDateField : ''}"
-                      style="font-size: small"
-                    />
+                    <input type="date" class="form-control form-control-sm mb-3" placeholder="Fecha Final:"
+                      name="end-date" th:value="${endDateField != null ? endDateField : ''}" style="font-size: small" />
                   </div>
                   <style>
                     input[type="date"]:before {
@@ -56,6 +37,7 @@
                       margin-right: 0.2em;
                       font-size: 10px;
                     }
+
                     input[type="date"]:focus:before,
                     input[type="date"]:valid:before {
                       content: "";
@@ -63,171 +45,92 @@
                   </style>
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Zona</p>
-                    <select
-                      name="zona"
-                      class="form-select form-select-sm mb-3"
-                      aria-label="Filtrar Zona"
-                    >
-                      <option
-                        value="default"
-                        th:selected="${zonaField == null}"
-                      >
+                    <select name="zona" class="form-select form-select-sm mb-3" aria-label="Filtrar Zona">
+                      <option value="default" th:selected="${zonaField == null}">
                         Elige una zona
                       </option>
                       <th:block th:each="zona : ${zonas}">
-                        <option
-                          th:value="${zona.idZona}"
-                          th:text="${zona.nombre}"
-                          th:selected="${zonaField != null && zona.idZona == zonaField}"
-                        ></option>
+                        <option th:value="${zona.idZona}" th:text="${zona.nombre}"
+                          th:selected="${zonaField != null && zona.idZona == zonaField}"></option>
                       </th:block>
                     </select>
                   </div>
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Ruta</p>
-                    <select
-                      name="ruta"
-                      class="form-select form-select-sm mb-3"
-                      aria-label="Filtrar Ruta"
-                    >
-                      <option
-                        value="default"
-                        th:selected="${rutaField == null}"
-                      >
+                    <select name="ruta" class="form-select form-select-sm mb-3" aria-label="Filtrar Ruta">
+                      <option value="default" th:selected="${rutaField == null}">
                         Elige una ruta
                       </option>
                       <th:block th:each="ruta : ${rutas}">
-                        <option
-                          th:value="${ruta.idRuta}"
-                          th:text="${ruta.nombre}"
-                          th:selected="${rutaField != null && ruta.idRuta == rutaField}"
-                        ></option>
+                        <option th:value="${ruta.idRuta}" th:text="${ruta.nombre}"
+                          th:selected="${rutaField != null && ruta.idRuta == rutaField}"></option>
                       </th:block>
                     </select>
                   </div>
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Cobrador</p>
-                    <select
-                      name="cobrador"
-                      class="form-select form-select-sm mb-3"
-                      aria-label="Filtrar Cobrador"
-                    >
-                      <option
-                        value="default"
-                        th:selected="${cobradorField == null}"
-                      >
+                    <select name="cobrador" class="form-select form-select-sm mb-3" aria-label="Filtrar Cobrador">
+                      <option value="default" th:selected="${cobradorField == null}">
                         Elige un cobrador
                       </option>
                       <th:block th:each="cobrador : ${cobradores}">
-                        <option
-                          th:value="${cobrador.idCobrador}"
-                          th:text="${cobrador.nombre}"
-                          th:selected="${cobradorField != null && cobrador.idCobrador == cobradorField}"
-                        ></option>
+                        <option th:value="${cobrador.idCobrador}" th:text="${cobrador.nombre}"
+                          th:selected="${cobradorField != null && cobrador.idCobrador == cobradorField}"></option>
                       </th:block>
                     </select>
                   </div>
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Empresa</p>
-                    <select
-                      name="empresa"
-                      class="form-select form-select-sm mb-3"
-                      aria-label="Filtrar Empresa"
-                    >
-                      <option
-                        value="default"
-                        th:selected="${empresaField == null}"
-                      >
+                    <select name="empresa" class="form-select form-select-sm mb-3" aria-label="Filtrar Empresa">
+                      <option value="default" th:selected="${empresaField == null}">
                         Elige una empresa
                       </option>
                       <th:block th:each="empresa : ${empresas}">
-                        <option
-                          th:value="${empresa.idEmpresa}"
-                          th:text="${empresa.nombre}"
-                          th:selected="${empresaField != null && empresa.idEmpresa == empresaField}"
-                        ></option>
+                        <option th:value="${empresa.idEmpresa}" th:text="${empresa.nombre}"
+                          th:selected="${empresaField != null && empresa.idEmpresa == empresaField}"></option>
                       </th:block>
                     </select>
                   </div>
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Cliente</p>
-                    <select
-                      name="cliente"
-                      class="form-select form-select-sm mb-3"
-                      aria-label="Filtrar Cliente"
-                    >
-                      <option
-                        value="default"
-                        th:selected="${clienteField == null}"
-                      >
+                    <select name="cliente" class="form-select form-select-sm mb-3" aria-label="Filtrar Cliente">
+                      <option value="default" th:selected="${clienteField == null}">
                         Elige un cliente
                       </option>
                       <th:block th:each="cliente : ${clientes}">
-                        <option
-                          th:value="${cliente.idCliente}"
-                          th:text="${cliente.nombre}"
-                          th:selected="${clienteField != null && cliente.idCliente == clienteField}"
-                        ></option>
+                        <option th:value="${cliente.idCliente}" th:text="${cliente.nombre}"
+                          th:selected="${clienteField != null && cliente.idCliente == clienteField}"></option>
                       </th:block>
                     </select>
                   </div>
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Filtrar por Prestamo</p>
-                    <select
-                      name="prestamo"
-                      class="form-select form-select-sm mb-3"
-                      aria-label="Filtrar Prestamo"
-                    >
-                      <option
-                        value="default"
-                        th:selected="${prestamoField == null}"
-                      >
+                    <select name="prestamo" class="form-select form-select-sm mb-3" aria-label="Filtrar Prestamo">
+                      <option value="default" th:selected="${prestamoField == null}">
                         Elige una prestamo
                       </option>
                       <th:block th:each="prestamo : ${prestamos}">
-                        <option
-                          th:value="${prestamo.idPrestamo}"
-                          th:text="${prestamo.tipoPrestamo}"
-                          th:selected="${prestamoField != null && prestamo.idPrestamo == prestamoField}"
-                        ></option>
+                        <option th:value="${prestamo.idPrestamo}" th:text="${prestamo.tipoPrestamo}"
+                          th:selected="${prestamoField != null && prestamo.idPrestamo == prestamoField}"></option>
                       </th:block>
                     </select>
                   </div>
                   <div class="col-md-6">
                     <p class="fs-6 me-3 fw-bold">Pagares con Recibo</p>
                     <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="pagare-con-recibo"
-                        id="inlineRadio1"
-                        value="true"
-                        th:checked="${pagareConReciboField == null || pagareConReciboField == true}"
-                      />
-                      <label class="form-check-label" for="inlineRadio1"
-                        >Sí</label
-                      >
+                      <input class="form-check-input" type="radio" name="pagare-con-recibo" id="inlineRadio1"
+                        value="true" th:checked="${pagareConReciboField == null || pagareConReciboField == true}" />
+                      <label class="form-check-label" for="inlineRadio1">Sí</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="pagare-con-recibo"
-                        id="inlineRadio2"
-                        value="false"
-                        th:checked="${pagareConReciboField == false}"
-                      />
-                      <label class="form-check-label" for="inlineRadio2"
-                        >No</label
-                      >
+                      <input class="form-check-input" type="radio" name="pagare-con-recibo" id="inlineRadio2"
+                        value="false" th:checked="${pagareConReciboField == false}" />
+                      <label class="form-check-label" for="inlineRadio2">No</label>
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <button
-                      type="submit"
-                      class="btn btn-light btn-md float-end filter-button"
-                    >
-                      Filtrar
+                    <button type="submit" class="btn btn-light btn-md float-end filter-button">
+                      <i class="uil uil-filter"></i> Filtrar
                     </button>
                   </div>
                 </div>
@@ -238,43 +141,43 @@
         <div class="col-md-6">
           <div class="boxes-cuadre">
             <div class="box-cuadre box1 mb-3">
-              <i class="uil uil-thumbs-up"></i>
+              <i class="uil uil-usd-circle"></i>
               <span class="text">Monto Total</span>
               <span class="number" th:text="${montoTotal}"></span>
             </div>
             <div class="box-cuadre box2 mb-3">
-              <i class="uil uil-thumbs-up"></i>
+              <i class="uil uil-bill"></i>
               <span class="text">Cantidad de Pagos</span>
               <span class="number" th:text="${cantidadPagares}"></span>
             </div>
             <div class="box-cuadre box3 mb-3">
-              <i class="uil uil-thumbs-up"></i>
+              <i class="uil uil-exclamation-circle"></i>
               <span class="text">Monto Pendiente</span>
               <span class="number" th:text="${montoPendiente}"></span>
             </div>
             <div class="box-cuadre box1 mb-3">
-              <i class="uil uil-thumbs-up"></i>
-              <span class="text">Cantidad de Pagos Pendientes</span>
+              <i class="uil uil-file-exclamation-alt"></i>
+              <span class="text">Pagos Pendientes</span>
               <span class="number" th:text="${cantidadPagosPendientes}"></span>
             </div>
             <div class="box-cuadre box2 mb-3">
-              <i class="uil uil-thumbs-up"></i>
-              <span class="text">Cantidad de Zonas</span>
+              <i class="bi bi-compass"></i>
+              <span class="text">Zonas</span>
               <span class="number" th:text="${cantidadZonasVisitadas}"></span>
             </div>
             <div class="box-cuadre box3 mb-3">
-              <i class="uil uil-thumbs-up"></i>
-              <span class="text">Cantidad de Rutas</span>
+              <i class="uil uil-map-marker"></i>
+              <span class="text">Rutas</span>
               <span class="number" th:text="${cantidadRutasVisitadas}"></span>
             </div>
             <div class="box-cuadre box1 mb-3">
-              <i class="uil uil-thumbs-up"></i>
-              <span class="text">Cantidad de Clientes</span>
+              <i class="uil uil-user-square"></i>
+              <span class="text">Clientes</span>
               <span class="number" th:text="${cantidadClientesPagaron}"></span>
             </div>
             <div class="box-cuadre box2 mb-3">
-              <i class="uil uil-thumbs-up"></i>
-              <span class="text">Cantidad de Prestamos</span>
+              <i class="uil uil-file-bookmark-alt"></i>
+              <span class="text">Prestamos</span>
               <span class="number" th:text="${cantidadPrestamos}"></span>
             </div>
           </div>

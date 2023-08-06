@@ -9,9 +9,9 @@ tableContainer2 = body.querySelector(".table-container2");
 let getMode = localStorage.getItem("mode");
 if (getMode && getMode === "dark") {
   body.classList.toggle("dark");
-  tableElement.classList.toggle("table-dark");
-  tableContainer.classList.toggle("bg-dark");
-  tableContainer2.classList.toggle("bg-dark");
+  tableElement?.classList.toggle("table-dark");
+  tableContainer?.classList.toggle("bg-dark");
+  tableContainer2?.classList.toggle("bg-dark");
 }
 
 let getStatus = localStorage.getItem("status");

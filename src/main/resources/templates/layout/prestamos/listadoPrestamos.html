@@ -92,13 +92,24 @@
                                 <div th:each="prestamo : ${prestamos}" style="background-color: var(--panel-color);">
                                     <div class="accordion-item mb-2">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed lead"
+                                            <button
+                                                th:if="${prestamo.estado == 1}"
+                                                class="accordion-button bg-warning-subtle collapsed lead"
                                                 th:text="'Codigo de prestamo: #'+ ${prestamo.idPrestamo} + ' CAPITAL: ' +${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)} + ' INTERES: ' + ${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)} "
                                                 type="button" data-bs-toggle="collapse"
                                                 th:attr="data-bs-target='#'+${prestamo.idPrestamo}" aria-expanded="true"
                                                 aria-controls="collapseOne">
                                                 Accordion Item #1
                                             </button>
+                                            <button
+                                            th:if="${prestamo.estado == 0}"
+                                            class="accordion-button bg-success-subtle collapsed lead"
+                                            th:text="'Codigo de prestamo: #'+ ${prestamo.idPrestamo} + ' CAPITAL: ' +${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)} + ' INTERES: ' + ${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)} "
+                                            type="button" data-bs-toggle="collapse"
+                                            th:attr="data-bs-target='#'+${prestamo.idPrestamo}" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Accordion Item #1
+                                        </button>
                                         </h2>
                                         <div th:attr="id=${prestamo.idPrestamo}" class="accordion-collapse collapse"
                                             data-bs-parent="#accordionExample">
@@ -108,13 +119,22 @@
                                                         <div class="card accordion-container">
                                                             <div class="card-header">
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-6">
                                                                         <h4 style="color: var(--text-color);">[[#{pagare.listapagares}]]</h4>
                                                                     </div>
-                                                                    <div class="col-md-8">
+                                                                    <div class="col-md-6">
+                                                                        <a sec:authorize="hasRole('ROLE_USER')"
+                                                                        th:if="${prestamo.estado == 0}"
+                                                                        th:href="@{/archivarprestamo/} + ${prestamo.idPrestamo}"
+                                                                        class="btn btn-success"
+                                                                        target="_blank">
+                                                                        <i class="fa-solid fa-box-archive"></i>
+                                                                        [[#{prestamo.archivar}]]
+                                                                        </a>        
+
                                                                         <a sec:authorize="hasRole('ROLE_USER')"
                                                                             th:href="@{/paginaimprimir/} + ${prestamo.idPrestamo}"
-                                                                            class="btn btn-primary float-end"
+                                                                            class="btn btn-primary"
                                                                             target="_blank">
                                                                             <i class="fa-solid fa-file-contract"></i>
                                                                             [[#{cliente.contrato}]]

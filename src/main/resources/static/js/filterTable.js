@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
             case "cobradorCustomer":
                 return 5;
             case "numeroPagare":
-                return 1;
+                return 0;
             case "nombreCliente":
-                return 2;
+                return 1;
             case "vencimiento" :
                 return 6;
             case "rutaNombre" :
@@ -52,6 +52,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 return 3;
             case "rutaCobrador" :
                 return 4;
+            case "nameUser" :
+                return 1;
+            case "idUser" :
+                return 4;
+            case "user" :
+                return 3;
             default:
                 return 0; // Default to name filter if no match found
         }

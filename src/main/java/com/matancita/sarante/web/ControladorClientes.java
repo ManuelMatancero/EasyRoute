@@ -163,6 +163,20 @@ public class ControladorClientes {
             pagare.setReciboGen(recibosGen);
             pagareService.update(pagare);
         }
+        //This is to check if all pagares are paid, and change the prestamo state to 0 that means paid o saldado
+        Prestamo prestamo = pagare.getPrestamo();
+        List<Pagare> pagares = prestamo.getPagares();
+        int pagaresPagados =0;
+        for(Pagare pagare1: pagares){
+            if(!(pagare1.getReciboGen()==null)){
+                pagaresPagados++;
+            }
+        }
+        if(prestamo.getEstado()!=0 && pagaresPagados==pagares.size()){
+            prestamo.setEstado(0);
+            prestamoService.update(prestamo);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         model.addAttribute("pagare", pagare);
         return "genRecibo";
     }
@@ -179,6 +193,7 @@ public class ControladorClientes {
                 ReciboPDFGenerator printRecibo = new ReciboPDFGenerator();
                 printRecibo.setPagare(pagare);
                 printRecibo.generate(response);
+                
     }
 
     @GetMapping("/eliminarCliente")

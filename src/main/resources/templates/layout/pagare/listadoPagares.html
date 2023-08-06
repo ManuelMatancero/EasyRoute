@@ -41,10 +41,10 @@
     </div>
     <div class="container-fluid mt-1">
       <div class="row">
-        <div class="col-md-12 mt-3 bg-dark border border-2 rounded-3">
-          <div class="card bg-dark border border-0">
-            <div th:if="${pagares != null and !pagares.empty}" class="border border-0 bg-dark border-dark">
-              <table id="dataTable" class="table table-dark table-borderless border-0 border-dark">
+        <div class="col-md-12 mt-3 border border-2 rounded-3 table-container">
+          <div class="card border border-0">
+            <div th:if="${pagares != null and !pagares.empty}" class="border border-0">
+              <table id="dataTable" class="table table-borderless border-0 border-dark">
                 <thead>
                   <tr>
                     <th th:text="#{pagare.nopagare}">No</th>

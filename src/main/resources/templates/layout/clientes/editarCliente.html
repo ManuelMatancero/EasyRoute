@@ -1,121 +1,125 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-  <title>Editar Cliente</title>
-  <meta charset="UTF-8"/>
-</head>
-<body>
-<section th:fragment="editarCliente">
-  <form th:action="@{/guardarCliente}" th:object="${cliente}"
-        method="POST" class="was-validated">
-    <input type="hidden" name="idCliente" id="idCliente" th:field="*{idCliente}"/>
-    <section th:replace="layout/clientes/botonesEditarCliente :: botonesEditarCliente"></section>
-    <div id="details">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="card">
-              <div class="card-header">
-                <h4>[[#{cliente.editarcliente}]]</h4>
-              </div>
-              <div class="card-body">
-                <div>
-                  <input type="hidden" name="idRuta" th:value="${cliente.ruta.idRuta}" id="idRuta"/>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="nombre" th:text="#{cliente.nombre}" class="col-form-label">Nombre</label>
-                      <input type="text" class="form-control" th:field="*{nombre}" id="nombre" required = "true"/>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="apellido" th:text="#{cliente.apellido}" class="col-form-label">Apellido</label>
-                      <input type="text" class="form-control" th:field="*{apellido}" id="apellido" required = "true"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="cedula" th:text="#{cliente.cedula}" class="col-form-label">Cedula</label>
-                      <input type="number" class="form-control" th:field="*{cedula}" id="cedula" required="true"/>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="date" th:text="#{cliente.nacimiento}">Pick a date:</label>
-                      <input type="date" class="form-control" id="date" name="date"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="mb-3">
-                      <label for="celular" th:text="#{cliente.celular}" class="col-form-label">Celular</label>
-                      <input type="tel" class="form-control" th:field="*{celular}" id="celular" required="true"/>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mb-3">
-                      <label for="telefonoresidencia" th:text="#{cliente.telefonoresidencia}" class="col-form-label">Cedula</label>
-                      <input type="tel" class="form-control" th:field="*{telResidencia}" id="telefonoresidencia"/>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mb-3">
-                      <label for="telefonotrabajo" th:text="#{cliente.telefonotrabajo}" class="col-form-label">Cedula</label>
-                      <input type="tel" class="form-control" th:field="*{telTrabajo}" id="telefonotrabajo"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="email" th:text="#{cliente.email}" class="col-form-label">Email</label>
-                      <input type="email" class="form-control" th:field="*{email}" id="email"/>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="ocupacion" th:text="#{cliente.ocupacion}" class="col-form-label">Ocupacion</label>
-                      <input type="text" class="form-control" th:field="*{ocupacion}" id="ocupacion"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="lugartrabajo" th:text="#{cliente.trabajo}" class="col-form-label">Trabajo</label>
-                  <input type="text" class="form-control" th:field="*{lugarTrabajo}" id="lugartrabajo"/>
-                </div>
-                <div class="mb-3">
-                  <label for="direccion" th:text="#{cliente.direccion}" class="col-form-label">Direccion</label>
-                  <textarea class="form-control" th:field="*{direccion}" id="direccion" required="true" rows="2"></textarea>
-                </div>
-                <div class="row">
-                  <div class="col-md-5">
-                    <div class="mb-3">
-                      <label for="recomendado" th:text="#{cliente.recomendado}" class="col-form-label">Recomendado</label>
-                      <input type="text" class="form-control" th:field="*{recomendado}" id="recomendado"/>
-                    </div>
-                  </div>
-                  <div class="col-md-7">
-                    <div class="mb-3">
-                      <label for="observacion" th:text="#{cliente.observaciones}" class="col-form-label">Observaciones</label>
-                      <textarea class="form-control" th:field="*{observaciones}" id="observacion" rows="2"></textarea>
-                    </div>
-                  </div>
-                </div>
+<section th:fragment="editarCliente" class="dashboard">
+  <link rel="stylesheet" th:href="@{/css/rutas.css}" />
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div class="search-box-ruta"></div>
 
+    <img src="/img/profile.jpg" alt="" />
+  </div>
+  <div class="dash-content">
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
+      <p th:text="${successMessage}"></p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="overview">
+      <div class="boxes mx-auto">
+        <div class="box company box1 mx-auto">
+          <h1 class="title mt-0 text-center text-title">[[#{cliente.editarcliente}]]</h1>
+          <form th:action="@{/guardarCliente}" th:object="${cliente}" method="POST" class="was-validated">
+            <input type="hidden" name="idCliente" id="idCliente" th:field="*{idCliente}" />
+            <!-- <section th:replace="layout/clientes/botonesEditarCliente :: botonesEditarCliente"></section> -->
+            <div>
+              <input type="hidden" name="idRuta" th:value="${cliente.ruta.idRuta}" id="idRuta" />
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="nombre" th:text="#{cliente.nombre}" class="col-form-label text">Nombre</label>
+                  <input type="text" class="form-control" th:field="*{nombre}" id="nombre" required="true" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="apellido" th:text="#{cliente.apellido}" class="col-form-label text">Apellido</label>
+                  <input type="text" class="form-control" th:field="*{apellido}" id="apellido" required="true" />
+                </div>
               </div>
             </div>
-          </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="cedula" th:text="#{cliente.cedula}" class="col-form-label text">Cedula</label>
+                  <input type="number" class="form-control" th:field="*{cedula}" id="cedula" required="true" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="date" th:text="#{cliente.nacimiento}" class="col-form-label text">Pick a date:</label>
+                  <input type="date" class="form-control" id="date" name="date" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="celular" th:text="#{cliente.celular}" class="col-form-label text">Celular</label>
+                  <input type="tel" class="form-control" th:field="*{celular}" id="celular" required="true" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="telefonoresidencia" th:text="#{cliente.telefonoresidencia}"
+                    class="col-form-label text">Cedula</label>
+                  <input type="tel" class="form-control" th:field="*{telResidencia}" id="telefonoresidencia" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="telefonotrabajo" th:text="#{cliente.telefonotrabajo}"
+                    class="col-form-label text">Cedula</label>
+                  <input type="tel" class="form-control" th:field="*{telTrabajo}" id="telefonotrabajo" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="email" th:text="#{cliente.email}" class="col-form-label text">Email</label>
+                  <input type="email" class="form-control" th:field="*{email}" id="email" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="ocupacion" th:text="#{cliente.ocupacion}" class="col-form-label text">Ocupacion</label>
+                  <input type="text" class="form-control" th:field="*{ocupacion}" id="ocupacion" />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="lugartrabajo" th:text="#{cliente.trabajo}" class="col-form-label text">Trabajo</label>
+              <input type="text" class="form-control" th:field="*{lugarTrabajo}" id="lugartrabajo" />
+            </div>
+            <div class="mb-3">
+              <label for="recomendado" th:text="#{cliente.recomendado}" class="col-form-label text">Recomendado</label>
+              <input type="text" class="form-control" th:field="*{recomendado}" id="recomendado" />
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="direccion" th:text="#{cliente.direccion}" class="col-form-label text">Direccion</label>
+                  <textarea class="form-control" th:field="*{direccion}" id="direccion" required="true"
+                    rows="2"></textarea>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="observacion" th:text="#{cliente.observaciones}"
+                    class="col-form-label text">Observaciones</label>
+                  <textarea class="form-control" th:field="*{observaciones}" id="observacion" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="float-end text-white mt-2">
+              <a th:href="@{/eliminarCliente(idCliente=${cliente.idCliente})}" class="btn btn-sm btn-danger text-white rounded f-5 px-3 py-0 m-0">
+                <i class="bi bi-trash-fill"></i>
+              </a>
+              <button type="submit" class="btn btn-sm btn-primary px-3 py-0 m-0 rounded text-white text-center ms-2">
+                <i class="bi bi-box-arrow-down"></i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </section>
-</body>
-</html>

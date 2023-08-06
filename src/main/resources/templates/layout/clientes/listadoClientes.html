@@ -34,7 +34,7 @@
     <div class="dash-content">
         <div class="overview">
             <div class="title">
-                <i class="uil uil-tachometer-fast-alt"></i>
+                <i class="uil uil-user-square"></i>
                 <span class="text">Clientes</span>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="card border border-0 table-container">
                     <div class="mt-3">
-                        <button sec:authorize="hasRole('ROLE_USER')"
+                        <button th:if="${idRuta}" sec:authorize="hasRole('ROLE_USER')"
                             class="btn btn-primary rounded-10 float-end mt-0 mb-2 py-2" data-bs-toggle="modal"
                             data-bs-target="#agregarCliente" data-bs-whatever="@mdo">
                             <i class="fa-solid fa-user-plus"></i>
@@ -82,7 +82,7 @@
                                     <td>
                                         <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
                                             class="btn btn-primary me-2 rounded">
-                                            <i class="fa-regular fa-address-card"></i>
+                                            <i class="uil uil-file-bookmark-alt"></i>
                                         </a>
                                         <a sec:authorize="hasRole('ROLE_ADMIN')"
                                             th:href="@{/modificarcliente/} + ${cliente.idCliente}"

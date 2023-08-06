@@ -4,11 +4,11 @@
         <i class="uil uil-bars sidebar-toggle"></i>
         <div class="search-box-ruta"></div>
 
-        <a th:href="@{/editarempresa}" class="btn btn-primary rounded-pill shadow float-end ps-3"
+        <a th:href="@{/editarempresa}" class="btn btn-sm btn-primary rounded float-end me-2 py-2"
             data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false"
             aria-controls="collapseWidthExample">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <b>[[#{empresa.editar}]]</b>
+            <small><i class="fa-solid fa-pen-to-square"></i>
+                <b>[[#{empresa.editar}]]</b></small>
         </a>
 
         <img src="/img/profile.jpg" alt="" />
@@ -21,7 +21,7 @@
         </div>
         <div class="overview">
             <div class="title">
-                <i class="uil uil-tachometer-fast-alt"></i>
+                <i class="uil uil-building"></i>
                 <span class="text">Empresas</span>
             </div>
             <div class="boxes mx-auto">

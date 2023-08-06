@@ -29,7 +29,7 @@
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/verclientes}">
-          <i class="uil uil-user-circle"></i>
+          <i class="uil uil-user-square"></i>
           <span class="link-name">Clientes</span>
         </a>
       </li>
@@ -41,8 +41,8 @@
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/verpagares}">
-          <i class="uil uil-comments"></i>
-          <span class="link-name">Recibos</span>
+          <i class="uil uil-bill"></i>
+          <span class="link-name">Pagares</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">

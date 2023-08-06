@@ -5,7 +5,7 @@
         <i class="uil uil-bars sidebar-toggle"></i>
 
         <div class="mt-3 center-text">
-            <h1 style="color: var(--text-color);">FELIZ [[${currentDate}]] 🚀</h1>
+            <h1 style="color: var(--text-color);">FELIZ [[${currentDate}]] <i class="uil uil-cloud-sun"></i></h1>
         </div>
 
         <img src="/img/profile.jpg" alt="" />
@@ -13,7 +13,7 @@
     <div class="dash-content">
         <div class="overview">
             <div class="title">
-                <i class="uil uil-tachometer-fast-alt"></i>
+                <i class="uil uil-file-exclamation-alt"></i>
                 <span class="text">Rutas a cobrar hoy</span>
             </div>
             <div class="row">
@@ -42,31 +42,32 @@
                         </div>
                     </div>
                     </br>
-                    <div class="alert alert-primary" role="alert">
+                    <div class="alert alert-secondary" role="alert">
                         <h4 class="alert-heading"><i class="fa-solid fa-triangle-exclamation"
-                                style="color: #023388;"></i>
-                            [[#{ruta.nohay}]]</h4>
+                                style="color: #4DA3FF;"></i>
+                            [[#{ruta.nohay}]].</h4>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="boxes-ruta">
                         <div class="box-ruta box1 mb-2">
-                            <i class="uil uil-thumbs-up"></i>
+                            <i class="bi bi-piggy-bank"></i>
                             <span class="text" th:text="#{ruta.porcobrar}"></span>
-                            <span class="number">[[${new.java.text.DecimalFormat('$#,##0.00').format(porCobrar)}]]</span>
+                            <span
+                                class="number">[[${new.java.text.DecimalFormat('$#,##0.00').format(porCobrar)}]]</span>
                         </div>
                         <div class="box-ruta box2 mb-2">
-                            <i class="uil uil-comments"></i>
+                            <i class="uil uil-map-marker"></i>
                             <span class="text" th:text="#{ruta.rutas}"></span>
                             <span class="number">[[${cantidadRutas}]]</span>
                         </div>
                         <div class="box-ruta box3 mb-2">
-                            <i class="uil uil-share"></i>
+                            <i class="uil uil-money-stack"></i>
                             <span class="text" th:text="#{prestamo.prestamos}"></span>
                             <span class="number">[[${cantidadPrestamos}]]</span>
                         </div>
                         <div class="box-ruta box1 mb-2">
-                            <i class="uil uil-thumbs-up"></i>
+                            <i class="uil uil-bill"></i>
                             <span class="text" th:text="#{pagare.pendiente}"></span>
                             <span class="number">[[${pagaresPendientes}]]</span>
                         </div>

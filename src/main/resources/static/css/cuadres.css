@@ -25,7 +25,7 @@
     color: var(--text-color);
 }
 .boxes-cuadre .box-cuadre .number{
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 500;
     color: var(--text-color);
 }
@@ -34,4 +34,10 @@
 }
 .boxes-cuadre .box-cuadre.box3{
     background-color: var(--box3-color);
+}
+
+@media (max-width: 1000px) {
+    .dash-content .boxes-cuadre .box-cuadre{
+        width: 100%;
+    }
 }

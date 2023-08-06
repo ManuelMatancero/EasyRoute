@@ -36,28 +36,28 @@
     <div class="dash-content">
         <div class="overview">
             <div class="title">
-                <i class="uil uil-tachometer-fast-alt"></i>
+                <i class="uil uil-file-bookmark-alt"></i>
                 <span class="text">Prestamos</span>
             </div>
 
             <div class="boxes">
                 <div class="box box1">
-                    <i class="uil uil-thumbs-up"></i>
+                    <i class="uil uil-exclamation-circle"></i>
                     <span class="text" th:text="#{prestamo.pendiente}"></span>
                     <span class="number">[[${new java.text.DecimalFormat('$#,##0.00').format(totalPendiente)}]]</span>
                 </div>
                 <div class="box box2">
-                    <i class="uil uil-comments"></i>
+                    <i class="uil uil-file-exclamation-alt"></i>
                     <span class="text" th:text="#{pagare.pendiente}"></span>
                     <span class="number">[[${pagaresPendientes}]]</span>
                 </div>
                 <div class="box box3">
-                    <i class="uil uil-share"></i>
+                    <i class="uil uil-bill"></i>
                     <span class="text" th:text="#{pagare.totalpagado}"></span>
                     <span class="number">[[${new java.text.DecimalFormat('$#,##0.00').format(totalPagado)}]]</span>
                 </div>
                 <div class="box box1">
-                    <i class="uil uil-thumbs-up"></i>
+                    <i class="uil uil-money-stack"></i>
                     <span class="text" th:text="#{prestamo.prestamos}"></span>
                     <span class="number">[[${totalPrestamos}]]</span>
                 </div>
@@ -73,13 +73,13 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <div class="mt-2 mb-2">
-                            <button class="btn btn-primary rounded mt-2 mb-2 py-2 float-end"
-                                data-bs-toggle="modal" data-bs-target="#agregarPrestamo" data-bs-whatever="@mdo">
+                            <button class="btn btn-primary rounded mt-2 mb-2 py-2 float-end" data-bs-toggle="modal"
+                                data-bs-target="#agregarPrestamo" data-bs-whatever="@mdo">
                                 <i class="fa-solid fa-plus"></i>
                                 <b th:text="#{accion.agregarprestamo}"></b>
                             </button>
-                            <h2 style="color: var(--text-color);" class="mt-1"><i class="fa-solid fa-handshake"></i> <span
-                                    th:text="#{panel.prestamos}"></span>
+                            <h2 style="color: var(--text-color);" class="mt-1"><i class="fa-solid fa-handshake"></i>
+                                <span th:text="#{panel.prestamos}"></span>
                             </h2>
                         </div>
                         <div class="alert alert-primary" role="alert" th:if="${prestamos == null or prestamos.empty}">
@@ -119,8 +119,10 @@
                                                         <div class="card accordion-container">
                                                             <div class="card-header">
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <h4 style="color: var(--text-color);">[[#{pagare.listapagares}]]</h4>
+                                                                    <div class="col-md-4">
+                                                                        <h4 style="color: var(--text-color);"><i
+                                                                                class="uil uil-file-search-alt"></i>
+                                                                            [[#{pagare.listapagares}]]</h4>
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <a sec:authorize="hasRole('ROLE_USER')"

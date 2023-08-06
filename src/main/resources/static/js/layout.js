@@ -5,6 +5,8 @@ sidebarToggle = body.querySelector(".sidebar-toggle");
 tableElement = body.querySelector("table");
 tableContainer = body.querySelector(".table-container");
 tableContainer2 = body.querySelector(".table-container2");
+accordionContainer = body.querySelector(".accordion-container");
+accordionContainer2 = body.querySelector(".accordion-container2");
 
 let getMode = localStorage.getItem("mode");
 if (getMode && getMode === "dark") {
@@ -12,6 +14,8 @@ if (getMode && getMode === "dark") {
   tableElement?.classList.toggle("table-dark");
   tableContainer?.classList.toggle("bg-dark");
   tableContainer2?.classList.toggle("bg-dark");
+  accordionContainer?.classList.toggle("bg-dark");
+  accordionContainer2?.classList.toggle("bg-dark");
 }
 
 let getStatus = localStorage.getItem("status");
@@ -24,6 +28,8 @@ modeToggle.addEventListener("click", () => {
   tableElement.classList.toggle("table-dark");
   tableContainer.classList.toggle("bg-dark");
   tableContainer2.classList.toggle("bg-dark");
+  accordionContainer?.classList.toggle("bg-dark");
+  accordionContainer2?.classList.toggle("bg-dark");
   if (body.classList.contains("dark")) {
     localStorage.setItem("mode", "dark");
   } else {

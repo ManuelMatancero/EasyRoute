@@ -65,20 +65,20 @@
         </div>
         <div class="container-fluid mt-1">
             <div class="row">
-                <div class="col-md-12 mt-3 bg-dark border border-2 rounded-3">
-                    <div class="card bg-dark border border-0">
+                <div class="col-md-12 mt-3 border border-2 rounded-3 table-container2">
+                    <div class="card border border-0 table-container">
                         <!-- Display success message if available -->
                         <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
                             <p th:text="${successMessage}"></p>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <div class="card-header text-white">
-                            <button class="btn btn-primary rounded mt-2 mb-2 py-2 shadow float-end"
+                        <div class="mt-2 mb-2">
+                            <button class="btn btn-primary rounded mt-2 mb-2 py-2 float-end"
                                 data-bs-toggle="modal" data-bs-target="#agregarPrestamo" data-bs-whatever="@mdo">
                                 <i class="fa-solid fa-plus"></i>
                                 <b th:text="#{accion.agregarprestamo}"></b>
                             </button>
-                            <h2 class="mt-1"><i class="fa-solid fa-handshake"></i> <span
+                            <h2 style="color: var(--text-color);" class="mt-1"><i class="fa-solid fa-handshake"></i> <span
                                     th:text="#{panel.prestamos}"></span>
                             </h2>
                         </div>
@@ -87,10 +87,10 @@
                             <i class="fa-solid fa-circle-plus" style="color: #023388;"></i>
                             <p th:text="#{prestamo.vacia}"></p>
                         </div>
-                        <div class="list-group bg-dark">
+                        <div class="list-group">
                             <div class="accordion" id="accordionExample">
                                 <div th:each="prestamo : ${prestamos}" style="background-color: var(--panel-color);">
-                                    <div class="accordion-item mb-2 bg-dark">
+                                    <div class="accordion-item mb-2">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button collapsed lead"
                                                 th:text="'Codigo de prestamo: #'+ ${prestamo.idPrestamo} + ' CAPITAL: ' +${new java.text.DecimalFormat('$#,##0.00').format(prestamo.monto)} + ' INTERES: ' + ${new java.text.DecimalFormat('$#,##0.00').format(prestamo.interes)} "
@@ -102,14 +102,14 @@
                                         </h2>
                                         <div th:attr="id=${prestamo.idPrestamo}" class="accordion-collapse collapse"
                                             data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
+                                            <div class="accordion-body accordion-container2">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="card bg-dark text-white">
+                                                        <div class="card accordion-container">
                                                             <div class="card-header">
                                                                 <div class="row">
                                                                     <div class="col-md-4">
-                                                                        <h4>[[#{pagare.listapagares}]]</h4>
+                                                                        <h4 style="color: var(--text-color);">[[#{pagare.listapagares}]]</h4>
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <a sec:authorize="hasRole('ROLE_USER')"
@@ -122,11 +122,11 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="card bg-dark border border-0">
+                                                            <div class="card border border-0">
                                                                 <div th:if="${prestamo.pagares != null and !prestamo.pagares.empty}"
-                                                                    class="border border-0 bg-dark border-dark">
+                                                                    class="border border-0">
                                                                     <table id="dataTable"
-                                                                        class="table table-dark table-borderless border-0 border-dark">
+                                                                        class="table table-borderless border-0">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th th:text="#{pagare.nopagare}">No</th>

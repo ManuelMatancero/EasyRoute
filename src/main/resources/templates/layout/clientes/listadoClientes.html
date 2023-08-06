@@ -7,33 +7,26 @@
             <input type="text" id="filterInput" th:placeholder="#{panel.filtrar}" class="search-box" />
             <div class="radio-box text-center">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1" th:text="#{cliente.nombre}"
-                      value="nameCustomer" checked>
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1"
+                        th:text="#{cliente.nombre}" value="nameCustomer" checked>
                     <label class="form-check-label" for="inlineRadio1"></label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio2" th:text="#{cliente.cedula}"
-                      value="idCustomer">
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio2"
+                        th:text="#{cliente.cedula}" value="idCustomer">
                     <label class="form-check-label" for="inlineRadio2"></label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio3" th:text="#{ruta.nombre}"
-                      value="routeCustomer">
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio3"
+                        th:text="#{ruta.nombre}" value="routeCustomer">
                     <label class="form-check-label" for="inlineRadio3"></label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio4" th:text="#{panel.cobrador}"
-                      value="cobradorCustomer">
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio4"
+                        th:text="#{panel.cobrador}" value="cobradorCustomer">
                     <label class="form-check-label" for="inlineRadio4"></label>
-                  </div>
+                </div>
             </div>
-        </div>
-        <div sec:authorize="hasRole('ROLE_USER')">
-            <button class="btn btn-primary rounded-pill shadow float-end mb-2" data-bs-toggle="modal"
-                data-bs-target="#agregarCliente" data-bs-whatever="@mdo">
-                <i class="fa-solid fa-user-plus"></i>
-                <b>[[#{cliente.agregar}]]</b>
-            </button>
         </div>
 
         <img src="/img/profile.jpg" alt="" />
@@ -58,6 +51,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <div class="card bg-dark border border-0">
+                    <div class="mt-3">
+                        <button sec:authorize="hasRole('ROLE_USER')"
+                            class="btn btn-primary rounded-10 shadow float-end mt-0 mb-2 py-2" data-bs-toggle="modal"
+                            data-bs-target="#agregarCliente" data-bs-whatever="@mdo">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <b>[[#{cliente.agregar}]]</b>
+                        </button>
+                        <h3 class="text-white">Usuarios</h3>
+                    </div>
                     <div th:if="${clientes != null and !clientes.empty}" class="border border-0 bg-dark border-dark">
                         <table id="dataTable" class="table table-dark table-borderless border-0 border-dark">
                             <thead class="thead-dark">

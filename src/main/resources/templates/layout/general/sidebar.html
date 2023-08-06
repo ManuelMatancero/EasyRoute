@@ -1,7 +1,7 @@
 <nav th:fragment="sidebar">
   <div class="logo-name">
     <div class="logo-image">
-      <img src="/img/logo.png" alt="" />
+      <img src="/img/icon.png" alt="icon" />
     </div>
 
     <span class="logo_name">EasyRoute</span>
@@ -13,6 +13,12 @@
         <a th:href="@{/}">
           <i class="uil uil-estate"></i>
           <span class="link-name">Dahsboard</span>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/usuarios}">
+          <i class="uil uil-files-landscapes"></i>
+          <span class="link-name">Usuarios</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">

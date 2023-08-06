@@ -1,69 +1,100 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <title>Listado usuarios</title>
-        <meta charset="UTF-8"/>
-    </head>
-    <body>
-        <section th:fragment="listadoUsuarios" id="usuarios">
-            <div class="container-fluid mt-3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
-                            <p th:text="${successMessage}"></p>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
-                            <p th:text="${errorMessage}"></p>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <div class="card">
-                            <div th:if="${usuarios != null and !usuarios.empty}">
-                                <div class="table-responsive">
-                                    <table class="table table-stryped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>#</th>
-                                                <th th:text="#{usuario.nombre}">Nombre</th>
-                                                <th th:text="#{usuario.apellido}">Apellido</th>
-                                                <th th:text="#{usuario.usuario}">Usuario</th>
-                                                <th th:text="#{usuario.cedula}">Cédula</th>
-                                                <th th:text="#{usuario.empresa}">Empresa</th>
-                                                <th th:text="#{usuario.telefono}">Teléfono</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="usuario, contador : ${usuarios}">
-                                                <td>[[${contador.count}]]</td>
-                                                <td>[[${usuario.cobrador.nombre}]]</td>
-                                                <td>[[${usuario.cobrador.apellido}]]</td>
-                                                <td>[[${usuario.username}]]</td>
-                                                <td>[[${usuario.cobrador.cedula}]]</td>
-                                                <td>[[${usuario.empresa.nombre}]]</td>
-                                                <td>[[${usuario.cobrador.telefono}]]</td>
-                                                <td sec:authorize="hasRole('ROLE_ADMIN')" >
-                                                    <a th:href="@{/editarUsuario/} + ${usuario.idUsuario}"
-                                                       class="btn btn-secondary">
-                                                        <i class="fa-solid fa-pen-to-square"></i>[[#{usuario.editar}]]
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="alert alert-primary" role="alert" th:if="${usuarios == null or usuarios.empty}">
-                                <h4 class="alert-heading" th:text="#{usuario.vacia}">Well done!</h4>
-                                <i class="fa-solid fa-circle-plus" style="color: #023388;"></i><p th:text="#{usuario.paraagregar}"></p>
-                            </div>
-                        </div>
-                    </div>
-
+<section th:fragment="listadoUsuarios" id="clientes" class="dashboard">
+    <link rel="stylesheet" th:href="@{/css/rutas.css}" />
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <div class="search-box-ruta">
+            <i class="uil uil-search"></i>
+            <input type="text" id="filterInput" th:placeholder="#{panel.filtrar}" class="search-box" />
+            <div class="radio-box text-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio1"
+                        th:text="#{cliente.nombre}" value="nameCustomer" checked>
+                    <label class="form-check-label" for="inlineRadio1"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio2"
+                        th:text="#{cliente.cedula}" value="idCustomer">
+                    <label class="form-check-label" for="inlineRadio2"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio3"
+                        th:text="#{ruta.nombre}" value="routeCustomer">
+                    <label class="form-check-label" for="inlineRadio3"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="filterType" id="inlineRadio4"
+                        th:text="#{panel.cobrador}" value="cobradorCustomer">
+                    <label class="form-check-label" for="inlineRadio4"></label>
                 </div>
             </div>
-        </section>
-    </body>
-</html>
+        </div>
+
+        <img src="/img/profile.jpg" alt="" />
+    </div>
+    <div class="dash-content">
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
+            <p th:text="${successMessage}"></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="overview">
+            <div class="title">
+                <i class="uil uil-tachometer-fast-alt"></i>
+                <span class="text">Usuarios</span>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-1">
+        <div class="row">
+            <div class="col-md-12 mt-3 bg-dark border border-2 rounded-3">
+                <div class="card bg-dark border border-0">
+                    <div class="mt-3">
+                        <button sec:authorize="hasRole('ROLE_ADMIN')"
+                            class="btn btn-sm btn-primary rounded-10 shadow float-end mt-0 mb-2 py-2"
+                            data-bs-toggle="modal" data-bs-target="#agregarUsuario" data-bs-whatever="@mdo">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <b>[[#{usuario.agregar}]]</b>
+                        </button>
+                        <h3 class="text-white">Usuarios</h3>
+                    </div>
+                    <div th:if="${usuarios != null and !usuarios.empty}" class="border border-0 bg-dark border-dark">
+                        <table id="dataTable" class="table table-dark table-borderless border-0 border-dark">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th th:text="#{usuario.nombre}">Nombre</th>
+                                    <th th:text="#{usuario.apellido}">Apellido</th>
+                                    <th th:text="#{usuario.usuario}">Usuario</th>
+                                    <th th:text="#{usuario.cedula}">Cédula</th>
+                                    <th th:text="#{usuario.empresa}">Empresa</th>
+                                    <th th:text="#{usuario.telefono}">Teléfono</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="usuario, contador : ${usuarios}">
+                                    <td>[[${contador.count}]]</td>
+                                    <td>[[${usuario.cobrador.nombre}]]</td>
+                                    <td>[[${usuario.cobrador.apellido}]]</td>
+                                    <td>[[${usuario.username}]]</td>
+                                    <td>[[${usuario.cobrador.cedula}]]</td>
+                                    <td>[[${usuario.empresa.nombre}]]</td>
+                                    <td>[[${usuario.cobrador.telefono}]]</td>
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                        <a th:href="@{/editarUsuario/} + ${usuario.idUsuario}" class="btn btn-primary">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="alert alert-primary" role="alert" th:if="${usuarios == null or usuarios.empty}">
+                    <h4 class="alert-heading" th:text="#{usuario.vacia}">Well done!</h4>
+                    <i class="fa-solid fa-circle-plus" style="color: #023388;"></i>
+                    <p th:text="#{usuario.paraagregar}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

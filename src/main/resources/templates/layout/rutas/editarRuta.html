@@ -1,67 +1,81 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <title>Editar Ruta</title>
-        <meta charset="UTF-8"/>
-    </head>
-    <body>
-        <section th:fragment="editarRuta">
-            <form th:action="@{/guardarRuta}" th:object="${ruta}"
-                  method="POST" class="was-validated">
-                <input type="hidden" name="idRuta" id="idRuta" th:field="*{idRuta}"/>
-                <section th:replace="layout/rutas/botonesEditarRuta :: botonesEditarRuta"></section>
-                <div id="details">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>[[#{ruta.editarruta}]]</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="nombre">[[#{ruta.nombre}]]</label>
-                                            <input type="text" class="form-control" id="nombre" name="nombre"
-                                                   required="true" th:field="*{nombre}"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="dia" th:text="#{ruta.dia}" class="col-form-label">Dia</label>
-                                            <select class="form-select" id="dia" th:field="*{dia}" aria-label="Default select example" required="required">
-                                                <option value="" disabled selected>Open this select menu</option>
-                                                <option value="LUNES" >LUNES</option>
-                                                <option value="MARTES" >MARTES</option>
-                                                <option value="MIERCOLES">MIERCOLES</option>
-                                                <option value="JUEVES">JUEVES</option>
-                                                <option value="VIERNES">VIERNES</option>
-                                                <option value="SABADO">SABADO</option>
-                                                <option value="DOMINGO">DOMINGO</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="cobrador" th:text="#{ruta.asignarcobrador}" class="col-form-label">Cobrador</label>
-                                            <select class="form-select" name="idCobrador" id="cobrador" aria-label="Default select example" required="true">
-                                                <!-- Loop through the List and generate options for each cobrador -->
-                                                <option selected th:value="*{cobrador.idCobrador}" th:text="*{cobrador.nombre} + ' ' + *{cobrador.apellido}">Open this select menu</option>
-                                                <option  th:each="cobrador : ${cobradores}" th:value="${cobrador.idCobrador}" th:text="${cobrador.nombre} + ' ' + ${cobrador.apellido} "></option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="zona" th:text="#{zona.agregarzona}" class="col-form-label">Zona</label>
-                                            <select class="form-select" name="idZona" id="zona" aria-label="Default select example">
-                                                <!-- Loop through the List and generate options for each cobrador -->
-                                                <option selected th:value="*{zona.idZona}" th:text="*{zona.nombre}">Open this select menu</option>
-                                                <option  th:each="zona : ${zonas}" th:value="${zona.idZona}" th:text="${zona.nombre}"></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<section th:fragment="editarRuta" class="dashboard">
+    <link rel="stylesheet" th:href="@{/css/rutas.css}" />
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <div class="search-box-ruta"></div>
+
+        <img src="/img/profile.jpg" alt="" />
+    </div>
+    <div class="dash-content">
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">
+            <p th:text="${successMessage}"></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="overview">
+            <div class="boxes mx-auto">
+                <div class="box company box1 mx-auto">
+                    <h1 class="title mt-0 text-center text-title">[[#{ruta.editarruta}]]</h1>
+                    <form th:action="@{/guardarRuta}" th:object="${ruta}" method="POST" class="was-validated">
+                        <input type="hidden" name="idRuta" id="idRuta" th:field="*{idRuta}" />
+                        <!-- <section th:replace="layout/rutas/botonesEditarRuta :: botonesEditarRuta"></section> -->
+                        <div class="form-group mb-2">
+                            <label for="nombre" class="col-form-label text">[[#{ruta.nombre}]]</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required="true"
+                                th:field="*{nombre}" />
                         </div>
-                    </div>
+                        <div class="form-group mb-2">
+                            <label for="dia" th:text="#{ruta.dia}" class="col-form-label text">Dia</label>
+                            <select class="form-select" id="dia" th:field="*{dia}" aria-label="Default select example"
+                                required="required">
+                                <option value="" disabled selected>Open this select menu
+                                </option>
+                                <option value="LUNES">LUNES</option>
+                                <option value="MARTES">MARTES</option>
+                                <option value="MIERCOLES">MIERCOLES</option>
+                                <option value="JUEVES">JUEVES</option>
+                                <option value="VIERNES">VIERNES</option>
+                                <option value="SABADO">SABADO</option>
+                                <option value="DOMINGO">DOMINGO</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cobrador" th:text="#{ruta.asignarcobrador}"
+                                class="col-form-label text">Cobrador</label>
+                            <select class="form-select" name="idCobrador" id="cobrador"
+                                aria-label="Default select example" required="true">
+                                <!-- Loop through the List and generate options for each cobrador -->
+                                <option selected th:value="*{cobrador.idCobrador}"
+                                    th:text="*{cobrador.nombre} + ' ' + *{cobrador.apellido}">
+                                    Open this select
+                                    menu</option>
+                                <option th:each="cobrador : ${cobradores}" th:value="${cobrador.idCobrador}"
+                                    th:text="${cobrador.nombre} + ' ' + ${cobrador.apellido} ">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="zona" th:text="#{zona.agregarzona}" class="col-form-label text">Zona</label>
+                            <select class="form-select" name="idZona" id="zona" aria-label="Default select example">
+                                <!-- Loop through the List and generate options for each cobrador -->
+                                <option selected th:value="*{zona.idZona}" th:text="*{zona.nombre}">Open this
+                                    select menu</option>
+                                <option th:each="zona : ${zonas}" th:value="${zona.idZona}" th:text="${zona.nombre}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="float-end text-white mt-2">
+                            <a th:href="@{/eliminarRuta(idRuta=${ruta.idRuta})}"
+                                class="btn btn-sm btn-danger text-white rounded f-5 p-2 m-0">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                            <button type="submit"
+                                class="btn btn-sm btn-primary p-2 m-0 rounded text-white text-center ms-2">
+                                <i class="bi bi-box-arrow-down"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </section>
-    </body>
-</html>
+            </div>
+        </div>
+    </div>
+</section>

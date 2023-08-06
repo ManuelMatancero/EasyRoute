@@ -115,7 +115,14 @@ nav .menu-items{
     justify-content: space-between;
     margin-left: 0px;
     padding-left: 0px;
+    overflow-y: auto;
 }
+/* Hide the scrollbar for webkit-based browsers */
+nav .menu-items::-webkit-scrollbar {
+    width: 0; /* Set the width of the scrollbar to zero */
+    height: 0; /* Set the height of the scrollbar to zero */
+}
+
 .menu-items li{
     list-style: none;
 }
@@ -364,7 +371,7 @@ nav.close ~ .dashboard .top{
     color: var(--text-color);
 }
 .boxes .box .number{
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 500;
     color: var(--text-color);
 }

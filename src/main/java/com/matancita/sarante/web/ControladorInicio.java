@@ -5,7 +5,10 @@ import com.matancita.sarante.servicio.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +45,12 @@ public class ControladorInicio {
     public String inicio(@AuthenticationPrincipal User user, Model model) {
         List<Ruta> rutas = rutaService.listAll();
         List<Cobrador> cobradores = cobradorService.listAll();
+        List<Cliente> lastTenAdded = new ArrayList<>();
+         // Sort the list based on the LocalDateTime attribute in descending order
+         lastTenAdded = clienteService.listAll();
+         lastTenAdded.sort(Comparator.comparing(Cliente::getFechaIngreso).reversed());
+         // Select the last 10 added items
+         List<Cliente> lastTenClientesAdded = lastTenAdded.stream().limit(10).collect(Collectors.toList());
         int cantidadRutas = 0;
         int cantidadCobradores = 0;
         double invertido = 0;
@@ -66,7 +75,7 @@ public class ControladorInicio {
                             ganancias += pagare.getInteres();
                             cobrado += pagare.getTotal();
                         }
-                        if (pagare.getVencimiento().isBefore(LocalDateTime.now())) {
+                        if (pagare.getVencimiento().isBefore(LocalDateTime.now()) && pagare.getReciboGen() == null) {
                             atrasos++;
                         }
                     }
@@ -87,6 +96,7 @@ public class ControladorInicio {
         model.addAttribute("cobrado", cobrado);
         model.addAttribute("cantidadPrestamos", cantidadPrestamos);
         model.addAttribute("atrasos", atrasos);
+        model.addAttribute("lastTenClientesAdded", lastTenClientesAdded);
         return "index";
     }
 

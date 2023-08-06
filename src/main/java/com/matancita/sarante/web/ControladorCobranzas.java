@@ -63,8 +63,8 @@ public class ControladorCobranzas {
             for (Ruta ruta : rutas) {
                 if (ruta.getDia().equalsIgnoreCase(formattedDate)) {
                     cantidadRutas++;
+                    clientes.addAll(ruta.getClientes());
                 }
-                clientes = ruta.getClientes();
             }
             for (Cliente cliente : clientes) {
                 prestamos.addAll(cliente.getPrestamos());
@@ -88,15 +88,15 @@ public class ControladorCobranzas {
              for (Ruta ruta : rutas) {
                 if (ruta.getDia().equalsIgnoreCase(formattedDate)) {
                     cantidadRutas++;
+                    clientes.addAll(ruta.getClientes());
                 }
-                clientes = ruta.getClientes();
             }
             for (Cliente cliente : clientes) {
-                prestamos = cliente.getPrestamos();
+                prestamos.addAll(cliente.getPrestamos());
             }
             for (Prestamo prestamo : prestamos) {
                 cantidadPrestamos++;
-                pagares = prestamo.getPagares();
+                pagares.addAll(prestamo.getPagares());
             }
             for (Pagare pagare : pagares) {
                 if (pagare.getReciboGen() == null) {

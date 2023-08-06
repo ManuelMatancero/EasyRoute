@@ -1,59 +1,115 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="layout/general/head :: head">
-    <title>Login</title>
-  </head>
-  <body>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <section id="actions" class="py-4 mb-4 bg-light">
-      <div class="container">
-        <div class="row">
-          <!--se pueden agregar botones-->
-        </div>
-      </div>
-    </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyRoute - Login</title>
+  <link rel="stylesheet" th:href="@{/css/login.css}" />
+  <!-- Unicons -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+</head>
 
-    <section id="login">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-            <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
-              <div class="card-body">
-                <h3 class="display-5 mb-4 text-center">
-                  <i class="fa-solid fa-route fa-sm"></i> Login
-                </h3>
-                <form method="POST" th:action="@{/login}">
-                  <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="username"
-                      id="username"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      name="password"
-                      id="password"
-                    />
-                  </div>
-                  <input
-                    type="submit"
-                    value="Login"
-                    class="btn btn-primary btn-block"
-                  />
-                </form>
-              </div>
-            </div>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav" style="margin-top: 20px; margin-bottom: 0px;">
+      <div></div>
+      <div></div>
+      <div></div>
+
+      <a href="#" class="nav_logo">EasyRoute</a>
+
+      <ul class="nav_items">
+      </ul>
+
+      <ul class="nav_items"></ul>
+      <ul class="nav_items"></ul>
+      <!-- <button class="button" id="form-open">Login</button> -->
+    </nav>
+    <nav class="nav" style="margin-top: -30px;">
+
+      <div></div>
+      <div></div>
+      <ul class="nav_items">
+        <li class="nav_item">
+          <a href="#" class="nav_link">
+            < Innovación</a>
+              <a href="#" class="nav_link">Transparencia</a>
+              <a href="#" class="nav_link">Calidad</a>
+              <a href="#" class="nav_link">Compromiso /></a>
+        </li>
+      </ul>
+
+      <ul class="nav_items"></ul>
+      <ul class="nav_items"></ul>
+      <!-- <button class="button" id="form-open">Login</button> -->
+    </nav>
+  </header>
+
+  <!-- Home -->
+  <section class="home show">
+    <div class="form_container">
+      <!-- <i class="uil uil-times form_close"></i> -->
+      <!-- Login From -->
+      <div class="form login_form">
+        <form method="POST" th:action="@{/login}">
+          <h2>Login</h2>
+
+          <div class="input_box">
+            <input type="text" placeholder="Inserta tu usuario" name="username" required />
+            <i class="uil uil-user email"></i>
           </div>
-        </div>
-      </div>
-    </section>
+          <div class="input_box">
+            <input type="password" placeholder="Inserta tu contraseña" name="password" required />
+            <i class="uil uil-lock password"></i>
+            <i class="uil uil-eye-slash pw_hide"></i>
+          </div>
 
-    <!-- <footer th:replace="layout/general/plantilla :: footer"></footer> -->
-  </body>
+          <div class="option_field">
+            <span class="checkbox">
+              <input type="checkbox" id="check" />
+              <label for="check">Recuérdate</label>
+            </span>
+            <!-- <a href="#" class="forgot_pw">Forgot password?</a> -->
+          </div>
+
+          <button class="button" type="submit">Iniciar sesión</button>
+
+          <!-- <div class="login_signup">Don't have an account? <a href="#" id="signup">Signup</a></div> -->
+        </form>
+      </div>
+
+      <!-- Signup From -->
+      <div class="form signup_form">
+        <form action="#">
+          <h2>Signup</h2>
+
+          <div class="input_box">
+            <input type="email" placeholder="Enter your email" required />
+            <i class="uil uil-envelope-alt email"></i>
+          </div>
+          <div class="input_box">
+            <input type="password" placeholder="Create password" required />
+            <i class="uil uil-lock password"></i>
+            <i class="uil uil-eye-slash pw_hide"></i>
+          </div>
+          <div class="input_box">
+            <input type="password" placeholder="Confirm password" required />
+            <i class="uil uil-lock password"></i>
+            <i class="uil uil-eye-slash pw_hide"></i>
+          </div>
+
+          <button class="button">Signup Now</button>
+
+          <div class="login_signup">Already have an account? <a href="#" id="login">Login</a></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script th:src="@{/js/login.js}"></script>
+</body>
+
 </html>

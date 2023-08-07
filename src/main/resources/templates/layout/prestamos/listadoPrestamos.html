@@ -1,17 +1,28 @@
 <section th:fragment="listadoPrestamos" class="dashboard">
     <link rel="stylesheet" th:href="@{/css/rutas.css}" />
+    <link rel="stylesheet" th:href="@{/css/breadcrumbstyle.css}" />
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
         <h1 style="color: var(--text-color);"> [[${cliente.nombre}]]  [[${cliente.apellido}]] <i class="uil uil-user"></i></h1>
 
         <img src="/img/profile.jpg" alt="" />
     </div>
-
+<div class="activity">
     <div class="dash-content">
         <div class="overview">
             <div class="title">
                 <i class="uil uil-file-bookmark-alt"></i>
                 <span class="text">Prestamos</span> <span class="text"> de [[${cliente.nombre}]]  [[${cliente.apellido}]], ruta [[${cliente.ruta.nombre}]] </span>
+            </div>
+            <div class="activity-data">
+                <div class=" breadcrumbcontiner">     
+                    <ul class="pagination shadow-sm">
+                        <li class="page-item"><a class="page-link" th:href="@{/}"><i class="uil uil-estate"></i> <small>Dashboard</small>  </a></li>
+                        <li class="page-item"><a class="page-link" th:if="${idRuta}" th:href="@{/verrutas}"><i class="uil uil-map-marker"></i><small>Rutas &nbsp; </small></a></li> 
+                        <li class="page-item"><a class="page-link " th:href="@{/verclientes/} + ${cliente.ruta.idRuta}"><i class="uil uil-user-square"></i><small>Clientes&nbsp; </small></a></li>
+                        <li class="page-item active"><a class="page-link " href="#"><i class="uil uil-money-stack"></i><small>Prestamos&nbsp; </small></a></li>                 
+                    </ul> 
+                </div>
             </div>
 
             <div class="boxes">
@@ -200,4 +211,7 @@
             </div>
         </div>
     </div>
+</div>
+   
+    <script th:src="@{/js/breadcrumbjs.js}"></script>
 </section>

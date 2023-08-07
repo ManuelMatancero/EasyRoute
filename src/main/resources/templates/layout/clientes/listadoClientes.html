@@ -1,5 +1,6 @@
 <section th:fragment="listadoClientes" id="clientes" class="dashboard">
     <link rel="stylesheet" th:href="@{/css/rutas.css}" />
+    <link rel="stylesheet" th:href="@{/css/breadcrumbstyle.css}" />
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
         <div class="search-box-ruta">
@@ -31,76 +32,91 @@
 
         <img src="/img/profile.jpg" alt="" />
     </div>
-    <div class="dash-content">
-        <div class="overview">
-            <div class="title">
-                <i class="uil uil-user-square"></i>
-                <span class="text">Clientes</span> <span th:if="${idRuta}" class="text" th:text="${ruta.nombre}">Clientes</span>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid mt-1">
-        <div class="row">
-            <div class="col-md-12 mt-3 border border-2 rounded-3 table-container2">
-                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
-                    <p th:text="${successMessage}"></p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <div class="card border border-0 table-container">
-                    <div class="mt-3">
-                        <button th:if="${idRuta}" sec:authorize="hasRole('ROLE_USER')"
-                            class="btn btn-primary rounded-10 float-end mt-0 mb-2 py-2" data-bs-toggle="modal"
-                            data-bs-target="#agregarCliente" data-bs-whatever="@mdo">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <b>[[#{cliente.agregar}]]</b>
-                        </button>
-                        <h3 style="color: var(--text-color);">Clientes</h3>
-                    </div>
-                    <div th:if="${clientes != null and !clientes.empty}" class="border border-0">
-                        <table id="dataTable" class="table table-borderless border-0">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th th:text="#{cliente.nombre}">Nombre</th>
-                                    <th th:text="#{cliente.apellido}">Apellido</th>
-                                    <th th:text="#{cliente.cedula}">Cedula</th>
-                                    <th th:text="#{ruta.nombre}">Ruta</th>
-                                    <th th:text="#{panel.cobrador}">Direccion</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="cliente, contador : ${clientes}">
-                                    <td>[[${contador.count}]]</td>
-                                    <td>[[${cliente.nombre}]]</td>
-                                    <td>[[${cliente.apellido}]]</td>
-                                    <td>[[${cliente.cedula}]]</td>
-                                    <td>[[${cliente.ruta.nombre}]]</td>
-                                    <td>[[${cliente.ruta.cobrador.nombre} + ' ' +
-                                        ${cliente.ruta.cobrador.apellido}]]</td>
-
-                                    <td>
-                                        <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
-                                            class="btn btn-primary me-2 rounded">
-                                            <i class="uil uil-file-bookmark-alt"></i>
-                                        </a>
-                                        <a sec:authorize="hasRole('ROLE_ADMIN')"
-                                            th:href="@{/modificarcliente/} + ${cliente.idCliente}"
-                                            class="btn btn-light rounded">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="alert alert-primary" role="alert" th:if="${clientes == null or clientes.empty}">
-                    <h4 class="alert-heading" th:text="#{cliente.vacia}">Well done!</h4>
-                    <i class="fa-solid fa-circle-plus" style="color: #023388;"></i>
-                    <p th:text="#{cliente.paraagregar}"></p>
+    <div class="activity">
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-user-square"></i>
+                    <span class="text">Clientes</span> <span th:if="${idRuta}" class="text" th:text="${ruta.nombre}">Clientes</span>
                 </div>
             </div>
         </div>
+        <div class="activity-data">
+            <div class=" breadcrumbcontiner">     
+                <ul class="pagination shadow-sm">
+                    <li class="page-item"><a class="page-link" th:href="@{/}"><i class="uil uil-estate"></i> <small>Dashboard</small>  </a></li>
+                    <li class="page-item"><a class="page-link" th:if="${idRuta}" th:href="@{/verrutas}"><i class="uil uil-map-marker"></i><small>Rutas &nbsp; </small></a></li> 
+                    <li class="page-item active"><a class="page-link " href="#"><i class="uil uil-user-square"></i><small>Clientes&nbsp; </small></a></li>                
+                </ul> 
+            </div>
+        </div>
+        <div class="activity-data">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 mt-3 border border-2 rounded-3 table-container2">
+                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+                            <p th:text="${successMessage}"></p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div class="card border border-0 table-container">
+                            <div class="mt-3">
+                                <button th:if="${idRuta}" sec:authorize="hasRole('ROLE_USER')"
+                                    class="btn btn-primary rounded-10 float-end mt-0 mb-2 py-2" data-bs-toggle="modal"
+                                    data-bs-target="#agregarCliente" data-bs-whatever="@mdo">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <b>[[#{cliente.agregar}]]</b>
+                                </button>
+                                <h3 style="color: var(--text-color);">Clientes</h3>
+                            </div>
+                            <div th:if="${clientes != null and !clientes.empty}" class="border border-0">
+                                <table id="dataTable" class="table table-borderless border-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th th:text="#{cliente.nombre}">Nombre</th>
+                                            <th th:text="#{cliente.apellido}">Apellido</th>
+                                            <th th:text="#{cliente.cedula}">Cedula</th>
+                                            <th th:text="#{ruta.nombre}">Ruta</th>
+                                            <th th:text="#{panel.cobrador}">Direccion</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="cliente, contador : ${clientes}">
+                                            <td>[[${contador.count}]]</td>
+                                            <td>[[${cliente.nombre}]]</td>
+                                            <td>[[${cliente.apellido}]]</td>
+                                            <td>[[${cliente.cedula}]]</td>
+                                            <td>[[${cliente.ruta.nombre}]]</td>
+                                            <td>[[${cliente.ruta.cobrador.nombre} + ' ' +
+                                                ${cliente.ruta.cobrador.apellido}]]</td>
+        
+                                            <td>
+                                                <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
+                                                    class="btn btn-primary me-2 rounded">
+                                                    <i class="uil uil-file-bookmark-alt"></i>
+                                                </a>
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')"
+                                                    th:href="@{/modificarcliente/} + ${cliente.idCliente}"
+                                                    class="btn btn-light rounded">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="alert alert-primary" role="alert" th:if="${clientes == null or clientes.empty}">
+                            <h4 class="alert-heading" th:text="#{cliente.vacia}">Well done!</h4>
+                            <i class="fa-solid fa-circle-plus" style="color: #023388;"></i>
+                            <p th:text="#{cliente.paraagregar}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>     
     </div>
+   
+    <script th:src="@{/js/breadcrumbjs.js}"></script>
 </section>

@@ -245,6 +245,15 @@ nav.close ~ .dashboard .top{
     left: 103px;
     width: calc(100% - 103px);
 }
+
+.dashboard .top .search-box .breadcrumb{
+    position: relative;
+    height: 45px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 30px;
+}
+
 .dashboard .top .sidebar-toggle{
     font-size: 26px;
     color: var(--text-color);

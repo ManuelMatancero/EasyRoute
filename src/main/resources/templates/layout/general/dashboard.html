@@ -79,9 +79,9 @@
           </div>
         </div>
         <div class="data joined">
-          <span class="data-title">Ingreso</span>
+          <span class="data-title">Ruta</span>
           <div class="data names" th:each=" cliente : ${lastTenClientesAdded}">
-            <span class="data-list" th:text="${cliente.fechaIngreso}"></span>
+            <span class="data-list" th:text="${cliente.ruta.nombre}"></span>
           </div>
         </div>
         <div class="data type">

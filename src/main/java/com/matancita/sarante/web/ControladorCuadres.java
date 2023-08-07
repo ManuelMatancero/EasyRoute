@@ -15,10 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matancita.sarante.domain.Cliente;
@@ -60,6 +62,13 @@ public class ControladorCuadres {
 
     @Autowired
     private PrestamoService prestamoService;
+
+      @ExceptionHandler(Throwable.class)
+    public ModelAndView handleInternalServerError(Exception ex) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
+        return modelAndView;
+    }
 
     @GetMapping("/cuadres")
     public String cuadres(Model model) {

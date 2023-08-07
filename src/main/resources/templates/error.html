@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error</title>
+</head>
+<body>
+    <h1>Oops! An internal server error occurred.</h1>
+    <p th:text="${errorMsg}"></p>
+    <hr>
+    <a th:href="@{/}" >[[#{accion.regresar}]]</a>
+</body>
+</html>

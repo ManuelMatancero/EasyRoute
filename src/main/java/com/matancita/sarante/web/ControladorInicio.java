@@ -19,8 +19,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @Slf4j
@@ -40,6 +42,13 @@ public class ControladorInicio {
     private PagareService pagareService;
     @Autowired
     private CobradorService cobradorService;
+
+      @ExceptionHandler(Throwable.class)
+    public ModelAndView handleInternalServerError(Exception ex) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
+        return modelAndView;
+    }
 
     @GetMapping("/")
     public String inicio(@AuthenticationPrincipal User user, Model model) {

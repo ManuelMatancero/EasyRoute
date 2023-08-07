@@ -10,7 +10,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.matancita.sarante.domain.Cliente;
 import com.matancita.sarante.domain.Cobrador;
@@ -38,6 +40,14 @@ public class ControladorCobranzas {
     private CobradorService cobradorService;
     @Autowired
     private IUsuarioService usuarioService;
+
+    
+      @ExceptionHandler(Throwable.class)
+    public ModelAndView handleInternalServerError(Exception ex) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
+        return modelAndView;
+    }
 
     @GetMapping("/vercobranzas")
     public String verCobranzas(@AuthenticationPrincipal User user, Model model) {
@@ -76,7 +86,8 @@ public class ControladorCobranzas {
             for (Pagare pagare : pagares) {
                 if (pagare.getReciboGen() == null) {
                     if (pagare.getVencimiento().isBefore(LocalDateTime.now())
-                            || pagare.getVencimiento().isEqual(LocalDateTime.now())) {
+                            || pagare.getVencimiento().isEqual(LocalDateTime.now()) ||
+                            pagare.getVencimiento().toLocalDate().equals(LocalDateTime.now().toLocalDate())) {
                         pagaresPendientes++;
                         porCobrar += pagare.getTotal();
                     }

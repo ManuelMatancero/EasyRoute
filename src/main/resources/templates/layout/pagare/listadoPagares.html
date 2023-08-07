@@ -73,11 +73,16 @@
                         java.text.DecimalFormat('$#,##0.00').format(pagare.total)}]]</strong></td>
                     <td>[[${#temporals.format(pagare.vencimiento, 'MMMM d, yyyy')}]]</td>
                     <td th:if="${pagare.reciboGen != null}">🟢 Pago</td>
-                    <td th:if="${pagare.reciboGen == null and pagare.vencimiento.isAfter(currentTime)}">🟡 Pendiente
+                    <td th:if="${pagare.reciboGen == null and pagare.vencimiento.isAfter(currentTime) and pagare.vencimiento.toLocalDate() != currentTime.toLocalDate()}">🟡 Pendiente
                     </td>
                     <td th:if="${pagare.vencimiento.isBefore(currentTime) and pagare.reciboGen == null}">🔴 Vencido</td>
+                    <td
+                      th:if="${pagare.vencimiento.toLocalDate()==currentTime.toLocalDate() and pagare.reciboGen == null}">
+                      🔵 Cobrar hoy
+                    </td>
                     <td>
-                      <a target="_blank" sec:authorize="hasRole('ROLE_USER')" th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
+                      <a target="_blank" sec:authorize="hasRole('ROLE_USER')"
+                        th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
                         class="btn btn-primary rounded text-center">
                         <i class="fas fa-print"></i>
                       </a>

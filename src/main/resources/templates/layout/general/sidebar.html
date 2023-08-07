@@ -15,7 +15,7 @@
           <span th:class="${dashboardPage} ? 'link-name text-primary fw-bold' : 'link-name'">Dashboard</span>
         </a>
       </li>
-      <li sec:authorize="isAuthenticated()">
+      <li sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/usuarios}">
           <i th:class="${usersPage} ? 'uil uil-users-alt text-primary' : 'uil uil-users-alt'"></i>
           <span th:class="${usersPage} ? 'link-name text-primary fw-bold' : 'link-name'">Usuarios</span>
@@ -45,7 +45,7 @@
           <span th:class="${paymentsPage} ? 'link-name text-primary fw-bold' : 'link-name'">Pagares</span>
         </a>
       </li>
-      <li sec:authorize="isAuthenticated()">
+      <li sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/cuadres}">
           <i th:class="${cuadresPage} ? 'uil uil-chart-bar text-primary' : 'uil uil-chart-bar'"></i>
           <span th:class="${cuadresPage} ? 'link-name text-primary fw-bold' : 'link-name'">Cuadres</span>

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,12 +38,7 @@ public class ControladorPrestamos {
     @Autowired
     private PagareService pagareService;
 
-     @ExceptionHandler(Throwable.class)
-    public ModelAndView handleInternalServerError(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
-        return modelAndView;
-    }
+   
 
     @PostMapping("/guardarPrestamo")
     public String guardarZona(@Valid Prestamo prestamo, @RequestParam Long idCliente, Errors errores, RedirectAttributes redirectAttributes) {
@@ -85,6 +81,17 @@ public class ControladorPrestamos {
         pagareService.insertAll(pagares);
         redirectAttributes.addFlashAttribute("successMessage", "Prestamo saved successfully!");
         return "redirect:/verprestamos/" + idCliente;
+    }
+
+    @GetMapping("/archivarprestamo/{idPrestamo}")
+    public String archivarprestamo(Prestamo prestamo, RedirectAttributes redirectAttributes){
+        prestamo = prestamoService.getById(prestamo.getIdPrestamo());
+        Long idCliente = prestamo.getCliente().getIdCliente();
+        prestamo.setEstado(2);
+        prestamoService.insert(prestamo);
+        redirectAttributes.addFlashAttribute("successMessage", "Prestamo archivado correctamente!");
+        return "redirect:/verprestamos/" + idCliente;
+
     }
 
 }

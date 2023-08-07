@@ -32,12 +32,7 @@ public class ControladorRuta {
     @Autowired
     private CobradorService cobradorService;
 
-      @ExceptionHandler(Throwable.class)
-    public ModelAndView handleInternalServerError(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
-        return modelAndView;
-    }
+  
 
     @PostMapping("/guardarZona")
     public String guardarZona(@Valid Zona zona, Errors errores, RedirectAttributes redirectAttributes) {

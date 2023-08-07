@@ -40,14 +40,7 @@ public class ControladorCobranzas {
     private CobradorService cobradorService;
     @Autowired
     private IUsuarioService usuarioService;
-
-    
-      @ExceptionHandler(Throwable.class)
-    public ModelAndView handleInternalServerError(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
-        return modelAndView;
-    }
+ 
 
     @GetMapping("/vercobranzas")
     public String verCobranzas(@AuthenticationPrincipal User user, Model model) {

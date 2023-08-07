@@ -111,7 +111,7 @@
                                                                         <a sec:authorize="hasRole('ROLE_USER')"
                                                                             th:if="${prestamo.estado == 0}"
                                                                             th:href="@{/archivarprestamo/} + ${prestamo.idPrestamo}"
-                                                                            class="btn btn-success" target="_blank">
+                                                                            class="btn btn-success">
                                                                             <i class="fa-solid fa-box-archive"></i>
                                                                             [[#{prestamo.archivar}]]
                                                                         </a>

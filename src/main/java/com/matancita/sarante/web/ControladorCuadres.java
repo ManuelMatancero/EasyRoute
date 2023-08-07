@@ -61,14 +61,7 @@ public class ControladorCuadres {
     private ClienteService clienteService;
 
     @Autowired
-    private PrestamoService prestamoService;
-
-      @ExceptionHandler(Throwable.class)
-    public ModelAndView handleInternalServerError(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
-        return modelAndView;
-    }
+    private PrestamoService prestamoService; 
 
     @GetMapping("/cuadres")
     public String cuadres(Model model) {

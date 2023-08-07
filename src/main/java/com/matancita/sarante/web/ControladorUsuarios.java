@@ -45,12 +45,7 @@ public class ControladorUsuarios {
     @Autowired
     private RolService rolService;
 
-      @ExceptionHandler(Throwable.class)
-    public ModelAndView handleInternalServerError(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMsg", "An internal server error occurred. Please try again later.");
-        return modelAndView;
-    }
+  
 
     @GetMapping("/usuarios")
     public String usuarios(Model model) {

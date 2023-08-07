@@ -82,10 +82,10 @@ public class ControladorCobranzas {
                     }
                 }
             }
-        }else{
+        } else {
             cobrador = usuario.getCobrador();
             rutas = cobrador.getRutas();
-             for (Ruta ruta : rutas) {
+            for (Ruta ruta : rutas) {
                 if (ruta.getDia().equalsIgnoreCase(formattedDate)) {
                     cantidadRutas++;
                     clientes.addAll(ruta.getClientes());
@@ -107,7 +107,7 @@ public class ControladorCobranzas {
                     }
                 }
             }
-        
+
         }
 
         model.addAttribute("pagaresPendientes", pagaresPendientes);
@@ -116,6 +116,7 @@ public class ControladorCobranzas {
         model.addAttribute("cantidadPrestamos", cantidadPrestamos);
         model.addAttribute("currentDate", formattedDate);
         model.addAttribute("rutas", rutas);
+        model.addAttribute("cobranzasPage", true);
         return "cobranzas";
     }
 

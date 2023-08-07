@@ -50,6 +50,7 @@ public class ControladorUsuarios {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("empresas", empresas);
         model.addAttribute("usuario", new Usuario());
+        model.addAttribute("usersPage", true);
         return "usuarios";
     }
 
@@ -66,18 +67,17 @@ public class ControladorUsuarios {
             RedirectAttributes ra) {
 
         if (errors.hasErrors()) {
-            return "usuarios";
+            return "redirect:/usuarios";
         }
 
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
         for (Usuario user : usuarios) {
             if (user.getUsername().equals(usuario.getUsername())) {
                 ra.addFlashAttribute(
-                    "errorMessage",
-                    "El nombre de usuario ya existe, por favor utilice otro."
-                );
+                        "errorMessage",
+                        "El nombre de usuario ya existe, por favor utilice otro.");
                 return "redirect:/usuarios";
-            }            
+            }
         }
 
         Cobrador cobrador = new Cobrador();
@@ -108,54 +108,55 @@ public class ControladorUsuarios {
         } else if (rol == 2) {
             rolService.insert(new Rol("ROLE_USER", usuario));
         }
-        
+
         ra.addFlashAttribute(
-            "successMessage",
-            "Usuario creado exitosamente"
-        );
+                "successMessage",
+                "Usuario creado exitosamente");
         return "redirect:/usuarios";
     }
 
     @GetMapping("editarUsuario/{id}")
     public String mostrarFormularioEdicion(@PathVariable("id") Long idUsuario, Model model) {
         Usuario usuario = usuarioService.getUsuarioById(idUsuario);
-        //Solo se debe listar los roles de ese usuario
+        // Solo se debe listar los roles de ese usuario
         List<Rol> roles = usuario.getRoles();
         String rolUsuario = null;
         for (Rol rol : roles) {
             if (rol != null && rol.getUsuario() != null) {
-                    //Aqui estaba el problema porque no se encontraba ese id de rol, 
-                    //Lo solucione agregandole el nombre rol
-                    if (rol.getNombre().equalsIgnoreCase("ROLE_ADMIN")){
-                        rolUsuario = "Admin";
-                        break;//Si se encuentra Admin ya no es mecesario segir iterando
-                    } else if (rol.getNombre().equalsIgnoreCase("ROLE_USER")) {
-                       rolUsuario = "Cobrador";
-                    }  
-            }          
+                // Aqui estaba el problema porque no se encontraba ese id de rol,
+                // Lo solucione agregandole el nombre rol
+                if (rol.getNombre().equalsIgnoreCase("ROLE_ADMIN")) {
+                    rolUsuario = "Admin";
+                    break;// Si se encuentra Admin ya no es mecesario segir iterando
+                } else if (rol.getNombre().equalsIgnoreCase("ROLE_USER")) {
+                    rolUsuario = "Cobrador";
+                }
+            }
         }
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("empresas", empresaService.listAll());
         model.addAttribute("rolUsuario", rolUsuario);
+        model.addAttribute("usersPage", true);
         return "layout/usuarios/editarUsuario";
     }
 
     @PostMapping("/editarUsuario")
     public String guardarEdicionUsuario(@ModelAttribute("usuario") @Valid Usuario usuario,
-                                        @RequestParam("rol") int roUser,
-                                        BindingResult result,
-                                        RedirectAttributes ra) {
+            @RequestParam("rol") int roUser,
+            BindingResult result,
+            RedirectAttributes ra) {
         if (result.hasErrors()) {
             return "layout/usuarios/editarUsuario";
         }
-        //Encriptamos el password antes de obtener el usuario
+        // Encriptamos el password antes de obtener el usuario
         String userPassword = EncriptarPassword.encriptarPassword(usuario.getPassword());
-        //Obtenemos todas las rutas de ese usuario
+        // Obtenemos todas las rutas de ese usuario
         List<Ruta> rutas = usuarioService.getUsuarioById(usuario.getIdUsuario()).getCobrador().getRutas();
-        //Se las asignamos a ese mismo usuario porque no vienen en el form de editar usuarios y estaba dando error
+        // Se las asignamos a ese mismo usuario porque no vienen en el form de editar
+        // usuarios y estaba dando error
         usuario.getCobrador().setRutas(rutas);
-        //Usuario para asignar al rol
+        // Usuario para asignar al rol
         Usuario userToRol = usuarioService.getUsuarioById(usuario.getIdUsuario());
 
         if (roUser == 1) {
@@ -172,20 +173,18 @@ public class ControladorUsuarios {
         for (Usuario user : usuarios) {
             if (user.getIdUsuario() != usuario.getIdUsuario() && user.getUsername().equals(usuario.getUsername())) {
                 ra.addFlashAttribute(
-                    "errorMessage",
-                    "El nombre de usuario ya existe, por favor utilice otro."
-                );
+                        "errorMessage",
+                        "El nombre de usuario ya existe, por favor utilice otro.");
                 // return to the path /editarUsuario/{id}
-                return "redirect:/editarUsuario/" + usuario.getIdUsuario(); 
-            }            
+                return "redirect:/editarUsuario/" + usuario.getIdUsuario();
+            }
         }
         usuario.setPassword(userPassword);
         usuarioService.guardarUsuario(usuario);
 
         ra.addFlashAttribute(
-            "successMessage",
-            "Usuario editado exitosamente"
-        );
+                "successMessage",
+                "Usuario editado exitosamente");
         return "redirect:/usuarios";
     }
 }

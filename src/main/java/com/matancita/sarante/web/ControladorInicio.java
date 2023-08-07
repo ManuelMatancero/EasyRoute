@@ -47,7 +47,7 @@ public class ControladorInicio {
         List<Cobrador> cobradores = cobradorService.listAll();
         List<Cliente> clientes = new ArrayList<>();
         List<Cliente> lastTenAdded = new ArrayList<>();
-        List<Cliente> lastTenClientesAdded =new ArrayList<>();
+        List<Cliente> lastTenClientesAdded = new ArrayList<>();
         List<Prestamo> prestamos = new ArrayList<>();
         List<Pagare> pagares = new ArrayList<>();
         int cantidadRutas = 0;
@@ -59,11 +59,11 @@ public class ControladorInicio {
         int atrasos = 0;
         int cantidadClientes = 0;
         if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-        // Sort the list based on the LocalDateTime attribute in descending order
-        lastTenAdded = clienteService.listAll();
-        lastTenAdded.sort(Comparator.comparing(Cliente::getFechaIngreso).reversed());
-        // Select the last 10 added items
-        lastTenClientesAdded = lastTenAdded.stream().limit(10).collect(Collectors.toList());
+            // Sort the list based on the LocalDateTime attribute in descending order
+            lastTenAdded = clienteService.listAll();
+            lastTenAdded.sort(Comparator.comparing(Cliente::getFechaIngreso).reversed());
+            // Select the last 10 added items
+            lastTenClientesAdded = lastTenAdded.stream().limit(10).collect(Collectors.toList());
             rutas = rutaService.listAll();
             // Calcular cantidad de rutas
             for (Ruta ruta : rutas) {
@@ -99,13 +99,13 @@ public class ControladorInicio {
             // Calcular cantidad de rutas
             for (Ruta ruta : rutas) {
                 cantidadRutas++;
-                clientes= ruta.getClientes();
+                clientes = ruta.getClientes();
                 lastTenAdded.addAll(clientes);
                 lastTenAdded.sort(Comparator.comparing(Cliente::getFechaIngreso).reversed());
-                 // Select the last 10 added items
+                // Select the last 10 added items
                 lastTenClientesAdded = lastTenAdded.stream().limit(10).collect(Collectors.toList());
                 for (Cliente cliente : clientes) {
-                    prestamos=cliente.getPrestamos();
+                    prestamos = cliente.getPrestamos();
                     for (Prestamo prestamo : prestamos) {
                         cantidadPrestamos++;
                         invertido += prestamo.getMonto();
@@ -137,6 +137,7 @@ public class ControladorInicio {
         model.addAttribute("cantidadPrestamos", cantidadPrestamos);
         model.addAttribute("atrasos", atrasos);
         model.addAttribute("lastTenClientesAdded", lastTenClientesAdded);
+        model.addAttribute("dashboardPage", true);
         return "index";
     }
 
@@ -187,6 +188,7 @@ public class ControladorInicio {
         // These are the objects to be filled in the form
         model.addAttribute("ruta", new Ruta());
         model.addAttribute("zona", new Zona());
+        model.addAttribute("routesPage", true);
         return "rutas";
     }
 
@@ -208,6 +210,7 @@ public class ControladorInicio {
         }
         model.addAttribute("clientes", clientes);
         model.addAttribute("cliente", new Cliente());
+        model.addAttribute("customersPage", true);
         return "clientesGeneral";
     }
 
@@ -235,6 +238,7 @@ public class ControladorInicio {
         }
         model.addAttribute("currentTime", currentTime);
         model.addAttribute("pagares", pagares);
+        model.addAttribute("paymentsPage", true);
         return "pagares";
     }
 
@@ -292,6 +296,7 @@ public class ControladorInicio {
         model.addAttribute("pagaresPendientes", pagarespendientes);
         model.addAttribute("totalPagado", totalPagado);
         model.addAttribute("prestamos", prestamos);
+        model.addAttribute("loansPage", true);
         return "prestamosGeneral";
     }
 }

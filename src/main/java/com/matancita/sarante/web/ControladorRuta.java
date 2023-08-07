@@ -1,6 +1,5 @@
 package com.matancita.sarante.web;
 
-
 import com.matancita.sarante.domain.Cobrador;
 import com.matancita.sarante.domain.Ruta;
 import com.matancita.sarante.domain.Zona;
@@ -32,56 +31,57 @@ public class ControladorRuta {
     private CobradorService cobradorService;
 
     @PostMapping("/guardarZona")
-       public String guardarZona(@Valid Zona zona, Errors errores, RedirectAttributes redirectAttributes){
-           if(errores.hasErrors()){
-               return "verrutas";
-           }
-           zona.setEstatus(1);
-           zonaService.insert(zona);
-           redirectAttributes.addFlashAttribute("successMessage", "Zone saved successfully!");
-           return "redirect:/verrutas";
-       }
+    public String guardarZona(@Valid Zona zona, Errors errores, RedirectAttributes redirectAttributes) {
+        if (errores.hasErrors()) {
+            return "verrutas";
+        }
+        zona.setEstatus(1);
+        zonaService.insert(zona);
+        redirectAttributes.addFlashAttribute("successMessage", "Zone saved successfully!");
+        return "redirect:/verrutas";
+    }
 
     @PostMapping("/guardarRuta")
-    public String guardarRuta(@Valid Ruta ruta, @RequestParam Long idCobrador,@RequestParam Long idZona,  Errors errores, RedirectAttributes redirectAttributes){
-        if(errores.hasErrors()){
+    public String guardarRuta(@Valid Ruta ruta, @RequestParam Long idCobrador, @RequestParam Long idZona,
+            Errors errores, RedirectAttributes redirectAttributes) {
+        if (errores.hasErrors()) {
             return "modificarRuta";
         }
-        log.info("nombre= " + ruta.getNombre()+ "\ndia= "+ ruta.getDia());
-        
+        log.info("nombre= " + ruta.getNombre() + "\ndia= " + ruta.getDia());
+
         Zona zona;
         zona = zonaService.getById(idZona);
         Cobrador cobrador;
         cobrador = cobradorService.getById(idCobrador);
-        //This operation will run if the idRuta is null when updating
-        if(!(ruta.getIdRuta()==null)){
-          Ruta rutaFromDb= rutaService.getById(ruta.getIdRuta());
-          ruta.setClientes(rutaFromDb.getClientes());
-        }  
+        // This operation will run if the idRuta is null when updating
+        if (!(ruta.getIdRuta() == null)) {
+            Ruta rutaFromDb = rutaService.getById(ruta.getIdRuta());
+            ruta.setClientes(rutaFromDb.getClientes());
+        }
         ruta.setZona(zona);
         ruta.setCobrador(cobrador);
         rutaService.insert(ruta);
         redirectAttributes.addFlashAttribute("successMessage", "Route saved successfully!");
         return "redirect:/verrutas";
     }
-    
-    
+
     @GetMapping("/modificarruta/{idRuta}")
-    public String modificarRuta(Ruta ruta, Model model){
+    public String modificarRuta(Ruta ruta, Model model) {
         List<Cobrador> cobradores = cobradorService.listAll();
         List<Zona> zonas = zonaService.listAll();
         ruta = rutaService.getById(ruta.getIdRuta());
         model.addAttribute("ruta", ruta);
         model.addAttribute("cobradores", cobradores);
         model.addAttribute("zonas", zonas);
+        model.addAttribute("routesPage", true);
         return "modificarRuta";
     }
 
-        @GetMapping("/eliminarRuta")
-        public String eliminarRuta(Ruta ruta, RedirectAttributes redirectAttributes){
-            ruta = rutaService.getById(ruta.getIdRuta());
-            rutaService.delete(ruta);
-            redirectAttributes.addFlashAttribute("successMessage", "Route eliminated successfully!");
-            return "redirect:/verrutas";
-        }
+    @GetMapping("/eliminarRuta")
+    public String eliminarRuta(Ruta ruta, RedirectAttributes redirectAttributes) {
+        ruta = rutaService.getById(ruta.getIdRuta());
+        rutaService.delete(ruta);
+        redirectAttributes.addFlashAttribute("successMessage", "Route eliminated successfully!");
+        return "redirect:/verrutas";
+    }
 }

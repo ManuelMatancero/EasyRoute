@@ -11,56 +11,56 @@
     <ul class="nav-links">
       <li>
         <a th:href="@{/}">
-          <i class="uil uil-estate"></i>
-          <span class="link-name">Dahsboard</span>
+          <i th:class="${dashboardPage} ? 'uil uil-estate text-primary' : 'uil uil-estate'"></i>
+          <span th:class="${dashboardPage} ? 'link-name text-primary fw-bold' : 'link-name'">Dashboard</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/usuarios}">
-          <i class="uil-users-alt"></i>
-          <span class="link-name">Usuarios</span>
+          <i th:class="${usersPage} ? 'uil uil-users-alt text-primary' : 'uil uil-users-alt'"></i>
+          <span th:class="${usersPage} ? 'link-name text-primary fw-bold' : 'link-name'">Usuarios</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/verrutas}">
-          <i class="uil uil-map-marker"></i>
-          <span class="link-name">Rutas</span>
+          <i th:class="${routesPage} ? 'uil uil-map-marker text-primary' : 'uil uil-map-marker'"></i>
+          <span th:class="${routesPage} ? 'link-name text-primary fw-bold' : 'link-name'">Rutas</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/verclientes}">
-          <i class="uil uil-user-square"></i>
-          <span class="link-name">Clientes</span>
+          <i th:class="${customersPage} ? 'uil uil-user-square text-primary' : 'uil uil-user-square'"></i>
+          <span th:class="${customersPage} ? 'link-name text-primary fw-bold' : 'link-name'">Clientes</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/verprestamos}">
-          <i class="uil uil-money-stack"></i>
-          <span class="link-name">Prestamos</span>
+          <i th:class="${loansPage} ? 'uil uil-money-stack text-primary' : 'uil uil-money-stack'"></i>
+          <span th:class="${loansPage} ? 'link-name text-primary fw-bold' : 'link-name'">Prestamos</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/verpagares}">
-          <i class="uil uil-bill"></i>
-          <span class="link-name">Pagares</span>
+          <i th:class="${paymentsPage} ? 'uil uil-bill text-primary' : 'uil uil-bill'"></i>
+          <span th:class="${paymentsPage} ? 'link-name text-primary fw-bold' : 'link-name'">Pagares</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/cuadres}">
-          <i class="uil uil-chart-bar"></i>
-          <span class="link-name">Cuadres</span>
+          <i th:class="${cuadresPage} ? 'uil uil-chart-bar text-primary' : 'uil uil-chart-bar'"></i>
+          <span th:class="${cuadresPage} ? 'link-name text-primary fw-bold' : 'link-name'">Cuadres</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/vercobranzas}">
-          <i class="uil uil-clock"></i>
-          <span class="link-name">Cobranzas</span>
+          <i th:class="${cobranzasPage} ? 'uil uil-clock text-primary' : 'uil uil-clock'"></i>
+          <span th:class="${cobranzasPage} ? 'link-name text-primary fw-bold' : 'link-name'">Cobranzas</span>
         </a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <a th:href="@{/verempresa}">
-          <i class="uil uil-building"></i>
-          <span class="link-name">Empresa</span>
+          <i th:class="${companyPage} ? 'uil uil-building text-primary' : 'uil uil-building'"></i>
+          <span th:class="${companyPage} ? 'link-name text-primary fw-bold' : 'link-name'">Empresa</span>
         </a>
       </li>
     </ul>

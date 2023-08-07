@@ -24,6 +24,7 @@ public class ControladorEmpresa {
         log.info("Ejecutando el controlador Spring MVC");
         Empresa empresa = empresaService.listAll().get(0);
         model.addAttribute("empresa", empresa);
+        model.addAttribute("companyPage", true);
         return "empresa";
     }
 

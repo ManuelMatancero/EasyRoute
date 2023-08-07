@@ -177,6 +177,7 @@ public class ControladorCuadres {
         String endDateField = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         model.addAttribute("startDateField", startDateField);
         model.addAttribute("endDateField", endDateField);
+        model.addAttribute("cuadresPage", true);
 
         return "cuadres";
     }
@@ -359,6 +360,7 @@ public class ControladorCuadres {
         model.addAttribute("empresas", empresas);
         model.addAttribute("clientes", clientes);
         model.addAttribute("prestamos", prestamos);
+        model.addAttribute("cuadresPage", true);
 
         return "cuadres";
     }

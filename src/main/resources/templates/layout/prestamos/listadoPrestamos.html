@@ -173,7 +173,7 @@
                                                                                     🟡 Pendiente
                                                                                 </td>
                                                                                 <td
-                                                                                    th:if="${pagare.vencimiento.isBefore(currentTime) and pagare.reciboGen == null}">
+                                                                                    th:if="${pagare.vencimiento.isBefore(currentTime) and pagare.reciboGen == null and pagare.vencimiento.toLocalDate() != currentTime.toLocalDate()}">
                                                                                     🔴 Vencido</td>
                                                                                 <td
                                                                                     th:if="${pagare.vencimiento.toLocalDate()==currentTime.toLocalDate() and pagare.reciboGen == null}">

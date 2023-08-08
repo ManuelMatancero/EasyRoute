@@ -75,7 +75,7 @@
                     <td th:if="${pagare.reciboGen != null}">🟢 Pago</td>
                     <td th:if="${pagare.reciboGen == null and pagare.vencimiento.isAfter(currentTime) and pagare.vencimiento.toLocalDate() != currentTime.toLocalDate()}">🟡 Pendiente
                     </td>
-                    <td th:if="${pagare.vencimiento.isBefore(currentTime) and pagare.reciboGen == null}">🔴 Vencido</td>
+                    <td th:if="${pagare.vencimiento.isBefore(currentTime) and pagare.reciboGen == null and pagare.vencimiento.toLocalDate() != currentTime.toLocalDate()}">🔴 Vencido</td>
                     <td
                       th:if="${pagare.vencimiento.toLocalDate()==currentTime.toLocalDate() and pagare.reciboGen == null}">
                       🔵 Cobrar hoy

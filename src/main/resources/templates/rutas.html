@@ -5,12 +5,13 @@
 <head th:replace="layout/general/head :: head"></head>
 
 <body>
+  <script th:src="@{/js/layout.js}"></script>
   <nav th:replace="layout/general/sidebar :: sidebar"></nav>
   <section th:replace="layout/rutas/agregarRuta :: agregarRuta"></section>
   <section th:replace="layout/rutas/agregarZona :: agregarZona"></section>
   <section th:replace="layout/rutas/listadoRutas :: listadoRutas"></section>
 
-  <script th:src="@{/js/layout.js}"></script>
+  <script th:src="@{/js/layoutEvents.js}"></script>
   <script src="/js/filterTable.js"></script>
 </body>
 

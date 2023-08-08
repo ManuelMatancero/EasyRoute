@@ -8,11 +8,12 @@
 </head>
 
 <body>
+  <script th:src="@{/js/layout.js}"></script>
   <nav th:replace="layout/general/sidebar :: sidebar"></nav>
   <section th:replace="layout/usuarios/agregarUsuarios :: agregarUsuarios"></section>
   <section th:replace="layout/usuarios/listadoUsuarios :: listadoUsuarios"></section>
 
-  <script th:src="@{/js/layout.js}"></script>
+  <script th:src="@{/js/layoutEvents.js}"></script>
   <script src="/js/filterTable.js"></script>
 </body>
 

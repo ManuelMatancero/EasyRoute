@@ -7,9 +7,10 @@
 </head>
 
 <body>
-  <nav th:replace="layout/general/sidebar :: sidebar"></nav>
-  <section th:replace="layout/clientes/editarCliente :: editarCliente"></section>
   <script th:src="@{/js/layout.js}"></script>
+  <nav th:replace="layout/general/sidebar :: sidebar"></nav>
+  <script th:src="@{/js/layoutEvents.js}"></script>
+  <section th:replace="layout/clientes/editarCliente :: editarCliente"></section>
 </body>
 
 </html>

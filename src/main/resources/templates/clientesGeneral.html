@@ -7,12 +7,13 @@
 </head>
 
 <body>
+  <script th:src="@{/js/layout.js}"></script>
   <nav th:replace="layout/general/sidebar :: sidebar"></nav>
   <!-- <section th:replace="layout/general/navegacionClientesGeneral :: navegacionClientesGeneral"></section> -->
   <section th:replace="layout/clientes/agregarCliente :: agregarCliente"></section>
   <section th:replace="layout/clientes/listadoClientes :: listadoClientes"></section>
 
-  <script th:src="@{/js/layout.js}"></script>
+  <script th:src="@{/js/layoutEvents.js}"></script>
   <script src="/js/filterTable.js"></script>
 </body>
 

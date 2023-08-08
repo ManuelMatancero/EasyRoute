@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ControladorClientes {
     @Autowired
     private PagareService pagareService;
 
-   
+
 
     @GetMapping("/verclientes/{idRuta}")
     public String clientes(Ruta ruta, Model model) {
@@ -63,7 +64,14 @@ public class ControladorClientes {
     public String prestamos(Cliente cliente, Model model) {
         cliente = clienteService.getById(cliente.getIdCliente());
         Long idRuta = cliente.getRuta().getIdRuta();
-        List<Prestamo> prestamos = cliente.getPrestamos();
+        List<Prestamo> allPrestamos = cliente.getPrestamos();
+        List<Prestamo> prestamos= new ArrayList<>();
+        //here i sort the prestamos that their state is not equals to 2
+        for(Prestamo prestamo: allPrestamos){
+            if(prestamo.getEstado()!=2){
+                prestamos.add(prestamo);
+            }
+        }
         // Here I know how much money that customer is pending
         double totalPendiente = 0;
         int totalPrestamos = 0;

@@ -75,7 +75,7 @@
                         <div class="list-group">
                             <div class="accordion" id="accordionExample">
                                 <div th:each="prestamo : ${prestamos}" style="background-color: var(--panel-color);">
-                                    <div class="accordion-item mb-2">
+                                    <div class="accordion-item mb-2" th:if="${prestamo.estado != 2}">
                                         <h2 class="accordion-header">
                                             <button th:if="${prestamo.estado == 1}"
                                                 class="accordion-button bg-warning-subtle collapsed lead"
@@ -180,7 +180,7 @@
                                                                                     🔵 Cobrar hoy
                                                                                 </td>
                                                                                 <td>
-                                                                                    <a target="_blank"
+                                                                                    <a 
                                                                                         sec:authorize="hasRole('ROLE_USER')"
                                                                                         th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
                                                                                         class="btn btn-primary rounded text-center">
@@ -193,8 +193,7 @@
                                                                 </div>
                                                                 <div class="text-center p-2"
                                                                     th:if="${prestamo.pagares == null or prestamo.pagares.empty}">
-                                                                    <span th:text="#{persona.lista-vacia}">Lista
-                                                                        vacía</span>
+                                                                    <span >Lista de pagares vacía</span>
                                                                 </div>
                                                             </div>
                                                         </div>

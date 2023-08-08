@@ -81,7 +81,7 @@
                       🔵 Cobrar hoy
                     </td>
                     <td>
-                      <a target="_blank" sec:authorize="hasRole('ROLE_USER')"
+                      <a sec:authorize="hasRole('ROLE_USER')"
                         th:href="@{/paginaimprimirrecibo/} + ${pagare.idPagare}"
                         class="btn btn-primary rounded text-center">
                         <i class="fas fa-print"></i>
@@ -92,7 +92,7 @@
               </table>
             </div>
             <div class="text-center p-2" th:if="${pagares == null or pagares.empty}">
-              <span th:text="#{persona.lista-vacia}">Lista vacía</span>
+              <span>Lista de pagares vacía</span>
             </div>
           </div>
         </div>

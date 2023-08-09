@@ -9,6 +9,20 @@
 
 <body>
   <script th:src="@{/js/layout.js}"></script>
+  <div id="loading-overlay" class="overlay">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <script text="text/javascript">
+    const overlay = document.getElementById("loading-overlay");
+    const spinner = document.querySelector(".spinner-border");
+
+    overlay.classList.add("show");
+    spinner.style.display = "block";
+  </script>
   <nav th:replace="layout/general/sidebar :: sidebar"></nav>
   <section th:replace="layout/usuarios/agregarUsuarios :: agregarUsuarios"></section>
   <section th:replace="layout/usuarios/listadoUsuarios :: listadoUsuarios"></section>

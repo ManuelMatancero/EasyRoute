@@ -2,7 +2,11 @@
   <link rel="stylesheet" th:href="@{/css/cuadres.css}" />
   <div class="top">
     <i class="uil uil-bars sidebar-toggle"></i>
-    <img src="/img/profile.jpg" alt="" />
+    <div>
+      <img sec:authorize="hasRole('ROLE_ADMIN')" src="/img/profile.jpg" alt="" />
+      <img sec:authorize="!hasRole('ROLE_ADMIN')" src="/img/profile.png" alt="" />
+      <small class="fw-bold" style="color: var(--text-color);" sec:authentication="name"></small>
+    </div>
   </div>
 
   <div class="dash-content">

@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modeToggle.addEventListener("click", () => {
     body.classList.toggle("dark");
-    tableElement.classList.toggle("table-dark");
-    tableContainer.classList.toggle("bg-dark");
-    tableContainer2.classList.toggle("bg-dark");
+    tableElement?.classList.toggle("table-dark");
+    tableContainer?.classList.toggle("bg-dark");
+    tableContainer2?.classList.toggle("bg-dark");
     accordionContainer?.classList.toggle("bg-dark");
     accordionContainer2?.classList.toggle("bg-dark");
     if (body.classList.contains("dark")) {
@@ -45,4 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("status", "open");
     }
   });
+
+  overlay.classList.remove("show");
+  spinner.style.display = "none";
 });

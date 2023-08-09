@@ -6,7 +6,22 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.704);
+    display: none; /* Inicialmente oculto */
+    z-index: 1000;
+  }
+  
+  .overlay.show {
+    display: block; /* Mostrar cuando es necesario */
+  }
 
+  
 :root{
     /* ===== Colors ===== */
     --primary-color: #0E4BF1;

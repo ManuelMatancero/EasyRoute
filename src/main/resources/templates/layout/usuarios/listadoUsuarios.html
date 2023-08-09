@@ -24,7 +24,11 @@
             </div>
         </div>
 
-        <img src="/img/profile.jpg" alt="" />
+        <div>
+            <img sec:authorize="hasRole('ROLE_ADMIN')" src="/img/profile.jpg" alt="" />
+            <img sec:authorize="!hasRole('ROLE_ADMIN')" src="/img/profile.png" alt="" />
+            <small class="fw-bold" style="color: var(--text-color);" sec:authentication="name"></small>
+        </div>
     </div>
     <div class="dash-content">
         <div th:if="${successMessage}" class="alert alert-success alert-dismissible mt-2 fade show">

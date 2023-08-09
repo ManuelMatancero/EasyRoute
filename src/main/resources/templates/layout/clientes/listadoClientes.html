@@ -37,17 +37,21 @@
             <div class="overview">
                 <div class="title">
                     <i class="uil uil-user-square"></i>
-                    <span class="text">Clientes</span> <span th:if="${idRuta}" class="text" th:text="${ruta.nombre}">Clientes</span>
+                    <span class="text">Clientes</span> <span th:if="${idRuta}" class="text"
+                        th:text="${ruta.nombre}">Clientes</span>
                 </div>
             </div>
         </div>
         <div class="activity-data">
-            <div class=" breadcrumbcontiner">     
+            <div class=" breadcrumbcontiner">
                 <ul class="pagination shadow-sm">
-                    <li class="page-item"><a class="page-link" th:href="@{/}"><i class="uil uil-estate"></i> <small>Dashboard</small>  </a></li>
-                    <li class="page-item"><a class="page-link" th:if="${idRuta}" th:href="@{/verrutas}"><i class="uil uil-map-marker"></i><small>Rutas &nbsp; </small></a></li> 
-                    <li class="page-item active"><a class="page-link " href="#"><i class="uil uil-user-square"></i><small>Clientes&nbsp; </small></a></li>                
-                </ul> 
+                    <li class="page-item"><a class="page-link" th:href="@{/}"><i class="uil uil-estate"></i>
+                            <small>Dashboard</small> </a></li>
+                    <li class="page-item"><a class="page-link" th:if="${idRuta}" th:href="@{/verrutas}"><i
+                                class="uil uil-map-marker"></i><small>Rutas &nbsp; </small></a></li>
+                    <li class="page-item active"><a class="page-link " href="#"><i
+                                class="uil uil-user-square"></i><small>Clientes&nbsp; </small></a></li>
+                </ul>
             </div>
         </div>
         <div class="activity-data">
@@ -90,7 +94,7 @@
                                             <td>[[${cliente.ruta.nombre}]]</td>
                                             <td>[[${cliente.ruta.cobrador.nombre} + ' ' +
                                                 ${cliente.ruta.cobrador.apellido}]]</td>
-        
+
                                             <td>
                                                 <a th:href="@{/verprestamos/} + ${cliente.idCliente}"
                                                     class="btn btn-primary me-2 rounded">
@@ -98,7 +102,7 @@
                                                 </a>
                                                 <a sec:authorize="hasRole('ROLE_ADMIN')"
                                                     th:href="@{/modificarcliente/} + ${cliente.idCliente}"
-                                                    class="btn btn-light rounded">
+                                                    class="btn btn-secondary rounded">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             </td>
@@ -115,8 +119,8 @@
                     </div>
                 </div>
             </div>
-        </div>     
+        </div>
     </div>
-   
+
     <script th:src="@{/js/breadcrumbjs.js}"></script>
 </section>

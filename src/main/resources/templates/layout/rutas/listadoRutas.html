@@ -76,7 +76,7 @@
                                             <th th:text="#{ruta.nombre}">Nombre</th>
                                             <th th:text="#{ruta.dia}">Dia</th>
                                             <th th:text="#{ruta.zona}">Zona</th>
-                                            <th th:text="#{ruta.cobrador}">Cobrador</th>
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{ruta.cobrador}">Cobrador</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -86,7 +86,7 @@
                                             <td>[[${ruta.nombre}]]</td>
                                             <td>[[${ruta.dia}]]</td>
                                             <td>[[${ruta.zona.nombre}]]</td>
-                                            <td>[[${ruta.cobrador.nombre + ' ' + ruta.cobrador.apellido }]]</td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">[[${ruta.cobrador.nombre + ' ' + ruta.cobrador.apellido }]]</td>
                                             <td>
                                                 <a th:href="@{/verclientes/} + ${ruta.idRuta}"
                                                     class="btn btn-primary me-2 rounded">

@@ -77,7 +77,7 @@
                                             <th th:text="#{cliente.apellido}">Apellido</th>
                                             <th th:text="#{cliente.cedula}">Cedula</th>
                                             <th th:text="#{ruta.nombre}">Ruta</th>
-                                            <th th:text="#{panel.cobrador}">Direccion</th>
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{panel.cobrador}">Direccion</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -88,7 +88,7 @@
                                             <td>[[${cliente.apellido}]]</td>
                                             <td>[[${cliente.cedula}]]</td>
                                             <td>[[${cliente.ruta.nombre}]]</td>
-                                            <td>[[${cliente.ruta.cobrador.nombre} + ' ' +
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">[[${cliente.ruta.cobrador.nombre} + ' ' +
                                                 ${cliente.ruta.cobrador.apellido}]]</td>
         
                                             <td>

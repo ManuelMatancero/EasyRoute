@@ -57,7 +57,7 @@
           <span th:class="${cobranzasPage} ? 'link-name text-primary fw-bold' : 'link-name'">Cobranzas</span>
         </a>
       </li>
-      <li sec:authorize="isAuthenticated()">
+      <li sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/verempresa}">
           <i th:class="${companyPage} ? 'uil uil-building text-primary' : 'uil uil-building'"></i>
           <span th:class="${companyPage} ? 'link-name text-primary fw-bold' : 'link-name'">Empresa</span>

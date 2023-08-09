@@ -44,7 +44,7 @@
         </div>
         <img src="/img/profile.jpg" alt="" />
     </div>
-       
+
     <div class="dash-content">
         <div class="activity">
             <div class="title">
@@ -52,16 +52,18 @@
                 <span class="text">Rutas</span>
             </div>
             <div class="activity-data">
-                <div class=" breadcrumbcontiner">     
+                <div class=" breadcrumbcontiner">
                     <ul class="pagination shadow-sm">
-                        <li class="page-item"><a class="page-link" th:href="@{/}"><i class="uil uil-estate"></i> <small>Dashboard</small>  </a></li>
-                        <li class="page-item active"><a class="page-link " href="#"><i class="uil uil-map-marker"></i><small>Rutas &nbsp; </small></a></li>                 
-                    </ul> 
+                        <li class="page-item"><a class="page-link" th:href="@{/}"><i class="uil uil-estate"></i>
+                                <small>Dashboard</small> </a></li>
+                        <li class="page-item active"><a class="page-link " href="#"><i
+                                    class="uil uil-map-marker"></i><small>Rutas &nbsp; </small></a></li>
+                    </ul>
                 </div>
             </div>
             <div class="activity-data">
-                <div class="row mx-auto gap-1">
-                    <div class="col-md-8 border border-2 rounded-3 table-container2">
+                <div class="row mx-auto">
+                    <div class="col-md-9 border border-2 rounded-3 table-container2">
                         <!-- Display success message if available -->
                         <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
                             <p th:text="${successMessage}"></p>
@@ -90,10 +92,12 @@
                                             <td>
                                                 <a th:href="@{/verclientes/} + ${ruta.idRuta}"
                                                     class="btn btn-primary me-2 rounded">
-                                                    <i class="uil uil-user-square"></i> <!-- [[#{accion.verclientes}]] -->
+                                                    <i class="uil uil-user-square"></i>
+                                                    <!-- [[#{accion.verclientes}]] -->
                                                 </a>
                                                 <a sec:authorize="hasRole('ROLE_ADMIN')"
-                                                    th:href="@{/modificarruta/} + ${ruta.idRuta}" class="btn btn-light">
+                                                    th:href="@{/modificarruta/} + ${ruta.idRuta}"
+                                                    class="btn btn-secondary">
                                                     <i class="bi bi-pencil-square"></i> <!-- [[#{accion.editar}]] -->
                                                 </a>
                                             </td>

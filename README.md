@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Loan Route Management Application</h1>
+  <h1>EasyRoute</h1>
   <h3>An efficient loan management solution for streamlined loan processes and customer evaluation.</h3>
 </div>
 

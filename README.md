@@ -51,7 +51,7 @@ The application provides a comprehensive and scalable solution that meets the ch
 
 ## :rocket: Main Technologies
 
-...
+:java: Java
 
 ## :white_check_mark: Requirements
 

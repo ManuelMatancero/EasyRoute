@@ -51,7 +51,7 @@ The application provides a comprehensive and scalable solution that meets the ch
 
 ## :rocket: Main Technologies
 
-:java: Java
+☕️Java, 🍃Spring Boot, 🔐Spring Security, 💤Hibernate, 🧱JPA, 📄MySQL, 🚀Bootstrap, 🌐HTML, 💮Thymeleaf, ⚡️JavaScript y 🎨CSS
 
 ## :white_check_mark: Requirements
 
@@ -67,4 +67,5 @@ The application provides a comprehensive and scalable solution that meets the ch
 
 ## 👨🏻‍🚀 Developers
 
-...
+### Frainer Encarnacion 
+### Manuel Sarante

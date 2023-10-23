@@ -41,7 +41,7 @@ public class ControladorPrestamos {
    
 
     @PostMapping("/guardarPrestamo")
-    public String guardarZona(@Valid Prestamo prestamo, @RequestParam Long idCliente, Errors errores, RedirectAttributes redirectAttributes) {
+    public String guardarPrestamo(@Valid Prestamo prestamo, @RequestParam Long idCliente, Errors errores, RedirectAttributes redirectAttributes) {
         if (errores.hasErrors()) {
             return "verrutas";
         }
